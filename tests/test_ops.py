@@ -1,6 +1,6 @@
 from src import add_n, sub_n, mult_n, div_n, n_div, n_sub, floordiv_n, n_floordiv, exp_n, n_exp, chain
 from src import sine, cosine, tangent, arctangent, arccosine, arcsine, identity, log_of_n, log_base_n
-from src import lt_n, le_n, gt_n, ge_n, get_n, set_n_to_val, derivative, parse_expr
+from src import lt_n, le_n, gt_n, ge_n, get_n, set_n_to_val, derivative, parse_expr, invert
 from src import f_plus_g, f_minus_g, f_times_g, f_divided_by_g, mx_plus_b, const, f_raised_to_g
 from math import log, sin, cos, tan, asin, acos, atan, sqrt
 import numpy as np
@@ -75,6 +75,16 @@ def test_comp():
             assert le(j) == (j <= i)
             assert gt(j) == (j > i)
             assert ge(j) == (j >= i)
+        
+    i = invert()
+    assert i(0)
+    assert not i(1)
+    assert i(False)
+    assert not i(True)
+
+    mult_invert = chain(invert(), mult_n(1))
+    assert not mult_invert(1)
+    assert mult_invert(0)
             
 def test_index():
     lst = list(range(_ITERS, 2 * _ITERS))

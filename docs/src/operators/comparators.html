@@ -68,7 +68,18 @@ def ge_n(n):
     Returns:
     :   comper (function (number -&gt; number)) : a function that returns True iff the input is greater than or equal to n    
     &#34;&#34;&#34;
-    return lambda x: x &gt;= n</code></pre>
+    return lambda x: x &gt;= n
+
+def invert():
+    &#34;&#34;&#34;Returns a function that returns the inverse of the input i.e. not x
+    
+    Args:
+        None
+
+    Returns:
+    :   inverter (function (any -&gt; bool)) : a function that returns the boolean inverse of the input
+    &#34;&#34;&#34;
+    return lambda x: not x</code></pre>
 </details>
 </section>
 <section>
@@ -130,6 +141,33 @@ def ge_n(n):
     :   comper (function (number -&gt; number)) : a function that returns True iff the input is greater than n    
     &#34;&#34;&#34;
     return lambda x: x &gt; n</code></pre>
+</details>
+</dd>
+<dt id="src.operators.comparators.invert"><code class="name flex">
+<span>def <span class="ident">invert</span></span>(<span>)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns a function that returns the inverse of the input i.e. not x</p>
+<h2 id="args">Args</h2>
+<dl>
+<dt>None</dt>
+<dt>Returns:</dt>
+<dd>inverter (function (any -&gt; bool)) : a function that returns the boolean inverse of the input</dd>
+</dl></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def invert():
+    &#34;&#34;&#34;Returns a function that returns the inverse of the input i.e. not x
+    
+    Args:
+        None
+
+    Returns:
+    :   inverter (function (any -&gt; bool)) : a function that returns the boolean inverse of the input
+    &#34;&#34;&#34;
+    return lambda x: not x</code></pre>
 </details>
 </dd>
 <dt id="src.operators.comparators.le_n"><code class="name flex">
@@ -206,6 +244,7 @@ def ge_n(n):
 <ul class="">
 <li><code><a title="src.operators.comparators.ge_n" href="#src.operators.comparators.ge_n">ge_n</a></code></li>
 <li><code><a title="src.operators.comparators.gt_n" href="#src.operators.comparators.gt_n">gt_n</a></code></li>
+<li><code><a title="src.operators.comparators.invert" href="#src.operators.comparators.invert">invert</a></code></li>
 <li><code><a title="src.operators.comparators.le_n" href="#src.operators.comparators.le_n">le_n</a></code></li>
 <li><code><a title="src.operators.comparators.lt_n" href="#src.operators.comparators.lt_n">lt_n</a></code></li>
 </ul>

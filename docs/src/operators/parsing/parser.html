@@ -58,14 +58,14 @@ def _parse_tree(tree, expr):
         const_base = _parse_tree(tree.base, expr)
         if not isinstance(const_base, const):
             raise SyntaxError(f&#39;Expected scalar value for log base: {expr}&#39;)
-        return chain(log_base_n(const_base.n), _parse_tree(tree.expr, expr))
+        return log_base_n(const_base.n)(_parse_tree(tree.expr, expr))
 
     if isinstance(tree, _BinOp):
         return _FUNC_COMBOS[typ](_parse_tree(tree.l, expr),
                                  _parse_tree(tree.r, expr))
 
     if isinstance(tree, _Trig):
-        return chain(_TRIG_MAP[typ](), _parse_tree(tree.expr, expr))
+        return _TRIG_MAP[typ]()(_parse_tree(tree.expr, expr))
 
     raise ValueError(f&#39;Internal error: invalid tree {tree} from {expr}&#39;)
 
