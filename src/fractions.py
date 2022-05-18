@@ -1,0 +1,235 @@
+import numpy as np
+
+class Fraction:
+    """An alternative way of storing (rational) floating-point numbers.
+    
+    Stores them as a numerator-denominator pair. If num divides den, the
+    constructor will return the integer quotient.
+
+    Args:
+        num (int) : the numerator
+
+        den (int) : the denominator
+    """
+    def __init__(self, num, den):
+        self._num = num
+        self._den = den
+        self._reduce()
+
+    def __new__(cls, num, den):
+        if num % den == 0:
+            return num // den
+        return super().__new__(cls)
+
+    def __add__(first, second):
+        """Adds the two numbers or fractions and returns the result.
+
+        Args:
+        :   first (Fraction) : the first fraction
+        :   second (Fraction | int | float) : the second number
+
+        Returns:
+        :   third (Fraction | int | float) : the sum of the two
+        """
+        typ = type(second)
+        if typ == Fraction:
+            prod = lcm(first._den, second._den)
+            num = ((prod * first._num // first._den) +
+                   (prod * second._num // second._den))
+            return divide(num, prod)
+        if typ == int:
+            return divide(first._num + second * first._den, first._den)
+        if typ == float:
+            return float(first) + second
+        raise ValueError(f'Unsupported argument to Fraction operation: {second}')
+
+    __radd__ = __add__
+
+    def __sub__(first, second):
+        """Subtracts the second from the first.
+
+        Args:
+        :   first (Fraction) : the first fraction
+        :   second (Fraction | int | float) : the second number
+
+        Returns:
+        :   third (Fraction | int | float) : the difference of the two
+        """
+        typ = type(second)
+        if typ == Fraction:
+            return first + Fraction(-second._num, second._den)
+        if typ == int or typ == float:
+            return first + -second
+        raise ValueError(f'Unsupported argument to Fraction operation: {second}')
+
+    def __rsub__(frac, first):
+        """Subtracts the fraction from first.
+        
+        Args:
+        :   frac (Fraction) : the Fraction on the right side
+        :   first (Fraction | int | float) : the number on the left side
+
+        Returns:
+        :   third (Fraction | int | float) : the difference of the two
+        """
+        return first + Fraction(-frac._num, frac._den)
+
+    def __mul__(first, second):
+        """Returns the product of the two numbers.
+
+        Args:
+        :   first (Fraction) : the first fraction
+        :   second (Fraction | int | float) : the second number
+
+        Returns:
+        :   third (Fraction | int | float) : the product of the two
+        """
+        typ = type(second)
+        if typ == Fraction:
+            return divide(first._num * second._num,
+                          first._den * second._den)
+        if typ == int:
+            return divide(first._num * second, first._den)
+        if typ == float:
+            return float(first) * second
+        raise ValueError(f'Unsupported argument to Fraction operation: {second}')
+
+    __rmul__ = __mul__
+
+    def __str__(self):
+        """A string representation of the fraction."""
+        strs = [str(self._num), str(self._den)]
+        lens = list(map(len, strs))
+        big_ind = np.argmax(lens)
+        sml_ind = 1 - big_ind
+        l_spaces = (lens[big_ind] - lens[sml_ind]) // 2
+        r_spaces = lens[big_ind] - lens[sml_ind] - l_spaces
+        strs[sml_ind] = ''.join([' ' * l_spaces, strs[sml_ind], ' ' * r_spaces])
+        return '\n'.join([strs[0], '-' * lens[big_ind], strs[1]])
+
+    def __truediv__(first, second):
+        """Divides the first by the second.
+
+        Args:
+        :   first (Fraction) : the first fraction
+        :   second (Fraction | int | float) : the second number
+
+        Returns:
+        :   third (Fraction | float) : the quotient of the two
+        """
+        typ = type(second)
+        if typ == Fraction:
+            return first * Fraction(second._den, second._num)
+        if typ == int:
+            return divide(first._num, first._den * second)
+        if typ == float:
+            return float(first) / second
+
+    def __rtruediv__(frac, first):
+        """Divides first by frac.
+        
+        Args:
+        :   frac (Fraction) : the Fraction on the right side
+        :   first (Fraction | int | float) : the number on the left side
+
+        Returns:
+        :   third (Fraction | float) : the quotient of the two
+        """
+        return first * Fraction(frac._den, frac._num)
+
+    def __int__(self):
+        """Divides the numerator by the denominator, rounding down."""
+        return self._num // self._den
+
+    def __float__(self):
+        """Divides the numberator by the denominator and provides a more exact value."""
+        return self._num / self._den
+
+    def _reduce(self):
+        """Simplifies the fraction"""
+        q = gcd(self._num, self._den)
+        self._num //= q
+        self._den //= q
+
+    def __eq__(first, second):
+        """Returns whether the two fractions are equal."""
+        typ = type(second)
+        if typ == Fraction:
+            return first._num == second._num and first._den == second._den
+        if typ == float:
+            return float(first) == second
+        if typ == int:
+            return False
+        raise ValueError(f'Unsupported argument to Fraction comparison: {second}')
+
+    def __lt__(first, second):
+        """Returns whether the first is less than the second."""
+        return float(first) < float(second)
+
+    def __le__(first, second):
+        """Returns whether the first is less than or equal to the second."""
+        return first < second or first == second
+
+    def __gt__(first, second):
+        """Returns whether the first is greater than the second."""
+        return not first <= second
+
+    def __ge__(first, second):
+        """Returns whether the first is greater than or equal to the second."""
+        return not first < second
+
+    def reciprocal(self):
+        """Returns the reciprocal of the fraction i.e. 1 / self.
+        
+        Args:
+        :   None
+
+        Returns:
+        :   recip (Fraction) : the reciprocal
+        """
+        return divide(self._num, self._den)
+
+def gcd(x, y):
+    """Returns the greatest common denominator between x and y.
+
+    O(log(min(x, y))) time.
+
+    Args:
+    :   x (int) : the first number
+    :   y (int) : the second number
+
+    Args:
+    :   gcd (int) : the greatest number that divides both x and y
+    """
+    if x > y: return gcd(y, x)
+    while y:
+        x, y = y, x % y
+    return x
+
+def lcm(x, y):
+    """Returns the least common multiple of x and y.
+
+    uses the fact that x * y == lcm * gcd.
+
+    O(log(min(x, y))) time.
+
+    Args:
+    :   x (int) : the first number
+    :   y (int) : the second number
+
+    Returns:
+    :   lcm (int) : the smallest number that both x and y are factors of
+    """
+    return (x * y) // gcd(x, y)
+
+def divide(num, den):
+    """Divides num by den, returning an exact Fraction if they do not divide.
+    
+    Args:
+    :   num (int) : the numerator
+    :   den (int) : the denominator
+
+    Returns:
+    :   q (int | Fraction) : the quotient of the two
+    """
+    return Fraction(num, den)

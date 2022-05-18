@@ -1,0 +1,1578 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>src.operators.arithmetic API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>src.operators.arithmetic</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">from math import log, e
+import numpy as np
+from .base_arithmetic import ArithmeticOpBase, _single_arg
+
+class const (ArithmeticOpBase):
+    &#34;&#34;&#34;Always returns n i.e. f(x) = n.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        self.priority = 6
+
+    def f(self, x):
+        return self.n
+
+    def f_prime(self):
+        return const(0)
+
+    def __str__(self):
+        return str(self.n)
+
+    def _simple_add(self, other):
+        other = self._get_func(other)
+        if self.n == 0:
+            return other
+        if isinstance(other, const):
+            return const(self.n + other.n)
+        if isinstance(other, add_n):
+            return add_n(self.n + other.n)
+        if isinstance(other, sub_n):
+            return add_n(self.n - other.n)
+        if isinstance(other, n_sub):
+            return n_sub(self.n + other.n)
+        if isinstance(other, identity):
+            return add_n(self.n)
+        return super()._simple_add(other)
+
+    def _simple_sub(self, other):
+        other = self._get_func(other)
+        if self.n == 0:
+            return other * -1
+        if isinstance(other, const):
+            return const(self.n - other.n)
+        if isinstance(other, add_n):
+            return n_sub(self.n - other.n)
+        if isinstance(other, sub_n):
+            return n_sub(self.n + other.n)
+        if isinstance(other, n_sub):
+            return add_n(self.n - other.n)
+        if isinstance(other, identity):
+            return n_sub(self.n)
+        return super()._simple_sub(other)
+
+    def _simple_mul(self, other):
+        other = self._get_func(other)
+        if self.n == 0:
+            return const(0)
+        if self.n == 1:
+            return other
+        if isinstance(other, const):
+            return const(self.n * other.n)
+        if isinstance(other, mult_n) or isinstance(other, n_div):
+            return type(other)(self.n * other.n)
+        if isinstance(other, identity):
+            return mult_n(self.n)
+        return super()._simple_mul(other)
+
+    def _simple_div(self, other):
+        other = self._get_func(other)
+        if self.n == 0:
+            return const(0)
+        if isinstance(other, const):
+            return const(self.n / other.n)
+        if isinstance(other, div_n):
+            return n_div(self.n * other.n)
+        if isinstance(other, identity):
+            return n_div(self.n)
+        return super()._simple_div(other)
+
+    def _simple_exp(self, other):
+        other = self._get_func(other)
+        if self.n == 0 or self.n == 1:
+            return self
+        if isinstance(other, const):
+            return const(self.n ** other.n)
+        return super()._simple_exp(other)
+
+class identity (_single_arg):
+    &#34;&#34;&#34;Always returns x i.e. f(x) = x.&#34;&#34;&#34;
+    def __init__(self):
+        self.priority = 6
+
+    def f(self, x):
+        return x
+
+    def f_prime(self):
+        return const(1)
+
+    def __str__(self):
+        return &#39;x&#39;
+
+    def _simple_add(self, other):
+        other = self._get_func(other)
+        if isinstance(other, identity):
+            return mult_n(2)
+        return other + self
+
+    def _simple_mul(self, other):
+        other = self._get_func(other)
+        if isinstance(other, identity):
+            return exp_n(2)
+        return other * self
+
+    def _simple_sub(self, other):
+        other = self._get_func(other)
+        if isinstance(other, identity):
+            return const(0)
+        if isinstance(other, const):
+            return const(-other.n) + self
+        if isinstance(other, add_n):
+            return const(-other.n)
+        if isinstance(other, sub_n):
+            return const(other.n)
+        return super()._simple_sub(other)
+
+    def _simple_div(self, other):
+        other = self._get_func(other)
+        if isinstance(other, identity):
+            return const(1)
+        if isinstance(other, const):
+            return div_n(other.n)
+        if isinstance(other, mult_n):
+            return const(1 / other.n)
+        if isinstance(other, div_n):
+            return const(other.n)
+        return super()._simple_div(other)
+
+class add_n (ArithmeticOpBase):
+    &#34;&#34;&#34;Adds x to n i.e. f(x) = x + n.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        self.priority = 0
+
+    def f(self, x):
+        return self.n + x
+
+    def f_prime(self):
+        return const(1)
+
+    def __str__(self):
+        return f&#39;x + {self.n}&#39;
+
+    def __new__(cls, n):
+        if n == 0:
+            return identity()
+        if n &lt; 0:
+            return sub_n(-n)
+        return super(add_n, cls).__new__(cls, n)
+
+    def _simple_add(self, other):
+        other = self._get_func(other)
+        if isinstance(other, const):
+            return other + self
+        if isinstance(other, add_n):
+            return mult_n(2) + (self.n + other.n)
+        if isinstance(other, sub_n):
+            if self.n &gt; other.n:
+                return mult_n(2) + (self.n - other.n)
+            return mult_n(2) - (other.n - self.n)
+        if isinstance(other, n_sub):
+            return const(self.n + other.n)
+        if isinstance(other, identity):
+            return mult_n(2) + const(self.n)
+        return super()._simple_add(other)
+
+    def _simple_sub(self, other):
+        other = self._get_func(other)
+        if isinstance(other, const):
+            return add_n(self.n - other.n)
+        if isinstance(other, add_n):
+            return const(self.n - other.n)
+        if isinstance(other, sub_n):
+            return const(self.n + other.n)
+        if isinstance(other, n_sub):
+            return mult_n(2) + (self.n - other.n)
+        if isinstance(other, identity):
+            return const(self.n)
+        return super()._simple_sub(other)
+
+class sub_n (ArithmeticOpBase):
+    &#34;&#34;&#34;Subtracts n from x i.e. f(x) = x - n.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        self.priority = 1
+
+    def f(self, x):
+        return x - self.n
+
+    def f_prime(self):
+        return const(1)
+
+    def __str__(self):
+        return f&#39;x - {self.n}&#39;
+
+    def __new__(cls, n):
+        if n == 0:
+            return identity()
+        if n &lt; 0:
+            return add_n(-n)
+        return super(sub_n, cls).__new__(cls, n)
+
+    def _simple_add(self, other):
+        other = self._get_func(other)
+        if isinstance(other, const) or isinstance(other, add_n):
+            return other + self
+        if isinstance(other, sub_n):
+            return mult_n(2) - (self.n + other.n)
+        if isinstance(other, n_sub):
+            return const(other.n - self.n)
+        if isinstance(other, identity):
+            return mult_n(2) - self.n
+        return super()._simple_add(other)
+
+    def _simple_sub(self, other):
+        other = self._get_func(other)
+        if isinstance(other, const):
+            return sub_n(self.n + other.n)
+        if isinstance(other, add_n):
+            return const(-self.n - other.n)
+        if isinstance(other, sub_n):
+            return const(other.n - self.n)
+        if isinstance(other, n_sub):
+            return mult_n(2) - (self.n + other.n)
+        if isinstance(other, identity):
+            return const(-self.n)
+        return super()._simple_sub(other)
+
+class n_sub (ArithmeticOpBase):
+    &#34;&#34;&#34;Subtracts x from n i.e. f(x) = n - x.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        self.priority = 1
+
+    def f(self, x):
+        return self.n - x
+
+    def f_prime(self):
+        return const(-1)
+
+    def __str__(self):
+        return f&#39;{self.n} - x&#39;
+
+    def __new__(cls, n):
+        if n == 0:
+            return mult_n(-1)
+        return super(n_sub, cls).__new__(cls, n)
+
+    def _simple_add(self, other):
+        other = self._get_func(other)
+        if isinstance(other, const) or isinstance(other, add_n) or isinstance(other, sub_n):
+            return other + self
+        if isinstance(other, n_sub):
+            return mult_n(-2) + (self.n + other.n)
+        if isinstance(other, identity):
+            return const(self.n)
+        return super()._simple_add(other)
+
+    def _simple_sub(self, other):
+        other = self._get_func(other)
+        if isinstance(other, const):
+            return n_sub(self.n - other.n)
+        if isinstance(other, add_n):
+            return mult_n(-2) + (self.n - other.n)
+        if isinstance(other, sub_n):
+            return mult_n(-2) + (self.n + other.n)
+        if isinstance(other, n_sub):
+            return const(self.n - other.n)
+        if isinstance(other, identity):
+            return mult_n(-2) + self.n
+        return super()._simple_sub(other)
+
+class mult_n (ArithmeticOpBase):
+    &#34;&#34;&#34;Multiplies n with the output i.e. f(x) = nx.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        self.priority = 2
+
+    def f(self, x):
+        return x * self.n
+
+    def f_prime(self):
+        return const(self.n)
+
+    def __str__(self):
+        if self.n == 1:
+            return &#39;x&#39;
+        if self.n == -1:
+            return &#39;(-x)&#39;
+        return f&#39;{self.n}x&#39;
+
+    def __new__(cls, n):
+        if n == 0:
+            return const(0)
+        if n == 1:
+            return identity()
+        return super(mult_n, cls).__new__(cls, n)
+
+    def _simple_mul(self, other):
+        other = self._get_func(other)
+        if isinstance(other, const):
+            return other * self
+        if isinstance(other, mult_n):
+            return exp_n(2) * (self.n * other.n)
+        if isinstance(other, div_n):
+            return exp_n(2) * (self.n / other.n)
+        if isinstance(other, n_div):
+            return const(self.n * other.n)
+        if isinstance(other, identity):
+            return exp_n(2) * self.n
+        return super()._simple_mul(other)
+
+    def _simple_div(self, other):
+        other = self._get_func(other)
+        if isinstance(other, const):
+            return mult_n(self.n / other.n)
+        if isinstance(other, mult_n):
+            return const(self.n / other.n)
+        if isinstance(other, div_n):
+            return self * n_div(other.n)
+        if isinstance(other, n_div):
+            return self * div_n(other.n)
+        if isinstance(other, identity):
+            return const(self.n)
+        return super()._simple_div(other)
+
+class div_n (ArithmeticOpBase):
+    &#34;&#34;&#34;Divides x by n i.e. f(x) = x / n.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        self.priority = 3
+        if self.n == 0:
+            raise ZeroDivisionError(&#39;Cannot create div_n class with n = 0&#39;)
+        self.recip = 1 / self.n
+
+    def __new__(cls, n):
+        if n == 1:
+            return identity()
+        return super(div_n, cls).__new__(cls, n)
+
+    def f(self, x):
+        return x / self.n
+
+    def f_prime(self):
+        return const(self.recip)
+
+    def __str__(self):
+        return f&#39;x / {self.n}&#39;
+
+    def __new__(cls, n):
+        if n == 1:
+            return identity()
+        return super(div_n, cls).__new__(cls, n)
+
+    def _simple_mul(self, other):
+        other = self._get_func(other)
+        if isinstance(other, const):
+            return other * self
+        if isinstance(other, mult_n):
+            return exp_n(2) * (other.n / self.n)
+        if isinstance(other, div_n):
+            return exp_n(2) / (self.n * other.n)
+        if isinstance(other, n_div):
+            return const(other.n / self.n)
+        if isinstance(other, identity):
+            return exp_n(2) / self.n
+        return super()._simple_mul(other)
+    
+    def _simple_div(self, other):
+        other = self._get_func(other)
+        if isinstance(other, const) or isinstance(other, mult_n):
+            return other * n_div(self.n)
+        if isinstance(other, div_n):
+            return self * n_div(other.n)
+        if isinstance(other, n_div):
+            return self * div_n(other.n)
+        if isinstance(other, identity):
+            return const(1 / self.n)
+        return super()._simple_div(other)
+
+class n_div (ArithmeticOpBase):
+    &#34;&#34;&#34;Divides n by x i.e. f(x) = n / x.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        self.priority = 3
+
+    def f(self, x):
+        return self.n / x
+
+    def f_prime(self):
+        return const(-self.n) / exp_n(2)
+
+    def __str__(self):
+        return f&#39;{self.n} / x&#39;
+
+    def __new__(cls, n):
+        if n == 0:
+            return const(0)
+        return super(n_div, cls).__new__(cls, n)
+
+    def _simple_mul(self, other):
+        other = self._get_func(other)
+        if isinstance(other, const) or isinstance(other, mult_n) or isinstance(other, div_n):
+            return other * self
+        if isinstance(other, n_div):
+            return const(self.n * other.n) / exp_n(2)
+        if isinstance(other, identity):
+            return const(self.n)
+        return super()._simple_mul(other)
+
+    def _simple_div(self, other):
+        other = self._get_func(other)
+        if isinstance(other, const):
+            return n_div(self.n / other.n)
+        if isinstance(other, mult_n):
+            return const(self.n / other.n) / exp_n(2)
+        if isinstance(other, div_n):
+            return self * n_div(other.n)
+        if isinstance(other, n_div):
+            return self * div_n(other.n)
+        if isinstance(other, identity):
+            return const(self.n) / exp_n(2)
+        return super()._simple_div(other)
+
+class floordiv_n (ArithmeticOpBase):
+    &#34;&#34;&#34;Floor divides x by n i.e. f(x) = x // n.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        self.priority = 3
+
+    def f(self, x):
+        return x // self.n
+
+    def f_prime(self):
+        return const(0)
+
+    def __str__(self):
+        return f&#39;x // {self.n}&#39;
+
+class n_floordiv (ArithmeticOpBase):
+    &#34;&#34;&#34;Floor divides x by n i.e. f(x) = n // x.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        self.priority = 3
+
+    def f(self, x):
+        return self.n // x
+
+    def f_prime(self):
+        return const(0)
+
+    def __str__(self):
+        return f&#39;{self.n} // x&#39;
+
+    def __new__(cls, n):
+        if n == 0:
+            return const(0)
+        return super(n_floordiv, cls).__new__(cls, n)
+
+class exp_n (ArithmeticOpBase):
+    &#34;&#34;&#34;Raises x to the power of n i.e. f(x) = x ** n.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        self.priority = 4
+
+    def f(self, x):
+        return x ** self.n
+
+    def f_prime(self):
+        return exp_n(self.n - 1) * self.n
+
+    def __str__(self):
+        return f&#39;x^{self.n}&#39;
+
+    def __new__(cls, n):
+        if n == 0:
+            return const(1)
+        if n == 1:
+            return identity()
+        return super(exp_n, cls).__new__(cls, n)
+
+    def _simple_mul(self, other):
+        other = self._get_func(other)
+        if isinstance(other, identity):
+            return exp_n(self.n + 1)
+        return super()._simple_mul(other)
+
+class n_exp (ArithmeticOpBase):
+    &#34;&#34;&#34;Raises n to the power of x i.e. f(x) = n ** x.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        self.priority = 4
+
+    def __init__(self, n):
+        super().__init__(n)
+        self.ln = log(self.n) if self.n &gt; 0 else None
+
+    def f(self, x):
+        return self.n ** x
+
+    def f_prime(self):
+        if self.ln is None:
+            raise ValueError(f&#39;Derivative of n ^ x is undefined with n = {self.n}&#39;)
+        return n_exp(self.n) * self.ln
+
+    def __str__(self):
+        return f&#39;{self.n}^x&#39;
+
+    def __new__(cls, n):
+        if n == 0 or n == 1:
+            return const(n)
+        return super(n_exp, cls).__new__(cls, n)
+
+class log_base_n (ArithmeticOpBase):
+    &#34;&#34;&#34;Returns log_n(x) i.e. the argument to the log varies based on the input.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        if self.n &lt;= 0:
+            raise ValueError(f&#39;Log base must be greater than 0, not {self.n}&#39;)
+        self.ln = log(self.n)
+        self.priority = 5
+
+    def f(self, x):
+        return log(x, self.n)
+
+    def f_prime(self):
+        return const(1) / mult_n(self.ln)
+
+    def __str__(self):
+        if np.isclose(self.n, e):
+            return &#39;ln(x)&#39;
+        return f&#39;log{self.n}(x)&#39;
+
+class log_of_n (ArithmeticOpBase):
+    &#34;&#34;&#34;Returns log_x(n) i.e. the base of the log varies based on the input.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        if self.n &lt;= 0:
+            raise ValueError(f&#39;Log argument must be greater than 0, not {self.n}&#39;)
+        self.ln = log(self.n)
+        self.priority = 5
+
+    def f(self, x):
+        return log(self.n, x)
+
+    def f_prime(self):
+        return const(-self.ln) / (identity() * log_base_n(e) ** 2)
+    
+    def __str__(self):
+        return f&#39;log_x({self.n})&#39;
+
+    def __new__(cls, n):
+        if n == 1:
+            return const(0)
+        return super(log_of_n, cls).__new__(cls, n)</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="src.operators.arithmetic.add_n"><code class="flex name class">
+<span>class <span class="ident">add_n</span></span>
+<span>(</span><span>n)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Adds x to n i.e. f(x) = x + n.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class add_n (ArithmeticOpBase):
+    &#34;&#34;&#34;Adds x to n i.e. f(x) = x + n.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        self.priority = 0
+
+    def f(self, x):
+        return self.n + x
+
+    def f_prime(self):
+        return const(1)
+
+    def __str__(self):
+        return f&#39;x + {self.n}&#39;
+
+    def __new__(cls, n):
+        if n == 0:
+            return identity()
+        if n &lt; 0:
+            return sub_n(-n)
+        return super(add_n, cls).__new__(cls, n)
+
+    def _simple_add(self, other):
+        other = self._get_func(other)
+        if isinstance(other, const):
+            return other + self
+        if isinstance(other, add_n):
+            return mult_n(2) + (self.n + other.n)
+        if isinstance(other, sub_n):
+            if self.n &gt; other.n:
+                return mult_n(2) + (self.n - other.n)
+            return mult_n(2) - (other.n - self.n)
+        if isinstance(other, n_sub):
+            return const(self.n + other.n)
+        if isinstance(other, identity):
+            return mult_n(2) + const(self.n)
+        return super()._simple_add(other)
+
+    def _simple_sub(self, other):
+        other = self._get_func(other)
+        if isinstance(other, const):
+            return add_n(self.n - other.n)
+        if isinstance(other, add_n):
+            return const(self.n - other.n)
+        if isinstance(other, sub_n):
+            return const(self.n + other.n)
+        if isinstance(other, n_sub):
+            return mult_n(2) + (self.n - other.n)
+        if isinstance(other, identity):
+            return const(self.n)
+        return super()._simple_sub(other)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></b></code>:
+<ul class="hlist">
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.derivative" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.derivative">derivative</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f">f</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f_prime" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f_prime">f_prime</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="src.operators.arithmetic.const"><code class="flex name class">
+<span>class <span class="ident">const</span></span>
+<span>(</span><span>n)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Always returns n i.e. f(x) = n.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class const (ArithmeticOpBase):
+    &#34;&#34;&#34;Always returns n i.e. f(x) = n.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        self.priority = 6
+
+    def f(self, x):
+        return self.n
+
+    def f_prime(self):
+        return const(0)
+
+    def __str__(self):
+        return str(self.n)
+
+    def _simple_add(self, other):
+        other = self._get_func(other)
+        if self.n == 0:
+            return other
+        if isinstance(other, const):
+            return const(self.n + other.n)
+        if isinstance(other, add_n):
+            return add_n(self.n + other.n)
+        if isinstance(other, sub_n):
+            return add_n(self.n - other.n)
+        if isinstance(other, n_sub):
+            return n_sub(self.n + other.n)
+        if isinstance(other, identity):
+            return add_n(self.n)
+        return super()._simple_add(other)
+
+    def _simple_sub(self, other):
+        other = self._get_func(other)
+        if self.n == 0:
+            return other * -1
+        if isinstance(other, const):
+            return const(self.n - other.n)
+        if isinstance(other, add_n):
+            return n_sub(self.n - other.n)
+        if isinstance(other, sub_n):
+            return n_sub(self.n + other.n)
+        if isinstance(other, n_sub):
+            return add_n(self.n - other.n)
+        if isinstance(other, identity):
+            return n_sub(self.n)
+        return super()._simple_sub(other)
+
+    def _simple_mul(self, other):
+        other = self._get_func(other)
+        if self.n == 0:
+            return const(0)
+        if self.n == 1:
+            return other
+        if isinstance(other, const):
+            return const(self.n * other.n)
+        if isinstance(other, mult_n) or isinstance(other, n_div):
+            return type(other)(self.n * other.n)
+        if isinstance(other, identity):
+            return mult_n(self.n)
+        return super()._simple_mul(other)
+
+    def _simple_div(self, other):
+        other = self._get_func(other)
+        if self.n == 0:
+            return const(0)
+        if isinstance(other, const):
+            return const(self.n / other.n)
+        if isinstance(other, div_n):
+            return n_div(self.n * other.n)
+        if isinstance(other, identity):
+            return n_div(self.n)
+        return super()._simple_div(other)
+
+    def _simple_exp(self, other):
+        other = self._get_func(other)
+        if self.n == 0 or self.n == 1:
+            return self
+        if isinstance(other, const):
+            return const(self.n ** other.n)
+        return super()._simple_exp(other)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></b></code>:
+<ul class="hlist">
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.derivative" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.derivative">derivative</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f">f</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f_prime" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f_prime">f_prime</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="src.operators.arithmetic.div_n"><code class="flex name class">
+<span>class <span class="ident">div_n</span></span>
+<span>(</span><span>n)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Divides x by n i.e. f(x) = x / n.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class div_n (ArithmeticOpBase):
+    &#34;&#34;&#34;Divides x by n i.e. f(x) = x / n.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        self.priority = 3
+        if self.n == 0:
+            raise ZeroDivisionError(&#39;Cannot create div_n class with n = 0&#39;)
+        self.recip = 1 / self.n
+
+    def __new__(cls, n):
+        if n == 1:
+            return identity()
+        return super(div_n, cls).__new__(cls, n)
+
+    def f(self, x):
+        return x / self.n
+
+    def f_prime(self):
+        return const(self.recip)
+
+    def __str__(self):
+        return f&#39;x / {self.n}&#39;
+
+    def __new__(cls, n):
+        if n == 1:
+            return identity()
+        return super(div_n, cls).__new__(cls, n)
+
+    def _simple_mul(self, other):
+        other = self._get_func(other)
+        if isinstance(other, const):
+            return other * self
+        if isinstance(other, mult_n):
+            return exp_n(2) * (other.n / self.n)
+        if isinstance(other, div_n):
+            return exp_n(2) / (self.n * other.n)
+        if isinstance(other, n_div):
+            return const(other.n / self.n)
+        if isinstance(other, identity):
+            return exp_n(2) / self.n
+        return super()._simple_mul(other)
+    
+    def _simple_div(self, other):
+        other = self._get_func(other)
+        if isinstance(other, const) or isinstance(other, mult_n):
+            return other * n_div(self.n)
+        if isinstance(other, div_n):
+            return self * n_div(other.n)
+        if isinstance(other, n_div):
+            return self * div_n(other.n)
+        if isinstance(other, identity):
+            return const(1 / self.n)
+        return super()._simple_div(other)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></b></code>:
+<ul class="hlist">
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.derivative" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.derivative">derivative</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f">f</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f_prime" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f_prime">f_prime</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="src.operators.arithmetic.exp_n"><code class="flex name class">
+<span>class <span class="ident">exp_n</span></span>
+<span>(</span><span>n)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Raises x to the power of n i.e. f(x) = x ** n.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class exp_n (ArithmeticOpBase):
+    &#34;&#34;&#34;Raises x to the power of n i.e. f(x) = x ** n.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        self.priority = 4
+
+    def f(self, x):
+        return x ** self.n
+
+    def f_prime(self):
+        return exp_n(self.n - 1) * self.n
+
+    def __str__(self):
+        return f&#39;x^{self.n}&#39;
+
+    def __new__(cls, n):
+        if n == 0:
+            return const(1)
+        if n == 1:
+            return identity()
+        return super(exp_n, cls).__new__(cls, n)
+
+    def _simple_mul(self, other):
+        other = self._get_func(other)
+        if isinstance(other, identity):
+            return exp_n(self.n + 1)
+        return super()._simple_mul(other)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></b></code>:
+<ul class="hlist">
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.derivative" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.derivative">derivative</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f">f</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f_prime" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f_prime">f_prime</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="src.operators.arithmetic.floordiv_n"><code class="flex name class">
+<span>class <span class="ident">floordiv_n</span></span>
+<span>(</span><span>n)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Floor divides x by n i.e. f(x) = x // n.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class floordiv_n (ArithmeticOpBase):
+    &#34;&#34;&#34;Floor divides x by n i.e. f(x) = x // n.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        self.priority = 3
+
+    def f(self, x):
+        return x // self.n
+
+    def f_prime(self):
+        return const(0)
+
+    def __str__(self):
+        return f&#39;x // {self.n}&#39;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></b></code>:
+<ul class="hlist">
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.derivative" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.derivative">derivative</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f">f</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f_prime" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f_prime">f_prime</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="src.operators.arithmetic.identity"><code class="flex name class">
+<span>class <span class="ident">identity</span></span>
+</code></dt>
+<dd>
+<div class="desc"><p>Always returns x i.e. f(x) = x.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class identity (_single_arg):
+    &#34;&#34;&#34;Always returns x i.e. f(x) = x.&#34;&#34;&#34;
+    def __init__(self):
+        self.priority = 6
+
+    def f(self, x):
+        return x
+
+    def f_prime(self):
+        return const(1)
+
+    def __str__(self):
+        return &#39;x&#39;
+
+    def _simple_add(self, other):
+        other = self._get_func(other)
+        if isinstance(other, identity):
+            return mult_n(2)
+        return other + self
+
+    def _simple_mul(self, other):
+        other = self._get_func(other)
+        if isinstance(other, identity):
+            return exp_n(2)
+        return other * self
+
+    def _simple_sub(self, other):
+        other = self._get_func(other)
+        if isinstance(other, identity):
+            return const(0)
+        if isinstance(other, const):
+            return const(-other.n) + self
+        if isinstance(other, add_n):
+            return const(-other.n)
+        if isinstance(other, sub_n):
+            return const(other.n)
+        return super()._simple_sub(other)
+
+    def _simple_div(self, other):
+        other = self._get_func(other)
+        if isinstance(other, identity):
+            return const(1)
+        if isinstance(other, const):
+            return div_n(other.n)
+        if isinstance(other, mult_n):
+            return const(1 / other.n)
+        if isinstance(other, div_n):
+            return const(other.n)
+        return super()._simple_div(other)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>src.operators.base_arithmetic._single_arg</li>
+<li><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></b></code>:
+<ul class="hlist">
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.derivative" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.derivative">derivative</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f">f</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f_prime" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f_prime">f_prime</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="src.operators.arithmetic.log_base_n"><code class="flex name class">
+<span>class <span class="ident">log_base_n</span></span>
+<span>(</span><span>n)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns log_n(x) i.e. the argument to the log varies based on the input.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class log_base_n (ArithmeticOpBase):
+    &#34;&#34;&#34;Returns log_n(x) i.e. the argument to the log varies based on the input.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        if self.n &lt;= 0:
+            raise ValueError(f&#39;Log base must be greater than 0, not {self.n}&#39;)
+        self.ln = log(self.n)
+        self.priority = 5
+
+    def f(self, x):
+        return log(x, self.n)
+
+    def f_prime(self):
+        return const(1) / mult_n(self.ln)
+
+    def __str__(self):
+        if np.isclose(self.n, e):
+            return &#39;ln(x)&#39;
+        return f&#39;log{self.n}(x)&#39;</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></b></code>:
+<ul class="hlist">
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.derivative" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.derivative">derivative</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f">f</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f_prime" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f_prime">f_prime</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="src.operators.arithmetic.log_of_n"><code class="flex name class">
+<span>class <span class="ident">log_of_n</span></span>
+<span>(</span><span>n)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns log_x(n) i.e. the base of the log varies based on the input.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class log_of_n (ArithmeticOpBase):
+    &#34;&#34;&#34;Returns log_x(n) i.e. the base of the log varies based on the input.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        if self.n &lt;= 0:
+            raise ValueError(f&#39;Log argument must be greater than 0, not {self.n}&#39;)
+        self.ln = log(self.n)
+        self.priority = 5
+
+    def f(self, x):
+        return log(self.n, x)
+
+    def f_prime(self):
+        return const(-self.ln) / (identity() * log_base_n(e) ** 2)
+    
+    def __str__(self):
+        return f&#39;log_x({self.n})&#39;
+
+    def __new__(cls, n):
+        if n == 1:
+            return const(0)
+        return super(log_of_n, cls).__new__(cls, n)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></b></code>:
+<ul class="hlist">
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.derivative" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.derivative">derivative</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f">f</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f_prime" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f_prime">f_prime</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="src.operators.arithmetic.mult_n"><code class="flex name class">
+<span>class <span class="ident">mult_n</span></span>
+<span>(</span><span>n)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Multiplies n with the output i.e. f(x) = nx.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class mult_n (ArithmeticOpBase):
+    &#34;&#34;&#34;Multiplies n with the output i.e. f(x) = nx.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        self.priority = 2
+
+    def f(self, x):
+        return x * self.n
+
+    def f_prime(self):
+        return const(self.n)
+
+    def __str__(self):
+        if self.n == 1:
+            return &#39;x&#39;
+        if self.n == -1:
+            return &#39;(-x)&#39;
+        return f&#39;{self.n}x&#39;
+
+    def __new__(cls, n):
+        if n == 0:
+            return const(0)
+        if n == 1:
+            return identity()
+        return super(mult_n, cls).__new__(cls, n)
+
+    def _simple_mul(self, other):
+        other = self._get_func(other)
+        if isinstance(other, const):
+            return other * self
+        if isinstance(other, mult_n):
+            return exp_n(2) * (self.n * other.n)
+        if isinstance(other, div_n):
+            return exp_n(2) * (self.n / other.n)
+        if isinstance(other, n_div):
+            return const(self.n * other.n)
+        if isinstance(other, identity):
+            return exp_n(2) * self.n
+        return super()._simple_mul(other)
+
+    def _simple_div(self, other):
+        other = self._get_func(other)
+        if isinstance(other, const):
+            return mult_n(self.n / other.n)
+        if isinstance(other, mult_n):
+            return const(self.n / other.n)
+        if isinstance(other, div_n):
+            return self * n_div(other.n)
+        if isinstance(other, n_div):
+            return self * div_n(other.n)
+        if isinstance(other, identity):
+            return const(self.n)
+        return super()._simple_div(other)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></b></code>:
+<ul class="hlist">
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.derivative" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.derivative">derivative</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f">f</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f_prime" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f_prime">f_prime</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="src.operators.arithmetic.n_div"><code class="flex name class">
+<span>class <span class="ident">n_div</span></span>
+<span>(</span><span>n)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Divides n by x i.e. f(x) = n / x.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class n_div (ArithmeticOpBase):
+    &#34;&#34;&#34;Divides n by x i.e. f(x) = n / x.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        self.priority = 3
+
+    def f(self, x):
+        return self.n / x
+
+    def f_prime(self):
+        return const(-self.n) / exp_n(2)
+
+    def __str__(self):
+        return f&#39;{self.n} / x&#39;
+
+    def __new__(cls, n):
+        if n == 0:
+            return const(0)
+        return super(n_div, cls).__new__(cls, n)
+
+    def _simple_mul(self, other):
+        other = self._get_func(other)
+        if isinstance(other, const) or isinstance(other, mult_n) or isinstance(other, div_n):
+            return other * self
+        if isinstance(other, n_div):
+            return const(self.n * other.n) / exp_n(2)
+        if isinstance(other, identity):
+            return const(self.n)
+        return super()._simple_mul(other)
+
+    def _simple_div(self, other):
+        other = self._get_func(other)
+        if isinstance(other, const):
+            return n_div(self.n / other.n)
+        if isinstance(other, mult_n):
+            return const(self.n / other.n) / exp_n(2)
+        if isinstance(other, div_n):
+            return self * n_div(other.n)
+        if isinstance(other, n_div):
+            return self * div_n(other.n)
+        if isinstance(other, identity):
+            return const(self.n) / exp_n(2)
+        return super()._simple_div(other)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></b></code>:
+<ul class="hlist">
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.derivative" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.derivative">derivative</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f">f</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f_prime" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f_prime">f_prime</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="src.operators.arithmetic.n_exp"><code class="flex name class">
+<span>class <span class="ident">n_exp</span></span>
+<span>(</span><span>n)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Raises n to the power of x i.e. f(x) = n ** x.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class n_exp (ArithmeticOpBase):
+    &#34;&#34;&#34;Raises n to the power of x i.e. f(x) = n ** x.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        self.priority = 4
+
+    def __init__(self, n):
+        super().__init__(n)
+        self.ln = log(self.n) if self.n &gt; 0 else None
+
+    def f(self, x):
+        return self.n ** x
+
+    def f_prime(self):
+        if self.ln is None:
+            raise ValueError(f&#39;Derivative of n ^ x is undefined with n = {self.n}&#39;)
+        return n_exp(self.n) * self.ln
+
+    def __str__(self):
+        return f&#39;{self.n}^x&#39;
+
+    def __new__(cls, n):
+        if n == 0 or n == 1:
+            return const(n)
+        return super(n_exp, cls).__new__(cls, n)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></b></code>:
+<ul class="hlist">
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.derivative" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.derivative">derivative</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f">f</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f_prime" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f_prime">f_prime</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="src.operators.arithmetic.n_floordiv"><code class="flex name class">
+<span>class <span class="ident">n_floordiv</span></span>
+<span>(</span><span>n)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Floor divides x by n i.e. f(x) = n // x.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class n_floordiv (ArithmeticOpBase):
+    &#34;&#34;&#34;Floor divides x by n i.e. f(x) = n // x.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        self.priority = 3
+
+    def f(self, x):
+        return self.n // x
+
+    def f_prime(self):
+        return const(0)
+
+    def __str__(self):
+        return f&#39;{self.n} // x&#39;
+
+    def __new__(cls, n):
+        if n == 0:
+            return const(0)
+        return super(n_floordiv, cls).__new__(cls, n)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></b></code>:
+<ul class="hlist">
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.derivative" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.derivative">derivative</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f">f</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f_prime" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f_prime">f_prime</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="src.operators.arithmetic.n_sub"><code class="flex name class">
+<span>class <span class="ident">n_sub</span></span>
+<span>(</span><span>n)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Subtracts x from n i.e. f(x) = n - x.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class n_sub (ArithmeticOpBase):
+    &#34;&#34;&#34;Subtracts x from n i.e. f(x) = n - x.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        self.priority = 1
+
+    def f(self, x):
+        return self.n - x
+
+    def f_prime(self):
+        return const(-1)
+
+    def __str__(self):
+        return f&#39;{self.n} - x&#39;
+
+    def __new__(cls, n):
+        if n == 0:
+            return mult_n(-1)
+        return super(n_sub, cls).__new__(cls, n)
+
+    def _simple_add(self, other):
+        other = self._get_func(other)
+        if isinstance(other, const) or isinstance(other, add_n) or isinstance(other, sub_n):
+            return other + self
+        if isinstance(other, n_sub):
+            return mult_n(-2) + (self.n + other.n)
+        if isinstance(other, identity):
+            return const(self.n)
+        return super()._simple_add(other)
+
+    def _simple_sub(self, other):
+        other = self._get_func(other)
+        if isinstance(other, const):
+            return n_sub(self.n - other.n)
+        if isinstance(other, add_n):
+            return mult_n(-2) + (self.n - other.n)
+        if isinstance(other, sub_n):
+            return mult_n(-2) + (self.n + other.n)
+        if isinstance(other, n_sub):
+            return const(self.n - other.n)
+        if isinstance(other, identity):
+            return mult_n(-2) + self.n
+        return super()._simple_sub(other)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></b></code>:
+<ul class="hlist">
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.derivative" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.derivative">derivative</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f">f</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f_prime" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f_prime">f_prime</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt id="src.operators.arithmetic.sub_n"><code class="flex name class">
+<span>class <span class="ident">sub_n</span></span>
+<span>(</span><span>n)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Subtracts n from x i.e. f(x) = x - n.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class sub_n (ArithmeticOpBase):
+    &#34;&#34;&#34;Subtracts n from x i.e. f(x) = x - n.&#34;&#34;&#34;
+    def __init__(self, n):
+        super().__init__(n)
+        self.priority = 1
+
+    def f(self, x):
+        return x - self.n
+
+    def f_prime(self):
+        return const(1)
+
+    def __str__(self):
+        return f&#39;x - {self.n}&#39;
+
+    def __new__(cls, n):
+        if n == 0:
+            return identity()
+        if n &lt; 0:
+            return add_n(-n)
+        return super(sub_n, cls).__new__(cls, n)
+
+    def _simple_add(self, other):
+        other = self._get_func(other)
+        if isinstance(other, const) or isinstance(other, add_n):
+            return other + self
+        if isinstance(other, sub_n):
+            return mult_n(2) - (self.n + other.n)
+        if isinstance(other, n_sub):
+            return const(other.n - self.n)
+        if isinstance(other, identity):
+            return mult_n(2) - self.n
+        return super()._simple_add(other)
+
+    def _simple_sub(self, other):
+        other = self._get_func(other)
+        if isinstance(other, const):
+            return sub_n(self.n + other.n)
+        if isinstance(other, add_n):
+            return const(-self.n - other.n)
+        if isinstance(other, sub_n):
+            return const(other.n - self.n)
+        if isinstance(other, n_sub):
+            return mult_n(2) - (self.n + other.n)
+        if isinstance(other, identity):
+            return const(-self.n)
+        return super()._simple_sub(other)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></li>
+</ul>
+<h3>Inherited members</h3>
+<ul class="hlist">
+<li><code><b><a title="src.operators.base_arithmetic.ArithmeticOpBase" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></b></code>:
+<ul class="hlist">
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.derivative" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.derivative">derivative</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f">f</a></code></li>
+<li><code><a title="src.operators.base_arithmetic.ArithmeticOpBase.f_prime" href="base_arithmetic.html#src.operators.base_arithmetic.ArithmeticOpBase.f_prime">f_prime</a></code></li>
+</ul>
+</li>
+</ul>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="src.operators" href="index.html">src.operators</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="src.operators.arithmetic.add_n" href="#src.operators.arithmetic.add_n">add_n</a></code></h4>
+</li>
+<li>
+<h4><code><a title="src.operators.arithmetic.const" href="#src.operators.arithmetic.const">const</a></code></h4>
+</li>
+<li>
+<h4><code><a title="src.operators.arithmetic.div_n" href="#src.operators.arithmetic.div_n">div_n</a></code></h4>
+</li>
+<li>
+<h4><code><a title="src.operators.arithmetic.exp_n" href="#src.operators.arithmetic.exp_n">exp_n</a></code></h4>
+</li>
+<li>
+<h4><code><a title="src.operators.arithmetic.floordiv_n" href="#src.operators.arithmetic.floordiv_n">floordiv_n</a></code></h4>
+</li>
+<li>
+<h4><code><a title="src.operators.arithmetic.identity" href="#src.operators.arithmetic.identity">identity</a></code></h4>
+</li>
+<li>
+<h4><code><a title="src.operators.arithmetic.log_base_n" href="#src.operators.arithmetic.log_base_n">log_base_n</a></code></h4>
+</li>
+<li>
+<h4><code><a title="src.operators.arithmetic.log_of_n" href="#src.operators.arithmetic.log_of_n">log_of_n</a></code></h4>
+</li>
+<li>
+<h4><code><a title="src.operators.arithmetic.mult_n" href="#src.operators.arithmetic.mult_n">mult_n</a></code></h4>
+</li>
+<li>
+<h4><code><a title="src.operators.arithmetic.n_div" href="#src.operators.arithmetic.n_div">n_div</a></code></h4>
+</li>
+<li>
+<h4><code><a title="src.operators.arithmetic.n_exp" href="#src.operators.arithmetic.n_exp">n_exp</a></code></h4>
+</li>
+<li>
+<h4><code><a title="src.operators.arithmetic.n_floordiv" href="#src.operators.arithmetic.n_floordiv">n_floordiv</a></code></h4>
+</li>
+<li>
+<h4><code><a title="src.operators.arithmetic.n_sub" href="#src.operators.arithmetic.n_sub">n_sub</a></code></h4>
+</li>
+<li>
+<h4><code><a title="src.operators.arithmetic.sub_n" href="#src.operators.arithmetic.sub_n">sub_n</a></code></h4>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>
