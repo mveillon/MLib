@@ -83,6 +83,9 @@ def test_frac():
     assert Fraction(6, 3) == 2
     assert isinstance(Fraction(6, 3), int)
     assert not isinstance(Fraction(7, 3), int)
+    f3 = Fraction(1, 2)
+    assert f3 ** 2 == Fraction(1, 4)
+    assert (f3 * 3) ** 2 == Fraction(9, 4)
 
 def test_strs():
     if CHECK_STRS:

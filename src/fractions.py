@@ -31,15 +31,14 @@ class Fraction:
         Returns:
         :   third (Fraction | int | float) : the sum of the two
         """
-        typ = type(second)
-        if typ == Fraction:
+        if isinstance(second, Fraction):
             prod = lcm(first._den, second._den)
             num = ((prod * first._num // first._den) +
                    (prod * second._num // second._den))
-            return divide(num, prod)
-        if typ == int:
-            return divide(first._num + second * first._den, first._den)
-        if typ == float:
+            return Fraction(num, prod)
+        if isinstance(second, int):
+            return Fraction(first._num + second * first._den, first._den)
+        if isinstance(second, float):
             return float(first) + second
         raise ValueError(f'Unsupported argument to Fraction operation: {second}')
 
@@ -55,10 +54,9 @@ class Fraction:
         Returns:
         :   third (Fraction | int | float) : the difference of the two
         """
-        typ = type(second)
-        if typ == Fraction:
+        if isinstance(second, Fraction):
             return first + Fraction(-second._num, second._den)
-        if typ == int or typ == float:
+        if isinstance(second, int) or isinstance(second, float):
             return first + -second
         raise ValueError(f'Unsupported argument to Fraction operation: {second}')
 
@@ -84,13 +82,12 @@ class Fraction:
         Returns:
         :   third (Fraction | int | float) : the product of the two
         """
-        typ = type(second)
-        if typ == Fraction:
-            return divide(first._num * second._num,
-                          first._den * second._den)
-        if typ == int:
-            return divide(first._num * second, first._den)
-        if typ == float:
+        if isinstance(second, Fraction):
+            return Fraction(first._num * second._num,
+                            first._den * second._den)
+        if isinstance(second, int):
+            return Fraction(first._num * second, first._den)
+        if isinstance(second, float):
             return float(first) * second
         raise ValueError(f'Unsupported argument to Fraction operation: {second}')
 
@@ -117,13 +114,13 @@ class Fraction:
         Returns:
         :   third (Fraction | float) : the quotient of the two
         """
-        typ = type(second)
-        if typ == Fraction:
+        if isinstance(second, Fraction):
             return first * Fraction(second._den, second._num)
-        if typ == int:
-            return divide(first._num, first._den * second)
-        if typ == float:
+        if isinstance(second, int):
+            return Fraction(first._num, first._den * second)
+        if isinstance(second, float):
             return float(first) / second
+        raise ValueError(f'Unsupported argument to Fraction operation: {second}')
 
     def __rtruediv__(frac, first):
         """Divides first by frac.
@@ -136,6 +133,22 @@ class Fraction:
         :   third (Fraction | float) : the quotient of the two
         """
         return first * Fraction(frac._den, frac._num)
+
+    def __pow__(frac, power):
+        """Raises frac the power of pow.
+        
+        Args:
+        :   frac (Fraction) : the Fraction acting as the base
+        :   power (Fraction | int | float) : the exponent of the expression
+
+        Returns:
+        :   third (Fraction | float) : frac raised to power
+        """
+        if isinstance(power, int):
+            return Fraction(frac._num ** power, frac._den ** power)
+        if isinstance(power, Fraction) or isinstance(power, float):
+            return float(frac) ** float(power)
+        raise ValueError(f'Unsupported argument to Fraction operation: {power}')
 
     def __int__(self):
         """Divides the numerator by the denominator, rounding down."""
@@ -153,12 +166,11 @@ class Fraction:
 
     def __eq__(first, second):
         """Returns whether the two fractions are equal."""
-        typ = type(second)
-        if typ == Fraction:
+        if isinstance(second, Fraction):
             return first._num == second._num and first._den == second._den
-        if typ == float:
+        if isinstance(second, float):
             return float(first) == second
-        if typ == int:
+        if isinstance(second, int):
             return False
         raise ValueError(f'Unsupported argument to Fraction comparison: {second}')
 
@@ -187,7 +199,7 @@ class Fraction:
         Returns:
         :   recip (Fraction) : the reciprocal
         """
-        return divide(self._num, self._den)
+        return Fraction(self._num, self._den)
 
 def gcd(x, y):
     """Returns the greatest common denominator between x and y.
@@ -224,6 +236,9 @@ def lcm(x, y):
 
 def divide(num, den):
     """Divides num by den, returning an exact Fraction if they do not divide.
+
+    Note that, because the Fraction constructor simplifies itself and can return
+    an integer, this function ends up being just an alias for the Fraction constructor.
     
     Args:
     :   num (int) : the numerator
