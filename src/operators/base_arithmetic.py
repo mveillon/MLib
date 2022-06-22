@@ -141,28 +141,33 @@ class ArithmeticOpBase:
 
     def __add__(self, other): 
         s = self._simple_add(other)
+        if s: return s
         from .combos import f_plus_g
-        return self._binop(other, f_plus_g) if s is None else s
+        return self._binop(other, f_plus_g)
 
     def __sub__(self, other):
         s = self._simple_sub(other)
+        if s: return s
         from .combos import f_minus_g
-        return self._binop(other, f_minus_g) if s is None else s
+        return self._binop(other, f_minus_g)
 
     def __mul__(self, other):
         s = self._simple_mul(other)
+        if s: return s
         from .combos import f_times_g
-        return self._binop(other, f_times_g) if s is None else s
+        return self._binop(other, f_times_g)
 
     def __truediv__(self, other):
         s = self._simple_div(other)
+        if s: return s
         from .combos import f_divided_by_g
-        return self._binop(other, f_divided_by_g) if s is None else s
+        return self._binop(other, f_divided_by_g)
 
     def __pow__(self, other):
         s = self._simple_exp(other)
+        if s: return s
         from .combos import f_raised_to_g
-        return self._binop(other, f_raised_to_g) if s is None else s
+        return self._binop(other, f_raised_to_g)
 
 class _single_arg (ArithmeticOpBase):
     """Abstract base class for single-argument functions."""
