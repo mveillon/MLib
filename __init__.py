@@ -14,3 +14,4 @@ from src import parse_expr, shunting_yard, find_tokens, disp_operator
 from src import Num, Var, Plus, Minus, Times, Divide, Exponent
 from src import Log, Sin, Cos, Tan, ArcSin, ArcCos, ArcTan
 from src import derivative
+from src import rolling_average

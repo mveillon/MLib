@@ -8,3 +8,4 @@ from .string_math import *
 from .utilities import *
 from .fractions import *
 from .operators import *
+from .stats import *
