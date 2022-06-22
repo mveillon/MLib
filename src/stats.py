@@ -5,7 +5,7 @@ def rolling_average(x, n_buckets = 0):
     """Returns the values for a rolling average of x.
     
     Specifically, the ith value in x will correspond to the average of
-    x[i - n_buckets, n_buckets]. Useful for plotting with 
+    x[i - n_buckets - 1:i + 1]. Useful for plotting with 
     matplotlib.pyplot.plot(range(x.shape[0]), rolling_average(x)).
 
     Args:
