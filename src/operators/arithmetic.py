@@ -354,11 +354,6 @@ class div_n (ArithmeticOpBase):
     def __str__(self):
         return f'x / {self.n}'
 
-    def __new__(cls, n):
-        if n == 1:
-            return identity()
-        return super(div_n, cls).__new__(cls, n)
-
     def _simple_mul(self, other):
         other = self._get_func(other)
         if isinstance(other, const):
@@ -497,10 +492,6 @@ class n_exp (ArithmeticOpBase):
     def __init__(self, n):
         super().__init__(n)
         self.priority = 4
-
-    def __init__(self, n):
-        super().__init__(n)
-        self.ln = log(self.n) if self.n > 0 else None
 
     def f(self, x):
         return self.n ** x
