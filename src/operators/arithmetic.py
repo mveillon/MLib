@@ -492,6 +492,7 @@ class n_exp (ArithmeticOpBase):
     def __init__(self, n):
         super().__init__(n)
         self.priority = 4
+        self.ln = log(self.n) if self.n > 0 else None
 
     def f(self, x):
         return self.n ** x
