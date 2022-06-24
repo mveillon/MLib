@@ -1,3 +1,6 @@
+from __future__ import annotations
+from typing import Union
+
 class Avg_Node:
     """An easy and efficient way to find the average of something.
 
@@ -10,7 +13,7 @@ class Avg_Node:
         self.count = 0
         self.data = 0
 
-    def __add__(self, num):
+    def __add__(self, num: Union[int, float]) -> Avg_Node:
         """Adds the number to the average and adds one to the total count.
 
         Faster than just adding num / total_count because this doesn't
@@ -21,13 +24,13 @@ class Avg_Node:
         :   num (int | float) : the number to add
 
         Returns:
-        :   None
+        :   self
         """
         self.count += 1
         self.data += num
         return self
 
-    def avg(self):
+    def avg(self) -> float:
         """Returns the compiled average.
 
         O(1) time
@@ -43,7 +46,7 @@ class Avg_Node:
         else:
             return 0
 
-    def __str__(self):
+    def __str__(self) -> str:
         """A string representation of the average."""
         return str(round(self.avg(), 3))
     

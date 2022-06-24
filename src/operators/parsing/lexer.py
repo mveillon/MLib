@@ -1,9 +1,11 @@
+from __future__ import annotations
+from typing import Deque, List
 from ._parse_utils import remove_whitespace, _is_float_char, is_func_str, is_op_char 
 from ._parse_utils import _check_tokens, PRIORITIES, _is_var, can_be_float
 from collections import deque
 from math import e
 
-def find_tokens(expr):
+def find_tokens(expr: str) -> Deque[str]:
     """Finds all the tokens in expr.
     
     Args:
@@ -13,10 +15,10 @@ def find_tokens(expr):
     :   tokens (list) : a list of tokens (all strings), each element being one of:
             a number, a variable, a function, an operator, or a parenthesis
     """
-    res = deque()
+    res: Deque[str] = deque()
     if not expr: return res
     is_num = _is_float_char(expr[0])
-    curr_word = deque()
+    curr_word: Deque[str] = deque()
     expr = remove_whitespace(expr)
     i = 0
     while i < len(expr):
@@ -91,7 +93,7 @@ def find_tokens(expr):
     _check_tokens(res, expr)
     return res
 
-def shunting_yard(expr):
+def shunting_yard(expr: str) -> List[str]:
     """Parses the infix expression and turns it into a postfix list of tokens.
     
     Args:
@@ -100,8 +102,8 @@ def shunting_yard(expr):
     Returns:
     :   tokens (list) : a list of strings representing the tokens, in postfix order
     """
-    res = deque()
-    operators = deque()
+    res: Deque[str] = deque()
+    operators: Deque[str] = deque()
     tokens = find_tokens(expr)
     for tok in tokens:
         if can_be_float(tok) or _is_var(tok):
