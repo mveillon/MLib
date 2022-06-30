@@ -26,17 +26,23 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .utilities import close_enough
+<pre><code class="python">from __future__ import annotations
+from .utilities import close_enough, number
 from math import floor
+import numpy as np
 
 class frange:
     &#34;&#34;&#34;A range-like iterator that supports floats.
 
     Same signature as range
     &#34;&#34;&#34;
-    def __init__(self, *args):
+    def __init__(self, *args: number):
         arity_str = f&#39;Arity mismatch: expected no more than three arguments, got {len(args)}&#39;
         assert len(args) &gt; 0 and len(args) &lt;= 3, arity_str
+        self.start: number = np.nan
+        self.stop: number = np.nan
+        self.step: number = np.nan
+        
         if len(args) == 1:
             self.start = 0
             self.stop = args[0]
@@ -59,7 +65,7 @@ class frange:
             current += self.step
             diff = current - self.stop
 
-    def __len__(self):
+    def __len__(self) -&gt; int:
         &#34;&#34;&#34;Returns the (estimated) number of iterations this iterator will yield.&#34;&#34;&#34;
         return floor((self.stop - self.start) / self.step)</code></pre>
 </details>
@@ -75,7 +81,7 @@ class frange:
 <dl>
 <dt id="src.frange.frange"><code class="flex name class">
 <span>class <span class="ident">frange</span></span>
-<span>(</span><span>*args)</span>
+<span>(</span><span>*args: number)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>A range-like iterator that supports floats.</p>
@@ -89,9 +95,13 @@ class frange:
 
     Same signature as range
     &#34;&#34;&#34;
-    def __init__(self, *args):
+    def __init__(self, *args: number):
         arity_str = f&#39;Arity mismatch: expected no more than three arguments, got {len(args)}&#39;
         assert len(args) &gt; 0 and len(args) &lt;= 3, arity_str
+        self.start: number = np.nan
+        self.stop: number = np.nan
+        self.step: number = np.nan
+        
         if len(args) == 1:
             self.start = 0
             self.stop = args[0]
@@ -114,7 +124,7 @@ class frange:
             current += self.step
             diff = current - self.stop
 
-    def __len__(self):
+    def __len__(self) -&gt; int:
         &#34;&#34;&#34;Returns the (estimated) number of iterations this iterator will yield.&#34;&#34;&#34;
         return floor((self.stop - self.start) / self.step)</code></pre>
 </details>

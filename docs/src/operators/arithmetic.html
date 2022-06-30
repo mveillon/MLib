@@ -26,26 +26,29 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from math import log, e
+<pre><code class="python">from __future__ import annotations
+from math import log, e
 import numpy as np
-from .base_arithmetic import ArithmeticOpBase, _single_arg
+from ..fractions import Fraction
+from .base_arithmetic import ArithmeticOpBase, _single_arg, operator_input, simple_return
+from ..utilities import number
 
 class const (ArithmeticOpBase):
     &#34;&#34;&#34;Always returns n i.e. f(x) = n.&#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         super().__init__(n)
         self.priority = 6
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return self.n
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(0)
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return str(self.n)
 
-    def _simple_add(self, other):
+    def _simple_add(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if self.n == 0:
             return other
@@ -61,7 +64,7 @@ class const (ArithmeticOpBase):
             return add_n(self.n)
         return super()._simple_add(other)
 
-    def _simple_sub(self, other):
+    def _simple_sub(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if self.n == 0:
             return other * -1
@@ -77,7 +80,7 @@ class const (ArithmeticOpBase):
             return n_sub(self.n)
         return super()._simple_sub(other)
 
-    def _simple_mul(self, other):
+    def _simple_mul(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if self.n == 0:
             return const(0)
@@ -91,7 +94,7 @@ class const (ArithmeticOpBase):
             return mult_n(self.n)
         return super()._simple_mul(other)
 
-    def _simple_div(self, other):
+    def _simple_div(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if self.n == 0:
             return const(0)
@@ -103,7 +106,7 @@ class const (ArithmeticOpBase):
             return n_div(self.n)
         return super()._simple_div(other)
 
-    def _simple_exp(self, other):
+    def _simple_exp(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if self.n == 0 or self.n == 1:
             return self
@@ -116,28 +119,28 @@ class identity (_single_arg):
     def __init__(self):
         self.priority = 6
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return x
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(1)
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return &#39;x&#39;
 
-    def _simple_add(self, other):
+    def _simple_add(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, identity):
             return mult_n(2)
         return other + self
 
-    def _simple_mul(self, other):
+    def _simple_mul(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, identity):
             return exp_n(2)
         return other * self
 
-    def _simple_sub(self, other):
+    def _simple_sub(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, identity):
             return const(0)
@@ -149,7 +152,7 @@ class identity (_single_arg):
             return const(other.n)
         return super()._simple_sub(other)
 
-    def _simple_div(self, other):
+    def _simple_div(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, identity):
             return const(1)
@@ -163,17 +166,17 @@ class identity (_single_arg):
 
 class add_n (ArithmeticOpBase):
     &#34;&#34;&#34;Adds x to n i.e. f(x) = x + n.&#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         super().__init__(n)
         self.priority = 0
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return self.n + x
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(1)
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return f&#39;x + {self.n}&#39;
 
     def __new__(cls, n):
@@ -183,7 +186,7 @@ class add_n (ArithmeticOpBase):
             return sub_n(-n)
         return super(add_n, cls).__new__(cls, n)
 
-    def _simple_add(self, other):
+    def _simple_add(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, const):
             return other + self
@@ -199,7 +202,7 @@ class add_n (ArithmeticOpBase):
             return mult_n(2) + const(self.n)
         return super()._simple_add(other)
 
-    def _simple_sub(self, other):
+    def _simple_sub(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, const):
             return add_n(self.n - other.n)
@@ -219,13 +222,13 @@ class sub_n (ArithmeticOpBase):
         super().__init__(n)
         self.priority = 1
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return x - self.n
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(1)
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return f&#39;x - {self.n}&#39;
 
     def __new__(cls, n):
@@ -235,7 +238,7 @@ class sub_n (ArithmeticOpBase):
             return add_n(-n)
         return super(sub_n, cls).__new__(cls, n)
 
-    def _simple_add(self, other):
+    def _simple_add(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, const) or isinstance(other, add_n):
             return other + self
@@ -247,7 +250,7 @@ class sub_n (ArithmeticOpBase):
             return mult_n(2) - self.n
         return super()._simple_add(other)
 
-    def _simple_sub(self, other):
+    def _simple_sub(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, const):
             return sub_n(self.n + other.n)
@@ -263,17 +266,17 @@ class sub_n (ArithmeticOpBase):
 
 class n_sub (ArithmeticOpBase):
     &#34;&#34;&#34;Subtracts x from n i.e. f(x) = n - x.&#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         super().__init__(n)
         self.priority = 1
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return self.n - x
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(-1)
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return f&#39;{self.n} - x&#39;
 
     def __new__(cls, n):
@@ -281,7 +284,7 @@ class n_sub (ArithmeticOpBase):
             return mult_n(-1)
         return super(n_sub, cls).__new__(cls, n)
 
-    def _simple_add(self, other):
+    def _simple_add(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, const) or isinstance(other, add_n) or isinstance(other, sub_n):
             return other + self
@@ -291,7 +294,7 @@ class n_sub (ArithmeticOpBase):
             return const(self.n)
         return super()._simple_add(other)
 
-    def _simple_sub(self, other):
+    def _simple_sub(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, const):
             return n_sub(self.n - other.n)
@@ -307,17 +310,17 @@ class n_sub (ArithmeticOpBase):
 
 class mult_n (ArithmeticOpBase):
     &#34;&#34;&#34;Multiplies n with the output i.e. f(x) = nx.&#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         super().__init__(n)
         self.priority = 2
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return x * self.n
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(self.n)
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         if self.n == 1:
             return &#39;x&#39;
         if self.n == -1:
@@ -331,7 +334,7 @@ class mult_n (ArithmeticOpBase):
             return identity()
         return super(mult_n, cls).__new__(cls, n)
 
-    def _simple_mul(self, other):
+    def _simple_mul(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, const):
             return other * self
@@ -345,7 +348,7 @@ class mult_n (ArithmeticOpBase):
             return exp_n(2) * self.n
         return super()._simple_mul(other)
 
-    def _simple_div(self, other):
+    def _simple_div(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, const):
             return mult_n(self.n / other.n)
@@ -361,7 +364,7 @@ class mult_n (ArithmeticOpBase):
 
 class div_n (ArithmeticOpBase):
     &#34;&#34;&#34;Divides x by n i.e. f(x) = x / n.&#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         super().__init__(n)
         self.priority = 3
         if self.n == 0:
@@ -373,21 +376,16 @@ class div_n (ArithmeticOpBase):
             return identity()
         return super(div_n, cls).__new__(cls, n)
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return x / self.n
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(self.recip)
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return f&#39;x / {self.n}&#39;
 
-    def __new__(cls, n):
-        if n == 1:
-            return identity()
-        return super(div_n, cls).__new__(cls, n)
-
-    def _simple_mul(self, other):
+    def _simple_mul(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, const):
             return other * self
@@ -401,7 +399,7 @@ class div_n (ArithmeticOpBase):
             return exp_n(2) / self.n
         return super()._simple_mul(other)
     
-    def _simple_div(self, other):
+    def _simple_div(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, const) or isinstance(other, mult_n):
             return other * n_div(self.n)
@@ -415,17 +413,17 @@ class div_n (ArithmeticOpBase):
 
 class n_div (ArithmeticOpBase):
     &#34;&#34;&#34;Divides n by x i.e. f(x) = n / x.&#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         super().__init__(n)
         self.priority = 3
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return self.n / x
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(-self.n) / exp_n(2)
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return f&#39;{self.n} / x&#39;
 
     def __new__(cls, n):
@@ -433,7 +431,7 @@ class n_div (ArithmeticOpBase):
             return const(0)
         return super(n_div, cls).__new__(cls, n)
 
-    def _simple_mul(self, other):
+    def _simple_mul(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, const) or isinstance(other, mult_n) or isinstance(other, div_n):
             return other * self
@@ -443,7 +441,7 @@ class n_div (ArithmeticOpBase):
             return const(self.n)
         return super()._simple_mul(other)
 
-    def _simple_div(self, other):
+    def _simple_div(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, const):
             return n_div(self.n / other.n)
@@ -459,32 +457,32 @@ class n_div (ArithmeticOpBase):
 
 class floordiv_n (ArithmeticOpBase):
     &#34;&#34;&#34;Floor divides x by n i.e. f(x) = x // n.&#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         super().__init__(n)
         self.priority = 3
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return x // self.n
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(0)
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return f&#39;x // {self.n}&#39;
 
 class n_floordiv (ArithmeticOpBase):
     &#34;&#34;&#34;Floor divides x by n i.e. f(x) = n // x.&#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         super().__init__(n)
         self.priority = 3
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return self.n // x
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(0)
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return f&#39;{self.n} // x&#39;
 
     def __new__(cls, n):
@@ -494,14 +492,14 @@ class n_floordiv (ArithmeticOpBase):
 
 class exp_n (ArithmeticOpBase):
     &#34;&#34;&#34;Raises x to the power of n i.e. f(x) = x ** n.&#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         super().__init__(n)
         self.priority = 4
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return x ** self.n
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return exp_n(self.n - 1) * self.n
 
     def __str__(self):
@@ -514,7 +512,7 @@ class exp_n (ArithmeticOpBase):
             return identity()
         return super(exp_n, cls).__new__(cls, n)
 
-    def _simple_mul(self, other):
+    def _simple_mul(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, identity):
             return exp_n(self.n + 1)
@@ -522,23 +520,20 @@ class exp_n (ArithmeticOpBase):
 
 class n_exp (ArithmeticOpBase):
     &#34;&#34;&#34;Raises n to the power of x i.e. f(x) = n ** x.&#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         super().__init__(n)
         self.priority = 4
-
-    def __init__(self, n):
-        super().__init__(n)
         self.ln = log(self.n) if self.n &gt; 0 else None
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return self.n ** x
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         if self.ln is None:
             raise ValueError(f&#39;Derivative of n ^ x is undefined with n = {self.n}&#39;)
         return n_exp(self.n) * self.ln
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return f&#39;{self.n}^x&#39;
 
     def __new__(cls, n):
@@ -548,40 +543,40 @@ class n_exp (ArithmeticOpBase):
 
 class log_base_n (ArithmeticOpBase):
     &#34;&#34;&#34;Returns log_n(x) i.e. the argument to the log varies based on the input.&#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         super().__init__(n)
         if self.n &lt;= 0:
             raise ValueError(f&#39;Log base must be greater than 0, not {self.n}&#39;)
         self.ln = log(self.n)
         self.priority = 5
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return log(x, self.n)
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(1) / mult_n(self.ln)
 
-    def __str__(self):
-        if np.isclose(self.n, e):
+    def __str__(self) -&gt; str:
+        if not isinstance(self.n, Fraction) and np.isclose(self.n, e):
             return &#39;ln(x)&#39;
         return f&#39;log{self.n}(x)&#39;
 
 class log_of_n (ArithmeticOpBase):
     &#34;&#34;&#34;Returns log_x(n) i.e. the base of the log varies based on the input.&#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         super().__init__(n)
         if self.n &lt;= 0:
             raise ValueError(f&#39;Log argument must be greater than 0, not {self.n}&#39;)
         self.ln = log(self.n)
         self.priority = 5
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return log(self.n, x)
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(-self.ln) / (identity() * log_base_n(e) ** 2)
     
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return f&#39;log_x({self.n})&#39;
 
     def __new__(cls, n):
@@ -601,7 +596,7 @@ class log_of_n (ArithmeticOpBase):
 <dl>
 <dt id="src.operators.arithmetic.add_n"><code class="flex name class">
 <span>class <span class="ident">add_n</span></span>
-<span>(</span><span>n)</span>
+<span>(</span><span>n: number)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Adds x to n i.e. f(x) = x + n.</p></div>
@@ -611,17 +606,17 @@ class log_of_n (ArithmeticOpBase):
 </summary>
 <pre><code class="python">class add_n (ArithmeticOpBase):
     &#34;&#34;&#34;Adds x to n i.e. f(x) = x + n.&#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         super().__init__(n)
         self.priority = 0
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return self.n + x
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(1)
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return f&#39;x + {self.n}&#39;
 
     def __new__(cls, n):
@@ -631,7 +626,7 @@ class log_of_n (ArithmeticOpBase):
             return sub_n(-n)
         return super(add_n, cls).__new__(cls, n)
 
-    def _simple_add(self, other):
+    def _simple_add(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, const):
             return other + self
@@ -647,7 +642,7 @@ class log_of_n (ArithmeticOpBase):
             return mult_n(2) + const(self.n)
         return super()._simple_add(other)
 
-    def _simple_sub(self, other):
+    def _simple_sub(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, const):
             return add_n(self.n - other.n)
@@ -678,7 +673,7 @@ class log_of_n (ArithmeticOpBase):
 </dd>
 <dt id="src.operators.arithmetic.const"><code class="flex name class">
 <span>class <span class="ident">const</span></span>
-<span>(</span><span>n)</span>
+<span>(</span><span>n: number)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Always returns n i.e. f(x) = n.</p></div>
@@ -688,20 +683,20 @@ class log_of_n (ArithmeticOpBase):
 </summary>
 <pre><code class="python">class const (ArithmeticOpBase):
     &#34;&#34;&#34;Always returns n i.e. f(x) = n.&#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         super().__init__(n)
         self.priority = 6
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return self.n
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(0)
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return str(self.n)
 
-    def _simple_add(self, other):
+    def _simple_add(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if self.n == 0:
             return other
@@ -717,7 +712,7 @@ class log_of_n (ArithmeticOpBase):
             return add_n(self.n)
         return super()._simple_add(other)
 
-    def _simple_sub(self, other):
+    def _simple_sub(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if self.n == 0:
             return other * -1
@@ -733,7 +728,7 @@ class log_of_n (ArithmeticOpBase):
             return n_sub(self.n)
         return super()._simple_sub(other)
 
-    def _simple_mul(self, other):
+    def _simple_mul(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if self.n == 0:
             return const(0)
@@ -747,7 +742,7 @@ class log_of_n (ArithmeticOpBase):
             return mult_n(self.n)
         return super()._simple_mul(other)
 
-    def _simple_div(self, other):
+    def _simple_div(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if self.n == 0:
             return const(0)
@@ -759,7 +754,7 @@ class log_of_n (ArithmeticOpBase):
             return n_div(self.n)
         return super()._simple_div(other)
 
-    def _simple_exp(self, other):
+    def _simple_exp(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if self.n == 0 or self.n == 1:
             return self
@@ -784,7 +779,7 @@ class log_of_n (ArithmeticOpBase):
 </dd>
 <dt id="src.operators.arithmetic.div_n"><code class="flex name class">
 <span>class <span class="ident">div_n</span></span>
-<span>(</span><span>n)</span>
+<span>(</span><span>n: number)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Divides x by n i.e. f(x) = x / n.</p></div>
@@ -794,7 +789,7 @@ class log_of_n (ArithmeticOpBase):
 </summary>
 <pre><code class="python">class div_n (ArithmeticOpBase):
     &#34;&#34;&#34;Divides x by n i.e. f(x) = x / n.&#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         super().__init__(n)
         self.priority = 3
         if self.n == 0:
@@ -806,21 +801,16 @@ class log_of_n (ArithmeticOpBase):
             return identity()
         return super(div_n, cls).__new__(cls, n)
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return x / self.n
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(self.recip)
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return f&#39;x / {self.n}&#39;
 
-    def __new__(cls, n):
-        if n == 1:
-            return identity()
-        return super(div_n, cls).__new__(cls, n)
-
-    def _simple_mul(self, other):
+    def _simple_mul(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, const):
             return other * self
@@ -834,7 +824,7 @@ class log_of_n (ArithmeticOpBase):
             return exp_n(2) / self.n
         return super()._simple_mul(other)
     
-    def _simple_div(self, other):
+    def _simple_div(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, const) or isinstance(other, mult_n):
             return other * n_div(self.n)
@@ -863,7 +853,7 @@ class log_of_n (ArithmeticOpBase):
 </dd>
 <dt id="src.operators.arithmetic.exp_n"><code class="flex name class">
 <span>class <span class="ident">exp_n</span></span>
-<span>(</span><span>n)</span>
+<span>(</span><span>n: number)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Raises x to the power of n i.e. f(x) = x ** n.</p></div>
@@ -873,14 +863,14 @@ class log_of_n (ArithmeticOpBase):
 </summary>
 <pre><code class="python">class exp_n (ArithmeticOpBase):
     &#34;&#34;&#34;Raises x to the power of n i.e. f(x) = x ** n.&#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         super().__init__(n)
         self.priority = 4
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return x ** self.n
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return exp_n(self.n - 1) * self.n
 
     def __str__(self):
@@ -893,7 +883,7 @@ class log_of_n (ArithmeticOpBase):
             return identity()
         return super(exp_n, cls).__new__(cls, n)
 
-    def _simple_mul(self, other):
+    def _simple_mul(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, identity):
             return exp_n(self.n + 1)
@@ -916,7 +906,7 @@ class log_of_n (ArithmeticOpBase):
 </dd>
 <dt id="src.operators.arithmetic.floordiv_n"><code class="flex name class">
 <span>class <span class="ident">floordiv_n</span></span>
-<span>(</span><span>n)</span>
+<span>(</span><span>n: number)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Floor divides x by n i.e. f(x) = x // n.</p></div>
@@ -926,17 +916,17 @@ class log_of_n (ArithmeticOpBase):
 </summary>
 <pre><code class="python">class floordiv_n (ArithmeticOpBase):
     &#34;&#34;&#34;Floor divides x by n i.e. f(x) = x // n.&#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         super().__init__(n)
         self.priority = 3
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return x // self.n
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(0)
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return f&#39;x // {self.n}&#39;</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -968,28 +958,28 @@ class log_of_n (ArithmeticOpBase):
     def __init__(self):
         self.priority = 6
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return x
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(1)
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return &#39;x&#39;
 
-    def _simple_add(self, other):
+    def _simple_add(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, identity):
             return mult_n(2)
         return other + self
 
-    def _simple_mul(self, other):
+    def _simple_mul(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, identity):
             return exp_n(2)
         return other * self
 
-    def _simple_sub(self, other):
+    def _simple_sub(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, identity):
             return const(0)
@@ -1001,7 +991,7 @@ class log_of_n (ArithmeticOpBase):
             return const(other.n)
         return super()._simple_sub(other)
 
-    def _simple_div(self, other):
+    def _simple_div(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, identity):
             return const(1)
@@ -1031,7 +1021,7 @@ class log_of_n (ArithmeticOpBase):
 </dd>
 <dt id="src.operators.arithmetic.log_base_n"><code class="flex name class">
 <span>class <span class="ident">log_base_n</span></span>
-<span>(</span><span>n)</span>
+<span>(</span><span>n: number)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns log_n(x) i.e. the argument to the log varies based on the input.</p></div>
@@ -1041,21 +1031,21 @@ class log_of_n (ArithmeticOpBase):
 </summary>
 <pre><code class="python">class log_base_n (ArithmeticOpBase):
     &#34;&#34;&#34;Returns log_n(x) i.e. the argument to the log varies based on the input.&#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         super().__init__(n)
         if self.n &lt;= 0:
             raise ValueError(f&#39;Log base must be greater than 0, not {self.n}&#39;)
         self.ln = log(self.n)
         self.priority = 5
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return log(x, self.n)
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(1) / mult_n(self.ln)
 
-    def __str__(self):
-        if np.isclose(self.n, e):
+    def __str__(self) -&gt; str:
+        if not isinstance(self.n, Fraction) and np.isclose(self.n, e):
             return &#39;ln(x)&#39;
         return f&#39;log{self.n}(x)&#39;</code></pre>
 </details>
@@ -1076,7 +1066,7 @@ class log_of_n (ArithmeticOpBase):
 </dd>
 <dt id="src.operators.arithmetic.log_of_n"><code class="flex name class">
 <span>class <span class="ident">log_of_n</span></span>
-<span>(</span><span>n)</span>
+<span>(</span><span>n: number)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns log_x(n) i.e. the base of the log varies based on the input.</p></div>
@@ -1086,20 +1076,20 @@ class log_of_n (ArithmeticOpBase):
 </summary>
 <pre><code class="python">class log_of_n (ArithmeticOpBase):
     &#34;&#34;&#34;Returns log_x(n) i.e. the base of the log varies based on the input.&#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         super().__init__(n)
         if self.n &lt;= 0:
             raise ValueError(f&#39;Log argument must be greater than 0, not {self.n}&#39;)
         self.ln = log(self.n)
         self.priority = 5
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return log(self.n, x)
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(-self.ln) / (identity() * log_base_n(e) ** 2)
     
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return f&#39;log_x({self.n})&#39;
 
     def __new__(cls, n):
@@ -1124,7 +1114,7 @@ class log_of_n (ArithmeticOpBase):
 </dd>
 <dt id="src.operators.arithmetic.mult_n"><code class="flex name class">
 <span>class <span class="ident">mult_n</span></span>
-<span>(</span><span>n)</span>
+<span>(</span><span>n: number)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Multiplies n with the output i.e. f(x) = nx.</p></div>
@@ -1134,17 +1124,17 @@ class log_of_n (ArithmeticOpBase):
 </summary>
 <pre><code class="python">class mult_n (ArithmeticOpBase):
     &#34;&#34;&#34;Multiplies n with the output i.e. f(x) = nx.&#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         super().__init__(n)
         self.priority = 2
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return x * self.n
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(self.n)
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         if self.n == 1:
             return &#39;x&#39;
         if self.n == -1:
@@ -1158,7 +1148,7 @@ class log_of_n (ArithmeticOpBase):
             return identity()
         return super(mult_n, cls).__new__(cls, n)
 
-    def _simple_mul(self, other):
+    def _simple_mul(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, const):
             return other * self
@@ -1172,7 +1162,7 @@ class log_of_n (ArithmeticOpBase):
             return exp_n(2) * self.n
         return super()._simple_mul(other)
 
-    def _simple_div(self, other):
+    def _simple_div(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, const):
             return mult_n(self.n / other.n)
@@ -1203,7 +1193,7 @@ class log_of_n (ArithmeticOpBase):
 </dd>
 <dt id="src.operators.arithmetic.n_div"><code class="flex name class">
 <span>class <span class="ident">n_div</span></span>
-<span>(</span><span>n)</span>
+<span>(</span><span>n: number)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Divides n by x i.e. f(x) = n / x.</p></div>
@@ -1213,17 +1203,17 @@ class log_of_n (ArithmeticOpBase):
 </summary>
 <pre><code class="python">class n_div (ArithmeticOpBase):
     &#34;&#34;&#34;Divides n by x i.e. f(x) = n / x.&#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         super().__init__(n)
         self.priority = 3
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return self.n / x
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(-self.n) / exp_n(2)
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return f&#39;{self.n} / x&#39;
 
     def __new__(cls, n):
@@ -1231,7 +1221,7 @@ class log_of_n (ArithmeticOpBase):
             return const(0)
         return super(n_div, cls).__new__(cls, n)
 
-    def _simple_mul(self, other):
+    def _simple_mul(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, const) or isinstance(other, mult_n) or isinstance(other, div_n):
             return other * self
@@ -1241,7 +1231,7 @@ class log_of_n (ArithmeticOpBase):
             return const(self.n)
         return super()._simple_mul(other)
 
-    def _simple_div(self, other):
+    def _simple_div(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, const):
             return n_div(self.n / other.n)
@@ -1272,7 +1262,7 @@ class log_of_n (ArithmeticOpBase):
 </dd>
 <dt id="src.operators.arithmetic.n_exp"><code class="flex name class">
 <span>class <span class="ident">n_exp</span></span>
-<span>(</span><span>n)</span>
+<span>(</span><span>n: number)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Raises n to the power of x i.e. f(x) = n ** x.</p></div>
@@ -1282,23 +1272,20 @@ class log_of_n (ArithmeticOpBase):
 </summary>
 <pre><code class="python">class n_exp (ArithmeticOpBase):
     &#34;&#34;&#34;Raises n to the power of x i.e. f(x) = n ** x.&#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         super().__init__(n)
         self.priority = 4
-
-    def __init__(self, n):
-        super().__init__(n)
         self.ln = log(self.n) if self.n &gt; 0 else None
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return self.n ** x
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         if self.ln is None:
             raise ValueError(f&#39;Derivative of n ^ x is undefined with n = {self.n}&#39;)
         return n_exp(self.n) * self.ln
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return f&#39;{self.n}^x&#39;
 
     def __new__(cls, n):
@@ -1323,7 +1310,7 @@ class log_of_n (ArithmeticOpBase):
 </dd>
 <dt id="src.operators.arithmetic.n_floordiv"><code class="flex name class">
 <span>class <span class="ident">n_floordiv</span></span>
-<span>(</span><span>n)</span>
+<span>(</span><span>n: number)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Floor divides x by n i.e. f(x) = n // x.</p></div>
@@ -1333,17 +1320,17 @@ class log_of_n (ArithmeticOpBase):
 </summary>
 <pre><code class="python">class n_floordiv (ArithmeticOpBase):
     &#34;&#34;&#34;Floor divides x by n i.e. f(x) = n // x.&#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         super().__init__(n)
         self.priority = 3
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return self.n // x
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(0)
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return f&#39;{self.n} // x&#39;
 
     def __new__(cls, n):
@@ -1368,7 +1355,7 @@ class log_of_n (ArithmeticOpBase):
 </dd>
 <dt id="src.operators.arithmetic.n_sub"><code class="flex name class">
 <span>class <span class="ident">n_sub</span></span>
-<span>(</span><span>n)</span>
+<span>(</span><span>n: number)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Subtracts x from n i.e. f(x) = n - x.</p></div>
@@ -1378,17 +1365,17 @@ class log_of_n (ArithmeticOpBase):
 </summary>
 <pre><code class="python">class n_sub (ArithmeticOpBase):
     &#34;&#34;&#34;Subtracts x from n i.e. f(x) = n - x.&#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         super().__init__(n)
         self.priority = 1
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return self.n - x
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(-1)
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return f&#39;{self.n} - x&#39;
 
     def __new__(cls, n):
@@ -1396,7 +1383,7 @@ class log_of_n (ArithmeticOpBase):
             return mult_n(-1)
         return super(n_sub, cls).__new__(cls, n)
 
-    def _simple_add(self, other):
+    def _simple_add(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, const) or isinstance(other, add_n) or isinstance(other, sub_n):
             return other + self
@@ -1406,7 +1393,7 @@ class log_of_n (ArithmeticOpBase):
             return const(self.n)
         return super()._simple_add(other)
 
-    def _simple_sub(self, other):
+    def _simple_sub(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, const):
             return n_sub(self.n - other.n)
@@ -1451,13 +1438,13 @@ class log_of_n (ArithmeticOpBase):
         super().__init__(n)
         self.priority = 1
 
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return x - self.n
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(1)
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return f&#39;x - {self.n}&#39;
 
     def __new__(cls, n):
@@ -1467,7 +1454,7 @@ class log_of_n (ArithmeticOpBase):
             return add_n(-n)
         return super(sub_n, cls).__new__(cls, n)
 
-    def _simple_add(self, other):
+    def _simple_add(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, const) or isinstance(other, add_n):
             return other + self
@@ -1479,7 +1466,7 @@ class log_of_n (ArithmeticOpBase):
             return mult_n(2) - self.n
         return super()._simple_add(other)
 
-    def _simple_sub(self, other):
+    def _simple_sub(self, other: operator_input) -&gt; simple_return:
         other = self._get_func(other)
         if isinstance(other, const):
             return sub_n(self.n + other.n)

@@ -26,7 +26,12 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def lt_n(n):
+<pre><code class="python">from typing import Any, Callable
+from ..utilities import number
+
+compare_callable = Callable[[number], bool]
+
+def lt_n(n: number) -&gt; compare_callable:
     &#34;&#34;&#34;Returns a function that compares the input to n.
     
     Args:
@@ -37,7 +42,7 @@
     &#34;&#34;&#34;
     return lambda x: x &lt; n
 
-def le_n(n):
+def le_n(n: number) -&gt; compare_callable:
     &#34;&#34;&#34;Returns a function that compares the input to n.
     
     Args:
@@ -48,7 +53,7 @@ def le_n(n):
     &#34;&#34;&#34;
     return lambda x: x &lt;= n
 
-def gt_n(n):
+def gt_n(n: number) -&gt; compare_callable:
     &#34;&#34;&#34;Returns a function that compares the input to n.
     
     Args:
@@ -59,7 +64,7 @@ def gt_n(n):
     &#34;&#34;&#34;
     return lambda x: x &gt; n
 
-def ge_n(n):
+def ge_n(n: number) -&gt; compare_callable:
     &#34;&#34;&#34;Returns a function that compares the input to n.
     
     Args:
@@ -70,7 +75,7 @@ def ge_n(n):
     &#34;&#34;&#34;
     return lambda x: x &gt;= n
 
-def invert():
+def invert() -&gt; Callable[[Any], bool]:
     &#34;&#34;&#34;Returns a function that returns the inverse of the input i.e. not x
     
     Args:
@@ -90,7 +95,7 @@ def invert():
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="src.operators.comparators.ge_n"><code class="name flex">
-<span>def <span class="ident">ge_n</span></span>(<span>n)</span>
+<span>def <span class="ident">ge_n</span></span>(<span>n: Union[int, float, <a title="src.fractions.Fraction" href="../fractions.html#src.fractions.Fraction">Fraction</a>]) ‑> Callable[[Union[int, float, <a title="src.fractions.Fraction" href="../fractions.html#src.fractions.Fraction">Fraction</a>]], bool]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns a function that compares the input to n.</p>
@@ -104,7 +109,7 @@ def invert():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def ge_n(n):
+<pre><code class="python">def ge_n(n: number) -&gt; compare_callable:
     &#34;&#34;&#34;Returns a function that compares the input to n.
     
     Args:
@@ -117,7 +122,7 @@ def invert():
 </details>
 </dd>
 <dt id="src.operators.comparators.gt_n"><code class="name flex">
-<span>def <span class="ident">gt_n</span></span>(<span>n)</span>
+<span>def <span class="ident">gt_n</span></span>(<span>n: Union[int, float, <a title="src.fractions.Fraction" href="../fractions.html#src.fractions.Fraction">Fraction</a>]) ‑> Callable[[Union[int, float, <a title="src.fractions.Fraction" href="../fractions.html#src.fractions.Fraction">Fraction</a>]], bool]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns a function that compares the input to n.</p>
@@ -131,7 +136,7 @@ def invert():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def gt_n(n):
+<pre><code class="python">def gt_n(n: number) -&gt; compare_callable:
     &#34;&#34;&#34;Returns a function that compares the input to n.
     
     Args:
@@ -144,7 +149,7 @@ def invert():
 </details>
 </dd>
 <dt id="src.operators.comparators.invert"><code class="name flex">
-<span>def <span class="ident">invert</span></span>(<span>)</span>
+<span>def <span class="ident">invert</span></span>(<span>) ‑> Callable[[Any], bool]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns a function that returns the inverse of the input i.e. not x</p>
@@ -158,7 +163,7 @@ def invert():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def invert():
+<pre><code class="python">def invert() -&gt; Callable[[Any], bool]:
     &#34;&#34;&#34;Returns a function that returns the inverse of the input i.e. not x
     
     Args:
@@ -171,7 +176,7 @@ def invert():
 </details>
 </dd>
 <dt id="src.operators.comparators.le_n"><code class="name flex">
-<span>def <span class="ident">le_n</span></span>(<span>n)</span>
+<span>def <span class="ident">le_n</span></span>(<span>n: Union[int, float, <a title="src.fractions.Fraction" href="../fractions.html#src.fractions.Fraction">Fraction</a>]) ‑> Callable[[Union[int, float, <a title="src.fractions.Fraction" href="../fractions.html#src.fractions.Fraction">Fraction</a>]], bool]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns a function that compares the input to n.</p>
@@ -185,7 +190,7 @@ def invert():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def le_n(n):
+<pre><code class="python">def le_n(n: number) -&gt; compare_callable:
     &#34;&#34;&#34;Returns a function that compares the input to n.
     
     Args:
@@ -198,7 +203,7 @@ def invert():
 </details>
 </dd>
 <dt id="src.operators.comparators.lt_n"><code class="name flex">
-<span>def <span class="ident">lt_n</span></span>(<span>n)</span>
+<span>def <span class="ident">lt_n</span></span>(<span>n: Union[int, float, <a title="src.fractions.Fraction" href="../fractions.html#src.fractions.Fraction">Fraction</a>]) ‑> Callable[[Union[int, float, <a title="src.fractions.Fraction" href="../fractions.html#src.fractions.Fraction">Fraction</a>]], bool]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns a function that compares the input to n.</p>
@@ -212,7 +217,7 @@ def invert():
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def lt_n(n):
+<pre><code class="python">def lt_n(n: number) -&gt; compare_callable:
     &#34;&#34;&#34;Returns a function that compares the input to n.
     
     Args:

@@ -30,8 +30,10 @@
 from .utilities import can_be_int
 from .factors import factors
 from .fractions import gcd
+from .utilities import number
+from typing import List
 
-def rad(n):
+def rad(n: int) -&gt; str:
     &#34;&#34;&#34;Takes a radicand and simplifies it.
 
     Args:
@@ -52,7 +54,7 @@ def rad(n):
     else:
         return f&#39;√{n}&#39;
     
-def frac(num, denom):
+def frac(num: int, denom: int) -&gt; str:
     &#34;&#34;&#34;Takes a fraction and simplifies it.
 
     Args:
@@ -71,7 +73,7 @@ def frac(num, denom):
         return f&#39;{num // best} / {denom // best}&#39;
     return str(num // best)
 
-def sep_rad(r):
+def sep_rad(r: str) -&gt; List[str]:
     &#34;&#34;&#34;Separates the radical and returns it as a list.
 
     Args:
@@ -87,7 +89,7 @@ def sep_rad(r):
     else:
         raise ValueError(&#39;No radical provided to sep_rad&#39;)
 
-def frac_to_float(frac):
+def frac_to_float(frac: str) -&gt; float:
     &#34;&#34;&#34;Converts a string fraction to a float.
 
     Args:
@@ -104,7 +106,7 @@ def frac_to_float(frac):
         return int(nums[0]) / int(nums[1])
     return int(nums[0])
 
-def rad_to_float(rad_arg):
+def rad_to_float(rad_arg: str) -&gt; float:
     &#34;&#34;&#34;Converts a string version of a radical into a float.
 
     Args:
@@ -132,7 +134,7 @@ def rad_to_float(rad_arg):
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="src.string_math.frac"><code class="name flex">
-<span>def <span class="ident">frac</span></span>(<span>num, denom)</span>
+<span>def <span class="ident">frac</span></span>(<span>num: int, denom: int) ‑> str</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Takes a fraction and simplifies it.</p>
@@ -147,7 +149,7 @@ def rad_to_float(rad_arg):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def frac(num, denom):
+<pre><code class="python">def frac(num: int, denom: int) -&gt; str:
     &#34;&#34;&#34;Takes a fraction and simplifies it.
 
     Args:
@@ -168,7 +170,7 @@ def rad_to_float(rad_arg):
 </details>
 </dd>
 <dt id="src.string_math.frac_to_float"><code class="name flex">
-<span>def <span class="ident">frac_to_float</span></span>(<span>frac)</span>
+<span>def <span class="ident">frac_to_float</span></span>(<span>frac: str) ‑> float</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Converts a string fraction to a float.</p>
@@ -183,7 +185,7 @@ frac (str) : a string fraction with a '/' character somewhere</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def frac_to_float(frac):
+<pre><code class="python">def frac_to_float(frac: str) -&gt; float:
     &#34;&#34;&#34;Converts a string fraction to a float.
 
     Args:
@@ -202,7 +204,7 @@ frac (str) : a string fraction with a '/' character somewhere</p>
 </details>
 </dd>
 <dt id="src.string_math.rad"><code class="name flex">
-<span>def <span class="ident">rad</span></span>(<span>n)</span>
+<span>def <span class="ident">rad</span></span>(<span>n: int) ‑> str</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Takes a radicand and simplifies it.</p>
@@ -216,7 +218,7 @@ frac (str) : a string fraction with a '/' character somewhere</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def rad(n):
+<pre><code class="python">def rad(n: int) -&gt; str:
     &#34;&#34;&#34;Takes a radicand and simplifies it.
 
     Args:
@@ -239,7 +241,7 @@ frac (str) : a string fraction with a '/' character somewhere</p>
 </details>
 </dd>
 <dt id="src.string_math.rad_to_float"><code class="name flex">
-<span>def <span class="ident">rad_to_float</span></span>(<span>rad_arg)</span>
+<span>def <span class="ident">rad_to_float</span></span>(<span>rad_arg: str) ‑> float</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Converts a string version of a radical into a float.</p>
@@ -253,7 +255,7 @@ frac (str) : a string fraction with a '/' character somewhere</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def rad_to_float(rad_arg):
+<pre><code class="python">def rad_to_float(rad_arg: str) -&gt; float:
     &#34;&#34;&#34;Converts a string version of a radical into a float.
 
     Args:
@@ -274,7 +276,7 @@ frac (str) : a string fraction with a '/' character somewhere</p>
 </details>
 </dd>
 <dt id="src.string_math.sep_rad"><code class="name flex">
-<span>def <span class="ident">sep_rad</span></span>(<span>r)</span>
+<span>def <span class="ident">sep_rad</span></span>(<span>r: str) ‑> List[str]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Separates the radical and returns it as a list.</p>
@@ -288,7 +290,7 @@ frac (str) : a string fraction with a '/' character somewhere</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def sep_rad(r):
+<pre><code class="python">def sep_rad(r: str) -&gt; List[str]:
     &#34;&#34;&#34;Separates the radical and returns it as a list.
 
     Args:

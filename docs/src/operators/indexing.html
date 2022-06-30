@@ -26,7 +26,9 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_n(n):
+<pre><code class="python">from typing import List, Any, Callable
+
+def get_n(n: int) -&gt; Callable[[List[Any]], Any]:
     &#34;&#34;&#34;Returns a function that returns the nth element of a collection.
     
     Args:
@@ -37,7 +39,7 @@
     &#34;&#34;&#34;
     return lambda coll: coll[n]
 
-def set_n_to_val(n, val):
+def set_n_to_val(n: int, val: Any) -&gt; Callable[[List[Any]], None]:
     &#34;&#34;&#34;Returns a function that sets the nth element of a collection to val.
     
     Args:
@@ -60,7 +62,7 @@ def set_n_to_val(n, val):
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="src.operators.indexing.get_n"><code class="name flex">
-<span>def <span class="ident">get_n</span></span>(<span>n)</span>
+<span>def <span class="ident">get_n</span></span>(<span>n: int) ‑> Callable[[List[Any]], Any]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns a function that returns the nth element of a collection.</p>
@@ -74,7 +76,7 @@ def set_n_to_val(n, val):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_n(n):
+<pre><code class="python">def get_n(n: int) -&gt; Callable[[List[Any]], Any]:
     &#34;&#34;&#34;Returns a function that returns the nth element of a collection.
     
     Args:
@@ -87,7 +89,7 @@ def set_n_to_val(n, val):
 </details>
 </dd>
 <dt id="src.operators.indexing.set_n_to_val"><code class="name flex">
-<span>def <span class="ident">set_n_to_val</span></span>(<span>n, val)</span>
+<span>def <span class="ident">set_n_to_val</span></span>(<span>n: int, val: Any) ‑> Callable[[List[Any]], None]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns a function that sets the nth element of a collection to val.</p>
@@ -102,7 +104,7 @@ def set_n_to_val(n, val):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def set_n_to_val(n, val):
+<pre><code class="python">def set_n_to_val(n: int, val: Any) -&gt; Callable[[List[Any]], None]:
     &#34;&#34;&#34;Returns a function that sets the nth element of a collection to val.
     
     Args:

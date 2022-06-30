@@ -28,7 +28,7 @@
 </summary>
 <pre><code class="python">from .parsing import parse_expr
 
-def derivative(expr):
+def derivative(expr: str) -&gt; str:
     &#34;&#34;&#34;Finds the derivative of a string expression.
     
     e.g. 3x + 4 or (x / 2) / (x^2), where ^ means exponent
@@ -50,7 +50,7 @@ def derivative(expr):
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="src.operators.string_derivative.derivative"><code class="name flex">
-<span>def <span class="ident">derivative</span></span>(<span>expr)</span>
+<span>def <span class="ident">derivative</span></span>(<span>expr: str) ‑> str</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Finds the derivative of a string expression.</p>
@@ -65,7 +65,7 @@ def derivative(expr):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def derivative(expr):
+<pre><code class="python">def derivative(expr: str) -&gt; str:
     &#34;&#34;&#34;Finds the derivative of a string expression.
     
     e.g. 3x + 4 or (x / 2) / (x^2), where ^ means exponent

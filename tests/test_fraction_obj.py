@@ -144,3 +144,4 @@ def test_frac_abs():
     assert frac_abs(f) == f
     assert frac_abs(-f) == f
     assert frac_abs(Fraction(0, 2)) == 0
+    

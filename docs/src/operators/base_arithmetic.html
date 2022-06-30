@@ -26,7 +26,12 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class ArithmeticOpBase:
+<pre><code class="python">from __future__ import annotations
+from typing import Callable, Union
+from src.fractions import Fraction
+from ..utilities import number
+
+class ArithmeticOpBase:
     &#34;&#34;&#34;Abstract base class for all arithmetic operations.
 
     These are objects so they can have derivative methods, but they can be
@@ -43,23 +48,19 @@
     appropriate operators (e.g. +, *). Doing so will return a new function that 
     combines the two given functions appropriately. You can also add numbers and 
     strings to functions. The strings should be parsable expressions.
-
-    Finally, calling an ArithmeticOpBase with another ArithmeticOpBase will return
-    a new chain function that first calls the inner function (the one passed as the
-    argument), then the outer on the input.
     
     Args:
         n (number) : the constant to use in the operation
     &#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         self.n = n
         self.priority = -1 #higher means it should go first
 
-    def __new__(cls, n):
+    def __new__(cls, n: number):
         &#34;&#34;&#34;We define this to allow simplification.&#34;&#34;&#34;
         return super(ArithmeticOpBase, cls).__new__(cls)
         
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         &#34;&#34;&#34;Returns the result of the function called on x.
         
         Args:
@@ -70,7 +71,7 @@
         &#34;&#34;&#34;
         raise NotImplementedError
 
-    def derivative(self):
+    def derivative(self) -&gt; str:
         &#34;&#34;&#34;Returns a string form of the derivative of this function.
 
         Formatted as an expression (i.e. no &#39;f(x) = &#39;) for recursive reasons.
@@ -83,14 +84,11 @@
         &#34;&#34;&#34;
         return str(self.f_prime())
 
-    def __call__(self, x):
+    def __call__(self, x: number) -&gt; number:
         &#34;&#34;&#34;Allows the object to pretend to be a function. Returns f(x).&#34;&#34;&#34;
-        if isinstance(x, ArithmeticOpBase):
-            from .combos import chain
-            return chain(self, x)
         return self.f(x)
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         &#34;&#34;&#34;Returns a function that returns the instantaneous slope at x.
         
         Args:
@@ -101,15 +99,15 @@
         &#34;&#34;&#34;
         raise NotImplementedError
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         &#34;&#34;&#34;Returns string representation of expression.&#34;&#34;&#34;
         raise NotImplementedError
 
-    def _get_func(self, other):
+    def _get_func(self, other: operator_input) -&gt; ArithmeticOpBase:
         &#34;&#34;&#34;Makes the other into an ArithmeticOpBase, if it isn&#39;t already.&#34;&#34;&#34;
         if isinstance(other, ArithmeticOpBase):
             return other
-        if isinstance(other, int) or isinstance(other, float):
+        if isinstance(other, int) or isinstance(other, float) or isinstance(other, Fraction):
             from .arithmetic import const
             return const(other)
         if isinstance(other, str):
@@ -117,11 +115,11 @@
             return parse_expr(other)
         raise ValueError(f&#39;Unexpected argument to function arithmetic: {other}&#39;)
 
-    def _binop(self, other, combiner):
+    def _binop(self, other: operator_input, combiner: Callable) -&gt; ArithmeticOpBase:
         &#34;&#34;&#34;Combines self and other using combiner.&#34;&#34;&#34;
         return combiner(self, self._get_func(other))
 
-    def _simple_add(self, other):
+    def _simple_add(self, other: operator_input) -&gt; simple_return:
         &#34;&#34;&#34;Tries to return simplified self + other. If it can&#39;t, it will return None.&#34;&#34;&#34;
         other = self._get_func(other)
         from .arithmetic import const
@@ -129,7 +127,7 @@
             return self
         return None
 
-    def _simple_sub(self, other):
+    def _simple_sub(self, other: operator_input) -&gt; simple_return:
         &#34;&#34;&#34;Tries to return simplified self - other. If it can&#39;t, it will return None.&#34;&#34;&#34;
         other = self._get_func(other)
         from .arithmetic import const
@@ -137,7 +135,7 @@
             return self
         return None
 
-    def _simple_mul(self, other):
+    def _simple_mul(self, other: operator_input) -&gt; simple_return:
         &#34;&#34;&#34;Tries to return simplified self * other. If it can&#39;t, it will return None.&#34;&#34;&#34;
         other = self._get_func(other)
         from .arithmetic import const
@@ -148,7 +146,7 @@
                 return self
         return None
 
-    def _simple_div(self, other):
+    def _simple_div(self, other: operator_input) -&gt; simple_return:
         &#34;&#34;&#34;Tries to return simplified self / other. If it can&#39;t, it will return None.&#34;&#34;&#34;
         other = self._get_func(other)
         from .arithmetic import const
@@ -156,7 +154,7 @@
             return self
         return None
 
-    def _simple_exp(self, other):
+    def _simple_exp(self, other: operator_input) -&gt; simple_return:
         &#34;&#34;&#34;Tries to return simplified self ** other. If it can&#39;t, it will return None.&#34;&#34;&#34;
         other = self._get_func(other)
         from .arithmetic import const
@@ -167,30 +165,35 @@
                 return self
         return None
 
-    def __add__(self, other): 
+    def __add__(self, other: operator_input) -&gt; ArithmeticOpBase: 
         s = self._simple_add(other)
+        if s: return s
         from .combos import f_plus_g
-        return self._binop(other, f_plus_g) if s is None else s
+        return self._binop(other, f_plus_g)
 
-    def __sub__(self, other):
+    def __sub__(self, other: operator_input) -&gt; ArithmeticOpBase:
         s = self._simple_sub(other)
+        if s: return s
         from .combos import f_minus_g
-        return self._binop(other, f_minus_g) if s is None else s
+        return self._binop(other, f_minus_g)
 
-    def __mul__(self, other):
+    def __mul__(self, other: operator_input) -&gt; ArithmeticOpBase:
         s = self._simple_mul(other)
+        if s: return s
         from .combos import f_times_g
-        return self._binop(other, f_times_g) if s is None else s
+        return self._binop(other, f_times_g)
 
-    def __truediv__(self, other):
+    def __truediv__(self, other: operator_input) -&gt; ArithmeticOpBase:
         s = self._simple_div(other)
+        if s: return s
         from .combos import f_divided_by_g
-        return self._binop(other, f_divided_by_g) if s is None else s
+        return self._binop(other, f_divided_by_g)
 
-    def __pow__(self, other):
+    def __pow__(self, other: operator_input) -&gt; ArithmeticOpBase:
         s = self._simple_exp(other)
+        if s: return s
         from .combos import f_raised_to_g
-        return self._binop(other, f_raised_to_g) if s is None else s
+        return self._binop(other, f_raised_to_g)
 
 class _single_arg (ArithmeticOpBase):
     &#34;&#34;&#34;Abstract base class for single-argument functions.&#34;&#34;&#34;
@@ -200,7 +203,10 @@ class _single_arg (ArithmeticOpBase):
     def __new__(cls):
         o = object.__new__(cls)
         o.__init__()
-        return o</code></pre>
+        return o
+
+simple_return = Union[ArithmeticOpBase, None]
+operator_input = Union[ArithmeticOpBase, int, float, Fraction, str]</code></pre>
 </details>
 </section>
 <section>
@@ -214,7 +220,7 @@ class _single_arg (ArithmeticOpBase):
 <dl>
 <dt id="src.operators.base_arithmetic.ArithmeticOpBase"><code class="flex name class">
 <span>class <span class="ident">ArithmeticOpBase</span></span>
-<span>(</span><span>n)</span>
+<span>(</span><span>n: number)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Abstract base class for all arithmetic operations.</p>
@@ -230,9 +236,6 @@ have the same functionality.</p>
 appropriate operators (e.g. +, *). Doing so will return a new function that
 combines the two given functions appropriately. You can also add numbers and
 strings to functions. The strings should be parsable expressions.</p>
-<p>Finally, calling an ArithmeticOpBase with another ArithmeticOpBase will return
-a new chain function that first calls the inner function (the one passed as the
-argument), then the outer on the input.</p>
 <h2 id="args">Args</h2>
 <p>n (number) : the constant to use in the operation</p></div>
 <details class="source">
@@ -256,23 +259,19 @@ argument), then the outer on the input.</p>
     appropriate operators (e.g. +, *). Doing so will return a new function that 
     combines the two given functions appropriately. You can also add numbers and 
     strings to functions. The strings should be parsable expressions.
-
-    Finally, calling an ArithmeticOpBase with another ArithmeticOpBase will return
-    a new chain function that first calls the inner function (the one passed as the
-    argument), then the outer on the input.
     
     Args:
         n (number) : the constant to use in the operation
     &#34;&#34;&#34;
-    def __init__(self, n):
+    def __init__(self, n: number):
         self.n = n
         self.priority = -1 #higher means it should go first
 
-    def __new__(cls, n):
+    def __new__(cls, n: number):
         &#34;&#34;&#34;We define this to allow simplification.&#34;&#34;&#34;
         return super(ArithmeticOpBase, cls).__new__(cls)
         
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         &#34;&#34;&#34;Returns the result of the function called on x.
         
         Args:
@@ -283,7 +282,7 @@ argument), then the outer on the input.</p>
         &#34;&#34;&#34;
         raise NotImplementedError
 
-    def derivative(self):
+    def derivative(self) -&gt; str:
         &#34;&#34;&#34;Returns a string form of the derivative of this function.
 
         Formatted as an expression (i.e. no &#39;f(x) = &#39;) for recursive reasons.
@@ -296,14 +295,11 @@ argument), then the outer on the input.</p>
         &#34;&#34;&#34;
         return str(self.f_prime())
 
-    def __call__(self, x):
+    def __call__(self, x: number) -&gt; number:
         &#34;&#34;&#34;Allows the object to pretend to be a function. Returns f(x).&#34;&#34;&#34;
-        if isinstance(x, ArithmeticOpBase):
-            from .combos import chain
-            return chain(self, x)
         return self.f(x)
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         &#34;&#34;&#34;Returns a function that returns the instantaneous slope at x.
         
         Args:
@@ -314,15 +310,15 @@ argument), then the outer on the input.</p>
         &#34;&#34;&#34;
         raise NotImplementedError
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         &#34;&#34;&#34;Returns string representation of expression.&#34;&#34;&#34;
         raise NotImplementedError
 
-    def _get_func(self, other):
+    def _get_func(self, other: operator_input) -&gt; ArithmeticOpBase:
         &#34;&#34;&#34;Makes the other into an ArithmeticOpBase, if it isn&#39;t already.&#34;&#34;&#34;
         if isinstance(other, ArithmeticOpBase):
             return other
-        if isinstance(other, int) or isinstance(other, float):
+        if isinstance(other, int) or isinstance(other, float) or isinstance(other, Fraction):
             from .arithmetic import const
             return const(other)
         if isinstance(other, str):
@@ -330,11 +326,11 @@ argument), then the outer on the input.</p>
             return parse_expr(other)
         raise ValueError(f&#39;Unexpected argument to function arithmetic: {other}&#39;)
 
-    def _binop(self, other, combiner):
+    def _binop(self, other: operator_input, combiner: Callable) -&gt; ArithmeticOpBase:
         &#34;&#34;&#34;Combines self and other using combiner.&#34;&#34;&#34;
         return combiner(self, self._get_func(other))
 
-    def _simple_add(self, other):
+    def _simple_add(self, other: operator_input) -&gt; simple_return:
         &#34;&#34;&#34;Tries to return simplified self + other. If it can&#39;t, it will return None.&#34;&#34;&#34;
         other = self._get_func(other)
         from .arithmetic import const
@@ -342,7 +338,7 @@ argument), then the outer on the input.</p>
             return self
         return None
 
-    def _simple_sub(self, other):
+    def _simple_sub(self, other: operator_input) -&gt; simple_return:
         &#34;&#34;&#34;Tries to return simplified self - other. If it can&#39;t, it will return None.&#34;&#34;&#34;
         other = self._get_func(other)
         from .arithmetic import const
@@ -350,7 +346,7 @@ argument), then the outer on the input.</p>
             return self
         return None
 
-    def _simple_mul(self, other):
+    def _simple_mul(self, other: operator_input) -&gt; simple_return:
         &#34;&#34;&#34;Tries to return simplified self * other. If it can&#39;t, it will return None.&#34;&#34;&#34;
         other = self._get_func(other)
         from .arithmetic import const
@@ -361,7 +357,7 @@ argument), then the outer on the input.</p>
                 return self
         return None
 
-    def _simple_div(self, other):
+    def _simple_div(self, other: operator_input) -&gt; simple_return:
         &#34;&#34;&#34;Tries to return simplified self / other. If it can&#39;t, it will return None.&#34;&#34;&#34;
         other = self._get_func(other)
         from .arithmetic import const
@@ -369,7 +365,7 @@ argument), then the outer on the input.</p>
             return self
         return None
 
-    def _simple_exp(self, other):
+    def _simple_exp(self, other: operator_input) -&gt; simple_return:
         &#34;&#34;&#34;Tries to return simplified self ** other. If it can&#39;t, it will return None.&#34;&#34;&#34;
         other = self._get_func(other)
         from .arithmetic import const
@@ -380,30 +376,35 @@ argument), then the outer on the input.</p>
                 return self
         return None
 
-    def __add__(self, other): 
+    def __add__(self, other: operator_input) -&gt; ArithmeticOpBase: 
         s = self._simple_add(other)
+        if s: return s
         from .combos import f_plus_g
-        return self._binop(other, f_plus_g) if s is None else s
+        return self._binop(other, f_plus_g)
 
-    def __sub__(self, other):
+    def __sub__(self, other: operator_input) -&gt; ArithmeticOpBase:
         s = self._simple_sub(other)
+        if s: return s
         from .combos import f_minus_g
-        return self._binop(other, f_minus_g) if s is None else s
+        return self._binop(other, f_minus_g)
 
-    def __mul__(self, other):
+    def __mul__(self, other: operator_input) -&gt; ArithmeticOpBase:
         s = self._simple_mul(other)
+        if s: return s
         from .combos import f_times_g
-        return self._binop(other, f_times_g) if s is None else s
+        return self._binop(other, f_times_g)
 
-    def __truediv__(self, other):
+    def __truediv__(self, other: operator_input) -&gt; ArithmeticOpBase:
         s = self._simple_div(other)
+        if s: return s
         from .combos import f_divided_by_g
-        return self._binop(other, f_divided_by_g) if s is None else s
+        return self._binop(other, f_divided_by_g)
 
-    def __pow__(self, other):
+    def __pow__(self, other: operator_input) -&gt; ArithmeticOpBase:
         s = self._simple_exp(other)
+        if s: return s
         from .combos import f_raised_to_g
-        return self._binop(other, f_raised_to_g) if s is None else s</code></pre>
+        return self._binop(other, f_raised_to_g)</code></pre>
 </details>
 <h3>Subclasses</h3>
 <ul class="hlist">
@@ -426,7 +427,7 @@ argument), then the outer on the input.</p>
 <h3>Methods</h3>
 <dl>
 <dt id="src.operators.base_arithmetic.ArithmeticOpBase.derivative"><code class="name flex">
-<span>def <span class="ident">derivative</span></span>(<span>self)</span>
+<span>def <span class="ident">derivative</span></span>(<span>self) ‑> str</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns a string form of the derivative of this function.</p>
@@ -441,7 +442,7 @@ argument), then the outer on the input.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def derivative(self):
+<pre><code class="python">def derivative(self) -&gt; str:
     &#34;&#34;&#34;Returns a string form of the derivative of this function.
 
     Formatted as an expression (i.e. no &#39;f(x) = &#39;) for recursive reasons.
@@ -456,7 +457,7 @@ argument), then the outer on the input.</p>
 </details>
 </dd>
 <dt id="src.operators.base_arithmetic.ArithmeticOpBase.f"><code class="name flex">
-<span>def <span class="ident">f</span></span>(<span>self, x)</span>
+<span>def <span class="ident">f</span></span>(<span>self, x: number) ‑> Union[int, float, <a title="src.fractions.Fraction" href="../fractions.html#src.fractions.Fraction">Fraction</a>]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns the result of the function called on x.</p>
@@ -470,7 +471,7 @@ argument), then the outer on the input.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def f(self, x):
+<pre><code class="python">def f(self, x: number) -&gt; number:
     &#34;&#34;&#34;Returns the result of the function called on x.
     
     Args:
@@ -483,7 +484,7 @@ argument), then the outer on the input.</p>
 </details>
 </dd>
 <dt id="src.operators.base_arithmetic.ArithmeticOpBase.f_prime"><code class="name flex">
-<span>def <span class="ident">f_prime</span></span>(<span>self)</span>
+<span>def <span class="ident">f_prime</span></span>(<span>self) ‑> <a title="src.operators.base_arithmetic.ArithmeticOpBase" href="#src.operators.base_arithmetic.ArithmeticOpBase">ArithmeticOpBase</a></span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns a function that returns the instantaneous slope at x.</p>
@@ -497,7 +498,7 @@ argument), then the outer on the input.</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def f_prime(self):
+<pre><code class="python">def f_prime(self) -&gt; ArithmeticOpBase:
     &#34;&#34;&#34;Returns a function that returns the instantaneous slope at x.
     
     Args:

@@ -28,8 +28,9 @@
 </summary>
 <pre><code class="python">from collections import deque
 import numpy as np
+from typing import Deque
 
-def rolling_average(x, n_buckets = 0):
+def rolling_average(x: np.ndarray, n_buckets: int = 0) -&gt; np.ndarray:
     &#34;&#34;&#34;Returns the values for a rolling average of x.
     
     Specifically, the ith value in x will correspond to the average of
@@ -45,9 +46,9 @@ def rolling_average(x, n_buckets = 0):
     :   avgs (np.array) : the array of rolling averages
     &#34;&#34;&#34;
     res = np.empty(x.shape[0])
-    q = deque()
-    curr_total = 0
-    n_buckets = n_buckets if n_buckets else x.shape[0] / 10
+    q: Deque[float] = deque()
+    curr_total: float = 0
+    n_buckets = n_buckets if n_buckets else x.shape[0] // 10
     for i in range(x.shape[0]):
         if len(q) &gt;= n_buckets:
             curr_total -= q.popleft()
@@ -67,7 +68,7 @@ def rolling_average(x, n_buckets = 0):
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="src.stats.rolling_average"><code class="name flex">
-<span>def <span class="ident">rolling_average</span></span>(<span>x, n_buckets=0)</span>
+<span>def <span class="ident">rolling_average</span></span>(<span>x: numpy.ndarray, n_buckets: int = 0) ‑> numpy.ndarray</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns the values for a rolling average of x.</p>
@@ -86,7 +87,7 @@ n_buckets will be one-tenth the length of x</dd>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def rolling_average(x, n_buckets = 0):
+<pre><code class="python">def rolling_average(x: np.ndarray, n_buckets: int = 0) -&gt; np.ndarray:
     &#34;&#34;&#34;Returns the values for a rolling average of x.
     
     Specifically, the ith value in x will correspond to the average of
@@ -102,9 +103,9 @@ n_buckets will be one-tenth the length of x</dd>
     :   avgs (np.array) : the array of rolling averages
     &#34;&#34;&#34;
     res = np.empty(x.shape[0])
-    q = deque()
-    curr_total = 0
-    n_buckets = n_buckets if n_buckets else x.shape[0] / 10
+    q: Deque[float] = deque()
+    curr_total: float = 0
+    n_buckets = n_buckets if n_buckets else x.shape[0] // 10
     for i in range(x.shape[0]):
         if len(q) &gt;= n_buckets:
             curr_total -= q.popleft()

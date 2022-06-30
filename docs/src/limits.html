@@ -26,12 +26,20 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from copy import deepcopy
+<pre><code class="python">from __future__ import annotations
+from copy import deepcopy
 import math
 from .frange import frange
-from .utilities import close_enough
+from .utilities import close_enough, number
+from typing import Callable, List
+from .fractions import frac_abs
 
-def analytical_limit(func, approaching, precision = 2, step = 1e-3):
+def analytical_limit(
+    func: Callable[[number], number], 
+    approaching: number, 
+    precision: number = 2, 
+    step: number = 1e-3
+    ) -&gt; number:
     &#34;&#34;&#34;Finds the analytical limit of the function approaching the given number.
 
     Args:
@@ -43,8 +51,8 @@ def analytical_limit(func, approaching, precision = 2, step = 1e-3):
     Returns:
     :   limit (float) : the analytical limit of the function
     &#34;&#34;&#34;
-    total_y = 0
-    total_w = 0
+    total_y: number = 0
+    total_w: number = 0
     for i in frange(approaching - step * precision, approaching + step * (precision + 1), step):
         if not close_enough(i, approaching):
             w = step / math.fabs(approaching - i)
@@ -52,7 +60,12 @@ def analytical_limit(func, approaching, precision = 2, step = 1e-3):
             total_w += w
     return total_y / total_w
 
-def limit(func, approaching, precision = 2, step = 1e-3):
+def limit(
+    func: Callable[[number], number], 
+    approaching: number, 
+    precision: number = 2, 
+    step: number = 1e-3
+    ) -&gt; number:
     &#34;&#34;&#34;Returns the limit of the function at approaching.
     
     First checks if approaching is in the function&#39;s domain, then 
@@ -72,7 +85,7 @@ def limit(func, approaching, precision = 2, step = 1e-3):
     except:
         return analytical_limit(func, approaching, precision, step)
 
-def diff_quo(func, x):
+def diff_quo(func: Callable[[number], number], x: number) -&gt; number:
     &#34;&#34;&#34;Returns the derivative of func at x using the difference quotient.
 
     Args:
@@ -84,7 +97,7 @@ def diff_quo(func, x):
     &#34;&#34;&#34;
     return analytical_limit(lambda h: (func(x + h) - func(x)) / h, 0)
 
-def assign_return(lst, ind, new_val):
+def assign_return(lst: List[number], ind: int, new_val: number) -&gt; List[number]:
     &#34;&#34;&#34;Assigns new_val to lst[ind] and returns the list.
 
     Useful for lambda functions -
@@ -102,7 +115,11 @@ def assign_return(lst, ind, new_val):
     res[ind] = new_val
     return res
 
-def part_derivative(func, xs, x_ind):
+def part_derivative(
+    func: Callable[[List[number]], number], 
+    xs: List[number], 
+    x_ind: int
+    ) -&gt; number:
     &#34;&#34;&#34;Returns the partial derivative with respect to x_{x_ind} of xs.
 
     Args:
@@ -115,7 +132,12 @@ def part_derivative(func, xs, x_ind):
     &#34;&#34;&#34;
     return diff_quo(lambda n: func(assign_return(xs, x_ind, n)), xs[x_ind])
 
-def get_root(func, guess, thresh = 1e-3, max_iters = 20):
+def get_root(
+    func: Callable[[number], number], 
+    guess: number, 
+    thresh: number = 1e-3, 
+    max_iters: number = 20
+    ) -&gt; number:
     &#34;&#34;&#34;Returns an approximation of the root (where it equals zero) of the function.
 
     Needs a reasonably good initial guess to work
@@ -130,10 +152,10 @@ def get_root(func, guess, thresh = 1e-3, max_iters = 20):
     Returns:
     :   root (float) : where the function equals zero
     &#34;&#34;&#34;
-    get_new = lambda g: guess - func(guess) / diff_quo(func, guess)
+    get_new = lambda g: g - func(g) / diff_quo(func, g)
     new = get_new(guess)
     iters = 0
-    while abs(new - guess) &gt; thresh and iters &lt; max_iters:
+    while frac_abs(new - guess) &gt; thresh and iters &lt; max_iters:
         guess = new
         new = get_new(guess)
         iters += 1
@@ -168,7 +190,7 @@ def get_root(func, guess, thresh = 1e-3, max_iters = 20):
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="src.limits.analytical_limit"><code class="name flex">
-<span>def <span class="ident">analytical_limit</span></span>(<span>func, approaching, precision=2, step=0.001)</span>
+<span>def <span class="ident">analytical_limit</span></span>(<span>func: Callable[[number], number], approaching: number, precision: number = 2, step: number = 0.001) ‑> Union[int, float, <a title="src.fractions.Fraction" href="fractions.html#src.fractions.Fraction">Fraction</a>]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Finds the analytical limit of the function approaching the given number.</p>
@@ -185,7 +207,12 @@ def get_root(func, guess, thresh = 1e-3, max_iters = 20):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def analytical_limit(func, approaching, precision = 2, step = 1e-3):
+<pre><code class="python">def analytical_limit(
+    func: Callable[[number], number], 
+    approaching: number, 
+    precision: number = 2, 
+    step: number = 1e-3
+    ) -&gt; number:
     &#34;&#34;&#34;Finds the analytical limit of the function approaching the given number.
 
     Args:
@@ -197,8 +224,8 @@ def get_root(func, guess, thresh = 1e-3, max_iters = 20):
     Returns:
     :   limit (float) : the analytical limit of the function
     &#34;&#34;&#34;
-    total_y = 0
-    total_w = 0
+    total_y: number = 0
+    total_w: number = 0
     for i in frange(approaching - step * precision, approaching + step * (precision + 1), step):
         if not close_enough(i, approaching):
             w = step / math.fabs(approaching - i)
@@ -208,7 +235,7 @@ def get_root(func, guess, thresh = 1e-3, max_iters = 20):
 </details>
 </dd>
 <dt id="src.limits.assign_return"><code class="name flex">
-<span>def <span class="ident">assign_return</span></span>(<span>lst, ind, new_val)</span>
+<span>def <span class="ident">assign_return</span></span>(<span>lst: List[number], ind: int, new_val: number) ‑> List[Union[int, float, <a title="src.fractions.Fraction" href="fractions.html#src.fractions.Fraction">Fraction</a>]]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Assigns new_val to lst[ind] and returns the list.</p>
@@ -226,7 +253,7 @@ Does not modify the original list</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def assign_return(lst, ind, new_val):
+<pre><code class="python">def assign_return(lst: List[number], ind: int, new_val: number) -&gt; List[number]:
     &#34;&#34;&#34;Assigns new_val to lst[ind] and returns the list.
 
     Useful for lambda functions -
@@ -246,7 +273,7 @@ Does not modify the original list</p>
 </details>
 </dd>
 <dt id="src.limits.diff_quo"><code class="name flex">
-<span>def <span class="ident">diff_quo</span></span>(<span>func, x)</span>
+<span>def <span class="ident">diff_quo</span></span>(<span>func: Callable[[number], number], x: number) ‑> Union[int, float, <a title="src.fractions.Fraction" href="fractions.html#src.fractions.Fraction">Fraction</a>]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns the derivative of func at x using the difference quotient.</p>
@@ -261,7 +288,7 @@ Does not modify the original list</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def diff_quo(func, x):
+<pre><code class="python">def diff_quo(func: Callable[[number], number], x: number) -&gt; number:
     &#34;&#34;&#34;Returns the derivative of func at x using the difference quotient.
 
     Args:
@@ -275,7 +302,7 @@ Does not modify the original list</p>
 </details>
 </dd>
 <dt id="src.limits.get_root"><code class="name flex">
-<span>def <span class="ident">get_root</span></span>(<span>func, guess, thresh=0.001, max_iters=20)</span>
+<span>def <span class="ident">get_root</span></span>(<span>func: Callable[[number], number], guess: number, thresh: number = 0.001, max_iters: number = 20) ‑> Union[int, float, <a title="src.fractions.Fraction" href="fractions.html#src.fractions.Fraction">Fraction</a>]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns an approximation of the root (where it equals zero) of the function.</p>
@@ -294,7 +321,12 @@ needs to be reasonably good</dd>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_root(func, guess, thresh = 1e-3, max_iters = 20):
+<pre><code class="python">def get_root(
+    func: Callable[[number], number], 
+    guess: number, 
+    thresh: number = 1e-3, 
+    max_iters: number = 20
+    ) -&gt; number:
     &#34;&#34;&#34;Returns an approximation of the root (where it equals zero) of the function.
 
     Needs a reasonably good initial guess to work
@@ -309,10 +341,10 @@ needs to be reasonably good</dd>
     Returns:
     :   root (float) : where the function equals zero
     &#34;&#34;&#34;
-    get_new = lambda g: guess - func(guess) / diff_quo(func, guess)
+    get_new = lambda g: g - func(g) / diff_quo(func, g)
     new = get_new(guess)
     iters = 0
-    while abs(new - guess) &gt; thresh and iters &lt; max_iters:
+    while frac_abs(new - guess) &gt; thresh and iters &lt; max_iters:
         guess = new
         new = get_new(guess)
         iters += 1
@@ -320,7 +352,7 @@ needs to be reasonably good</dd>
 </details>
 </dd>
 <dt id="src.limits.limit"><code class="name flex">
-<span>def <span class="ident">limit</span></span>(<span>func, approaching, precision=2, step=0.001)</span>
+<span>def <span class="ident">limit</span></span>(<span>func: Callable[[number], number], approaching: number, precision: number = 2, step: number = 0.001) ‑> Union[int, float, <a title="src.fractions.Fraction" href="fractions.html#src.fractions.Fraction">Fraction</a>]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns the limit of the function at approaching.</p>
@@ -339,7 +371,12 @@ finds the analytical limit</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def limit(func, approaching, precision = 2, step = 1e-3):
+<pre><code class="python">def limit(
+    func: Callable[[number], number], 
+    approaching: number, 
+    precision: number = 2, 
+    step: number = 1e-3
+    ) -&gt; number:
     &#34;&#34;&#34;Returns the limit of the function at approaching.
     
     First checks if approaching is in the function&#39;s domain, then 
@@ -361,7 +398,7 @@ finds the analytical limit</p>
 </details>
 </dd>
 <dt id="src.limits.part_derivative"><code class="name flex">
-<span>def <span class="ident">part_derivative</span></span>(<span>func, xs, x_ind)</span>
+<span>def <span class="ident">part_derivative</span></span>(<span>func: Callable[[List[number]], number], xs: List[number], x_ind: int) ‑> Union[int, float, <a title="src.fractions.Fraction" href="fractions.html#src.fractions.Fraction">Fraction</a>]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns the partial derivative with respect to x_{x_ind} of xs.</p>
@@ -378,7 +415,11 @@ func (function: (listof float) -&gt; float) : the function to evaluate</dt>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def part_derivative(func, xs, x_ind):
+<pre><code class="python">def part_derivative(
+    func: Callable[[List[number]], number], 
+    xs: List[number], 
+    x_ind: int
+    ) -&gt; number:
     &#34;&#34;&#34;Returns the partial derivative with respect to x_{x_ind} of xs.
 
     Args:

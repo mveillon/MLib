@@ -26,33 +26,38 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class Token:
-    def __eq__(self, other):
+<pre><code class="python">from __future__ import annotations
+from ...utilities import number
+
+class Token:
+    def __eq__(self, other) -&gt; bool:
         return type(other) == type(self)
 
 class Num (Token):
-    def __init__(self, n):
+    def __init__(self, n: number):
         self.n = n
 
-    def __eq__(self, other):
-        super().__eq__(other) and self.n == other.n
+    def __eq__(self, other) -&gt; bool:
+        return super().__eq__(other) and self.n == other.n
 
 class Var (Token):
-    def __init__(self, s):
+    def __init__(self, s: str):
         self.s = s
 
-    def __eq__(self, other):
-        super().__eq__(other) and self.s == other.s
+    def __eq__(self, other) -&gt; bool:
+        return super().__eq__(other) and self.s == other.s
 
 class _BinOp (Token):
-    def __init__(self, l, r):
+    def __init__(self, l: Token, r: Token):
         self.l = l
         self.r = r
 
-    def __eq__(self, other):
-        (super().__eq__(other) and 
-         self.l == other.l and 
-         self.r == other.r)
+    def __eq__(self, other) -&gt; bool:
+        return (
+            super().__eq__(other) and 
+            self.l == other.l and 
+            self.r == other.r
+        )
 
 class Plus (_BinOp):
     pass
@@ -70,20 +75,20 @@ class Exponent (_BinOp):
     pass
 
 class Log (Token):
-    def __init__(self, base, expr):
+    def __init__(self, base: Token, expr: Token):
         self.base = base
         self.expr = expr
 
-    def __eq__(self, other):
+    def __eq__(self, other) -&gt; bool:
         return (super().__eq__(other) and 
                 self.base == other.base and 
                 self.expr == other.expr)
 
 class _Trig (Token):
-    def __init__(self, expr):
+    def __init__(self, expr: Token):
         self.expr = expr
 
-    def __eq__(self, other):
+    def __eq__(self, other) -&gt; bool:
         return super().__eq__(other) and self.expr == other.expr
 
 class Sin (_Trig):
@@ -116,7 +121,7 @@ class ArcTan (_Trig):
 <dl>
 <dt id="src.operators.parsing.token_types.ArcCos"><code class="flex name class">
 <span>class <span class="ident">ArcCos</span></span>
-<span>(</span><span>expr)</span>
+<span>(</span><span>expr: <a title="src.operators.parsing.token_types.Token" href="#src.operators.parsing.token_types.Token">Token</a>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -135,7 +140,7 @@ class ArcTan (_Trig):
 </dd>
 <dt id="src.operators.parsing.token_types.ArcSin"><code class="flex name class">
 <span>class <span class="ident">ArcSin</span></span>
-<span>(</span><span>expr)</span>
+<span>(</span><span>expr: <a title="src.operators.parsing.token_types.Token" href="#src.operators.parsing.token_types.Token">Token</a>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -154,7 +159,7 @@ class ArcTan (_Trig):
 </dd>
 <dt id="src.operators.parsing.token_types.ArcTan"><code class="flex name class">
 <span>class <span class="ident">ArcTan</span></span>
-<span>(</span><span>expr)</span>
+<span>(</span><span>expr: <a title="src.operators.parsing.token_types.Token" href="#src.operators.parsing.token_types.Token">Token</a>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -173,7 +178,7 @@ class ArcTan (_Trig):
 </dd>
 <dt id="src.operators.parsing.token_types.Cos"><code class="flex name class">
 <span>class <span class="ident">Cos</span></span>
-<span>(</span><span>expr)</span>
+<span>(</span><span>expr: <a title="src.operators.parsing.token_types.Token" href="#src.operators.parsing.token_types.Token">Token</a>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -192,7 +197,7 @@ class ArcTan (_Trig):
 </dd>
 <dt id="src.operators.parsing.token_types.Divide"><code class="flex name class">
 <span>class <span class="ident">Divide</span></span>
-<span>(</span><span>l, r)</span>
+<span>(</span><span>l: <a title="src.operators.parsing.token_types.Token" href="#src.operators.parsing.token_types.Token">Token</a>, r: <a title="src.operators.parsing.token_types.Token" href="#src.operators.parsing.token_types.Token">Token</a>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -211,7 +216,7 @@ class ArcTan (_Trig):
 </dd>
 <dt id="src.operators.parsing.token_types.Exponent"><code class="flex name class">
 <span>class <span class="ident">Exponent</span></span>
-<span>(</span><span>l, r)</span>
+<span>(</span><span>l: <a title="src.operators.parsing.token_types.Token" href="#src.operators.parsing.token_types.Token">Token</a>, r: <a title="src.operators.parsing.token_types.Token" href="#src.operators.parsing.token_types.Token">Token</a>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -230,7 +235,7 @@ class ArcTan (_Trig):
 </dd>
 <dt id="src.operators.parsing.token_types.Log"><code class="flex name class">
 <span>class <span class="ident">Log</span></span>
-<span>(</span><span>base, expr)</span>
+<span>(</span><span>base: <a title="src.operators.parsing.token_types.Token" href="#src.operators.parsing.token_types.Token">Token</a>, expr: <a title="src.operators.parsing.token_types.Token" href="#src.operators.parsing.token_types.Token">Token</a>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -239,11 +244,11 @@ class ArcTan (_Trig):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Log (Token):
-    def __init__(self, base, expr):
+    def __init__(self, base: Token, expr: Token):
         self.base = base
         self.expr = expr
 
-    def __eq__(self, other):
+    def __eq__(self, other) -&gt; bool:
         return (super().__eq__(other) and 
                 self.base == other.base and 
                 self.expr == other.expr)</code></pre>
@@ -255,7 +260,7 @@ class ArcTan (_Trig):
 </dd>
 <dt id="src.operators.parsing.token_types.Minus"><code class="flex name class">
 <span>class <span class="ident">Minus</span></span>
-<span>(</span><span>l, r)</span>
+<span>(</span><span>l: <a title="src.operators.parsing.token_types.Token" href="#src.operators.parsing.token_types.Token">Token</a>, r: <a title="src.operators.parsing.token_types.Token" href="#src.operators.parsing.token_types.Token">Token</a>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -274,7 +279,7 @@ class ArcTan (_Trig):
 </dd>
 <dt id="src.operators.parsing.token_types.Num"><code class="flex name class">
 <span>class <span class="ident">Num</span></span>
-<span>(</span><span>n)</span>
+<span>(</span><span>n: number)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -283,11 +288,11 @@ class ArcTan (_Trig):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Num (Token):
-    def __init__(self, n):
+    def __init__(self, n: number):
         self.n = n
 
-    def __eq__(self, other):
-        super().__eq__(other) and self.n == other.n</code></pre>
+    def __eq__(self, other) -&gt; bool:
+        return super().__eq__(other) and self.n == other.n</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">
@@ -296,7 +301,7 @@ class ArcTan (_Trig):
 </dd>
 <dt id="src.operators.parsing.token_types.Plus"><code class="flex name class">
 <span>class <span class="ident">Plus</span></span>
-<span>(</span><span>l, r)</span>
+<span>(</span><span>l: <a title="src.operators.parsing.token_types.Token" href="#src.operators.parsing.token_types.Token">Token</a>, r: <a title="src.operators.parsing.token_types.Token" href="#src.operators.parsing.token_types.Token">Token</a>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -315,7 +320,7 @@ class ArcTan (_Trig):
 </dd>
 <dt id="src.operators.parsing.token_types.Sin"><code class="flex name class">
 <span>class <span class="ident">Sin</span></span>
-<span>(</span><span>expr)</span>
+<span>(</span><span>expr: <a title="src.operators.parsing.token_types.Token" href="#src.operators.parsing.token_types.Token">Token</a>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -334,7 +339,7 @@ class ArcTan (_Trig):
 </dd>
 <dt id="src.operators.parsing.token_types.Tan"><code class="flex name class">
 <span>class <span class="ident">Tan</span></span>
-<span>(</span><span>expr)</span>
+<span>(</span><span>expr: <a title="src.operators.parsing.token_types.Token" href="#src.operators.parsing.token_types.Token">Token</a>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -353,7 +358,7 @@ class ArcTan (_Trig):
 </dd>
 <dt id="src.operators.parsing.token_types.Times"><code class="flex name class">
 <span>class <span class="ident">Times</span></span>
-<span>(</span><span>l, r)</span>
+<span>(</span><span>l: <a title="src.operators.parsing.token_types.Token" href="#src.operators.parsing.token_types.Token">Token</a>, r: <a title="src.operators.parsing.token_types.Token" href="#src.operators.parsing.token_types.Token">Token</a>)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -380,7 +385,7 @@ class ArcTan (_Trig):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Token:
-    def __eq__(self, other):
+    def __eq__(self, other) -&gt; bool:
         return type(other) == type(self)</code></pre>
 </details>
 <h3>Subclasses</h3>
@@ -394,7 +399,7 @@ class ArcTan (_Trig):
 </dd>
 <dt id="src.operators.parsing.token_types.Var"><code class="flex name class">
 <span>class <span class="ident">Var</span></span>
-<span>(</span><span>s)</span>
+<span>(</span><span>s: str)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -403,11 +408,11 @@ class ArcTan (_Trig):
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">class Var (Token):
-    def __init__(self, s):
+    def __init__(self, s: str):
         self.s = s
 
-    def __eq__(self, other):
-        super().__eq__(other) and self.s == other.s</code></pre>
+    def __eq__(self, other) -&gt; bool:
+        return super().__eq__(other) and self.s == other.s</code></pre>
 </details>
 <h3>Ancestors</h3>
 <ul class="hlist">

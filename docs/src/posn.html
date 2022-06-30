@@ -26,9 +26,11 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">import math
+<pre><code class="python">from __future__ import annotations
+import math
 from .utilities import can_be_int
 from .string_math import rad
+from .utilities import number
 
 class Posn:
     &#34;&#34;&#34;A container for 2D positions that supports lots of operations.
@@ -38,49 +40,49 @@ class Posn:
         
         y (int | float) : the y coordinate
     &#34;&#34;&#34;
-    def __init__(self, x, y):
+    def __init__(self, x: number, y: number):
         self.x = x
         self.y = y
         
-    def __str__(self):
+    def __str__(self) -&gt; str:
         &#34;&#34;&#34;A string representation of the position.&#34;&#34;&#34;
         return f&#39;({self.x}, {self.y})&#39;
     
-    def __eq__(self, other):
+    def __eq__(self, other) -&gt; bool:
         &#34;&#34;&#34;Returns whether the two positions are equal.&#34;&#34;&#34;
         return self.x == other.x and self.y == other.y
     
-    def __ne__(self, other):
+    def __ne__(self, other) -&gt; bool:
         &#34;&#34;&#34;Returns whether the two positions are not equal.&#34;&#34;&#34;
         return not self == other
     
-    def __gt__(self, other):
+    def __gt__(self, other) -&gt; bool:
         &#34;&#34;&#34;Returns whether the first posn is greater lexigraphically.&#34;&#34;&#34;
         if self.x == other.x:
             return self.y &gt; other.y
         else:
             return self.x &gt; other.x
         
-    def __lt__(self, other):
+    def __lt__(self, other) -&gt; bool:
         &#34;&#34;&#34;Returns whether the first posn is lesser lexigraphically.&#34;&#34;&#34;
         return not (self &gt; other or self == other)
     
-    def __ge__(self, other):
+    def __ge__(self, other) -&gt; bool:
         &#34;&#34;&#34;Returns whether the first posn is greater or equal lexigraphically.&#34;&#34;&#34;
         return self &gt; other or self == other
     
-    def __le__(self, other):
+    def __le__(self, other) -&gt; bool:
         &#34;&#34;&#34;Returns whether the first posn is lesser or equal lexigraphically.&#34;&#34;&#34;
         return self &lt; other or self == other
     
-    def distance(self, other):
+    def distance(self, other: Posn) -&gt; str:
         &#34;&#34;&#34;Returns the distance between the positions as a string.&#34;&#34;&#34;
         res = ((other.x - self.x) ** 2 +
                (other.y - self.y) ** 2)
         if can_be_int(math.sqrt(res)):
             return str(int(math.sqrt(res)))
 
-        return rad(res)
+        return rad(int(res))
   </code></pre>
 </details>
 </section>
@@ -95,7 +97,7 @@ class Posn:
 <dl>
 <dt id="src.posn.Posn"><code class="flex name class">
 <span>class <span class="ident">Posn</span></span>
-<span>(</span><span>x, y)</span>
+<span>(</span><span>x: number, y: number)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>A container for 2D positions that supports lots of operations.</p>
@@ -114,54 +116,54 @@ class Posn:
         
         y (int | float) : the y coordinate
     &#34;&#34;&#34;
-    def __init__(self, x, y):
+    def __init__(self, x: number, y: number):
         self.x = x
         self.y = y
         
-    def __str__(self):
+    def __str__(self) -&gt; str:
         &#34;&#34;&#34;A string representation of the position.&#34;&#34;&#34;
         return f&#39;({self.x}, {self.y})&#39;
     
-    def __eq__(self, other):
+    def __eq__(self, other) -&gt; bool:
         &#34;&#34;&#34;Returns whether the two positions are equal.&#34;&#34;&#34;
         return self.x == other.x and self.y == other.y
     
-    def __ne__(self, other):
+    def __ne__(self, other) -&gt; bool:
         &#34;&#34;&#34;Returns whether the two positions are not equal.&#34;&#34;&#34;
         return not self == other
     
-    def __gt__(self, other):
+    def __gt__(self, other) -&gt; bool:
         &#34;&#34;&#34;Returns whether the first posn is greater lexigraphically.&#34;&#34;&#34;
         if self.x == other.x:
             return self.y &gt; other.y
         else:
             return self.x &gt; other.x
         
-    def __lt__(self, other):
+    def __lt__(self, other) -&gt; bool:
         &#34;&#34;&#34;Returns whether the first posn is lesser lexigraphically.&#34;&#34;&#34;
         return not (self &gt; other or self == other)
     
-    def __ge__(self, other):
+    def __ge__(self, other) -&gt; bool:
         &#34;&#34;&#34;Returns whether the first posn is greater or equal lexigraphically.&#34;&#34;&#34;
         return self &gt; other or self == other
     
-    def __le__(self, other):
+    def __le__(self, other) -&gt; bool:
         &#34;&#34;&#34;Returns whether the first posn is lesser or equal lexigraphically.&#34;&#34;&#34;
         return self &lt; other or self == other
     
-    def distance(self, other):
+    def distance(self, other: Posn) -&gt; str:
         &#34;&#34;&#34;Returns the distance between the positions as a string.&#34;&#34;&#34;
         res = ((other.x - self.x) ** 2 +
                (other.y - self.y) ** 2)
         if can_be_int(math.sqrt(res)):
             return str(int(math.sqrt(res)))
 
-        return rad(res)</code></pre>
+        return rad(int(res))</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
 <dt id="src.posn.Posn.distance"><code class="name flex">
-<span>def <span class="ident">distance</span></span>(<span>self, other)</span>
+<span>def <span class="ident">distance</span></span>(<span>self, other: <a title="src.posn.Posn" href="#src.posn.Posn">Posn</a>) ‑> str</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns the distance between the positions as a string.</p></div>
@@ -169,14 +171,14 @@ class Posn:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def distance(self, other):
+<pre><code class="python">def distance(self, other: Posn) -&gt; str:
     &#34;&#34;&#34;Returns the distance between the positions as a string.&#34;&#34;&#34;
     res = ((other.x - self.x) ** 2 +
            (other.y - self.y) ** 2)
     if can_be_int(math.sqrt(res)):
         return str(int(math.sqrt(res)))
 
-    return rad(res)</code></pre>
+    return rad(int(res))</code></pre>
 </details>
 </dd>
 </dl>

@@ -26,24 +26,29 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def even(n):
+<pre><code class="python">from typing import Union, Any
+from .fractions import Fraction
+
+number = Union[int, float, Fraction]
+
+def even(n: int) -&gt; bool:
     &#34;&#34;&#34;Returns whether n is even.&#34;&#34;&#34;
     return not n &amp; 1
 
-def odd(n):
+def odd(n: int) -&gt; bool:
     &#34;&#34;&#34;Returns whether n is odd.&#34;&#34;&#34;
-    return n &amp; 1
+    return bool(n &amp; 1)
 
-def is_truthy(thing):
+def is_truthy(thing: Any) -&gt; bool:
     &#34;&#34;&#34;Returns whether thing is truthy.&#34;&#34;&#34;
     return bool(thing)
     
-def close_enough(num1, num2):
+def close_enough(num1: number, num2: number) -&gt; bool:
     &#34;&#34;&#34;Returns whether the two numbers are close enough within floating point error.&#34;&#34;&#34;
     diff = num1 - num2
     return diff &lt; 0.001 and diff &gt; -0.001
 
-def can_be_int(thing):
+def can_be_int(thing: Any) -&gt; bool:
     &#34;&#34;&#34;Returns whether thing can be an integer.
 
     If thing is a float, it will check if thing is close_enough to the nearest integer.
@@ -72,7 +77,7 @@ def can_be_int(thing):
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="src.utilities.can_be_int"><code class="name flex">
-<span>def <span class="ident">can_be_int</span></span>(<span>thing)</span>
+<span>def <span class="ident">can_be_int</span></span>(<span>thing: Any) ‑> bool</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns whether thing can be an integer.</p>
@@ -88,7 +93,7 @@ Otherwise it will try to cast thing as an int</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def can_be_int(thing):
+<pre><code class="python">def can_be_int(thing: Any) -&gt; bool:
     &#34;&#34;&#34;Returns whether thing can be an integer.
 
     If thing is a float, it will check if thing is close_enough to the nearest integer.
@@ -110,7 +115,7 @@ Otherwise it will try to cast thing as an int</p>
 </details>
 </dd>
 <dt id="src.utilities.close_enough"><code class="name flex">
-<span>def <span class="ident">close_enough</span></span>(<span>num1, num2)</span>
+<span>def <span class="ident">close_enough</span></span>(<span>num1: Union[int, float, <a title="src.fractions.Fraction" href="fractions.html#src.fractions.Fraction">Fraction</a>], num2: Union[int, float, <a title="src.fractions.Fraction" href="fractions.html#src.fractions.Fraction">Fraction</a>]) ‑> bool</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns whether the two numbers are close enough within floating point error.</p></div>
@@ -118,14 +123,14 @@ Otherwise it will try to cast thing as an int</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def close_enough(num1, num2):
+<pre><code class="python">def close_enough(num1: number, num2: number) -&gt; bool:
     &#34;&#34;&#34;Returns whether the two numbers are close enough within floating point error.&#34;&#34;&#34;
     diff = num1 - num2
     return diff &lt; 0.001 and diff &gt; -0.001</code></pre>
 </details>
 </dd>
 <dt id="src.utilities.even"><code class="name flex">
-<span>def <span class="ident">even</span></span>(<span>n)</span>
+<span>def <span class="ident">even</span></span>(<span>n: int) ‑> bool</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns whether n is even.</p></div>
@@ -133,13 +138,13 @@ Otherwise it will try to cast thing as an int</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def even(n):
+<pre><code class="python">def even(n: int) -&gt; bool:
     &#34;&#34;&#34;Returns whether n is even.&#34;&#34;&#34;
     return not n &amp; 1</code></pre>
 </details>
 </dd>
 <dt id="src.utilities.is_truthy"><code class="name flex">
-<span>def <span class="ident">is_truthy</span></span>(<span>thing)</span>
+<span>def <span class="ident">is_truthy</span></span>(<span>thing: Any) ‑> bool</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns whether thing is truthy.</p></div>
@@ -147,13 +152,13 @@ Otherwise it will try to cast thing as an int</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def is_truthy(thing):
+<pre><code class="python">def is_truthy(thing: Any) -&gt; bool:
     &#34;&#34;&#34;Returns whether thing is truthy.&#34;&#34;&#34;
     return bool(thing)</code></pre>
 </details>
 </dd>
 <dt id="src.utilities.odd"><code class="name flex">
-<span>def <span class="ident">odd</span></span>(<span>n)</span>
+<span>def <span class="ident">odd</span></span>(<span>n: int) ‑> bool</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns whether n is odd.</p></div>
@@ -161,9 +166,9 @@ Otherwise it will try to cast thing as an int</p>
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def odd(n):
+<pre><code class="python">def odd(n: int) -&gt; bool:
     &#34;&#34;&#34;Returns whether n is odd.&#34;&#34;&#34;
-    return n &amp; 1</code></pre>
+    return bool(n &amp; 1)</code></pre>
 </details>
 </dd>
 </dl>

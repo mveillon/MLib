@@ -26,7 +26,10 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">class Avg_Node:
+<pre><code class="python">from __future__ import annotations
+from typing import Union
+
+class Avg_Node:
     &#34;&#34;&#34;An easy and efficient way to find the average of something.
 
     O(1) space
@@ -38,7 +41,7 @@
         self.count = 0
         self.data = 0
 
-    def __add__(self, num):
+    def __add__(self, num: Union[int, float]) -&gt; Avg_Node:
         &#34;&#34;&#34;Adds the number to the average and adds one to the total count.
 
         Faster than just adding num / total_count because this doesn&#39;t
@@ -49,13 +52,13 @@
         :   num (int | float) : the number to add
 
         Returns:
-        :   None
+        :   self
         &#34;&#34;&#34;
         self.count += 1
         self.data += num
         return self
 
-    def avg(self):
+    def avg(self) -&gt; float:
         &#34;&#34;&#34;Returns the compiled average.
 
         O(1) time
@@ -71,7 +74,7 @@
         else:
             return 0
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         &#34;&#34;&#34;A string representation of the average.&#34;&#34;&#34;
         return str(round(self.avg(), 3))
     </code></pre>
@@ -110,7 +113,7 @@
         self.count = 0
         self.data = 0
 
-    def __add__(self, num):
+    def __add__(self, num: Union[int, float]) -&gt; Avg_Node:
         &#34;&#34;&#34;Adds the number to the average and adds one to the total count.
 
         Faster than just adding num / total_count because this doesn&#39;t
@@ -121,13 +124,13 @@
         :   num (int | float) : the number to add
 
         Returns:
-        :   None
+        :   self
         &#34;&#34;&#34;
         self.count += 1
         self.data += num
         return self
 
-    def avg(self):
+    def avg(self) -&gt; float:
         &#34;&#34;&#34;Returns the compiled average.
 
         O(1) time
@@ -143,14 +146,14 @@
         else:
             return 0
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         &#34;&#34;&#34;A string representation of the average.&#34;&#34;&#34;
         return str(round(self.avg(), 3))</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
 <dt id="src.avg_node.Avg_Node.avg"><code class="name flex">
-<span>def <span class="ident">avg</span></span>(<span>self)</span>
+<span>def <span class="ident">avg</span></span>(<span>self) ‑> float</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns the compiled average.</p>
@@ -165,7 +168,7 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def avg(self):
+<pre><code class="python">def avg(self) -&gt; float:
     &#34;&#34;&#34;Returns the compiled average.
 
     O(1) time

@@ -26,74 +26,76 @@
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .arithmetic import const, exp_n
-from .base_arithmetic import _single_arg
+<pre><code class="python">from __future__ import annotations
+from .arithmetic import const, exp_n
+from .base_arithmetic import ArithmeticOpBase, _single_arg
 from math import sin, cos, tan, asin, acos, atan
+from ..utilities import number
 
 class sine (_single_arg):
     &#34;&#34;&#34;Returns sin(x).&#34;&#34;&#34;
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return sin(x)
     
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return cosine()
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return &#39;sin(x)&#39;
 
 class cosine (_single_arg):
     &#34;&#34;&#34;Returns cos(x).&#34;&#34;&#34;
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return cos(x)
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(-1) * sine()
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return &#39;cos(x)&#39;
 
 class tangent (_single_arg):
     &#34;&#34;&#34;Returns tan(x).&#34;&#34;&#34;
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return tan(x)
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return tangent() ** 2 + 1
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return &#39;tan(x)&#39;
 
 class arcsine (_single_arg):
     &#34;&#34;&#34;Returns sin^-1(x).&#34;&#34;&#34;
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return asin(x)
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(1) / (const(1) - exp_n(2)) ** 0.5
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return &#39;asin(x)&#39;
         
 class arccosine (_single_arg):
     &#34;&#34;&#34;Returns cos^-1(x).&#34;&#34;&#34;
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return acos(x)
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(-1) / (const(1) - exp_n(2)) ** 0.5
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return &#39;acos(x)&#39;
 
 class arctangent (_single_arg):
     &#34;&#34;&#34;Returns tan^-1(x).&#34;&#34;&#34;
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return atan(x)
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(1) / (const(1) + exp_n(2))
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return &#39;atan(x)&#39;</code></pre>
 </details>
 </section>
@@ -117,13 +119,13 @@ class arctangent (_single_arg):
 </summary>
 <pre><code class="python">class arccosine (_single_arg):
     &#34;&#34;&#34;Returns cos^-1(x).&#34;&#34;&#34;
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return acos(x)
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(-1) / (const(1) - exp_n(2)) ** 0.5
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return &#39;acos(x)&#39;</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -153,13 +155,13 @@ class arctangent (_single_arg):
 </summary>
 <pre><code class="python">class arcsine (_single_arg):
     &#34;&#34;&#34;Returns sin^-1(x).&#34;&#34;&#34;
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return asin(x)
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(1) / (const(1) - exp_n(2)) ** 0.5
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return &#39;asin(x)&#39;</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -189,13 +191,13 @@ class arctangent (_single_arg):
 </summary>
 <pre><code class="python">class arctangent (_single_arg):
     &#34;&#34;&#34;Returns tan^-1(x).&#34;&#34;&#34;
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return atan(x)
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(1) / (const(1) + exp_n(2))
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return &#39;atan(x)&#39;</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -225,13 +227,13 @@ class arctangent (_single_arg):
 </summary>
 <pre><code class="python">class cosine (_single_arg):
     &#34;&#34;&#34;Returns cos(x).&#34;&#34;&#34;
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return cos(x)
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return const(-1) * sine()
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return &#39;cos(x)&#39;</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -261,13 +263,13 @@ class arctangent (_single_arg):
 </summary>
 <pre><code class="python">class sine (_single_arg):
     &#34;&#34;&#34;Returns sin(x).&#34;&#34;&#34;
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return sin(x)
     
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return cosine()
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return &#39;sin(x)&#39;</code></pre>
 </details>
 <h3>Ancestors</h3>
@@ -297,13 +299,13 @@ class arctangent (_single_arg):
 </summary>
 <pre><code class="python">class tangent (_single_arg):
     &#34;&#34;&#34;Returns tan(x).&#34;&#34;&#34;
-    def f(self, x):
+    def f(self, x: number) -&gt; number:
         return tan(x)
 
-    def f_prime(self):
+    def f_prime(self) -&gt; ArithmeticOpBase:
         return tangent() ** 2 + 1
 
-    def __str__(self):
+    def __str__(self) -&gt; str:
         return &#39;tan(x)&#39;</code></pre>
 </details>
 <h3>Ancestors</h3>
