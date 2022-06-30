@@ -132,23 +132,3 @@ def get_root(
         new = get_new(guess)
         iters += 1
     return new
-
-# def critical_points(func, n_xs, range_iter = frange(-20, 20, 5)):
-#     roots = []
-#     for xind in range(n_xs):
-#         row = set()
-#         for guess in range_iter:
-#             row |= {round(get_root(lambda n: part_derivative(func, ), guess), 3)}
-#         roots.append(row)
-#     comped = roots[0]
-#     for row in range(1, len(roots)):
-#         comped &= row
-#     return comped
-
-# class _roundNode:
-#     def __init__(self, data, ind):
-#         self.data = data
-#         self.ind = ind
-    
-#     def __eq__(self, other):
-#         return self.data == other.data

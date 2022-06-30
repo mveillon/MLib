@@ -4,12 +4,13 @@ import numpy as np
 from ..fractions import Fraction
 from .base_arithmetic import ArithmeticOpBase, _single_arg, operator_input, simple_return
 from ..utilities import number
+from typing import Union
 
 class const (ArithmeticOpBase):
     """Always returns n i.e. f(x) = n."""
     def __init__(self, n: number):
         super().__init__(n)
-        self.priority = 6
+        self.priority: int = 6
 
     def f(self, x: number) -> number:
         return self.n
@@ -89,7 +90,7 @@ class const (ArithmeticOpBase):
 class identity (_single_arg):
     """Always returns x i.e. f(x) = x."""
     def __init__(self):
-        self.priority = 6
+        self.priority: int = 6
 
     def f(self, x: number) -> number:
         return x
@@ -140,7 +141,7 @@ class add_n (ArithmeticOpBase):
     """Adds x to n i.e. f(x) = x + n."""
     def __init__(self, n: number):
         super().__init__(n)
-        self.priority = 0
+        self.priority: int = 0
 
     def f(self, x: number) -> number:
         return self.n + x
@@ -192,7 +193,7 @@ class sub_n (ArithmeticOpBase):
     """Subtracts n from x i.e. f(x) = x - n."""
     def __init__(self, n):
         super().__init__(n)
-        self.priority = 1
+        self.priority: int = 1
 
     def f(self, x: number) -> number:
         return x - self.n
@@ -240,7 +241,7 @@ class n_sub (ArithmeticOpBase):
     """Subtracts x from n i.e. f(x) = n - x."""
     def __init__(self, n: number):
         super().__init__(n)
-        self.priority = 1
+        self.priority: int = 1
 
     def f(self, x: number) -> number:
         return self.n - x
@@ -284,7 +285,7 @@ class mult_n (ArithmeticOpBase):
     """Multiplies n with the output i.e. f(x) = nx."""
     def __init__(self, n: number):
         super().__init__(n)
-        self.priority = 2
+        self.priority: int = 2
 
     def f(self, x: number) -> number:
         return x * self.n
@@ -338,10 +339,10 @@ class div_n (ArithmeticOpBase):
     """Divides x by n i.e. f(x) = x / n."""
     def __init__(self, n: number):
         super().__init__(n)
-        self.priority = 3
+        self.priority: int = 3
         if self.n == 0:
             raise ZeroDivisionError('Cannot create div_n class with n = 0')
-        self.recip = 1 / self.n
+        self.recip: number = 1 / self.n
 
     def __new__(cls, n):
         if n == 1:
@@ -387,7 +388,7 @@ class n_div (ArithmeticOpBase):
     """Divides n by x i.e. f(x) = n / x."""
     def __init__(self, n: number):
         super().__init__(n)
-        self.priority = 3
+        self.priority: int = 3
 
     def f(self, x: number) -> number:
         return self.n / x
@@ -431,7 +432,7 @@ class floordiv_n (ArithmeticOpBase):
     """Floor divides x by n i.e. f(x) = x // n."""
     def __init__(self, n: number):
         super().__init__(n)
-        self.priority = 3
+        self.priority: int = 3
 
     def f(self, x: number) -> number:
         return x // self.n
@@ -446,7 +447,7 @@ class n_floordiv (ArithmeticOpBase):
     """Floor divides x by n i.e. f(x) = n // x."""
     def __init__(self, n: number):
         super().__init__(n)
-        self.priority = 3
+        self.priority: int = 3
 
     def f(self, x: number) -> number:
         return self.n // x
@@ -466,7 +467,7 @@ class exp_n (ArithmeticOpBase):
     """Raises x to the power of n i.e. f(x) = x ** n."""
     def __init__(self, n: number):
         super().__init__(n)
-        self.priority = 4
+        self.priority: int = 4
 
     def f(self, x: number) -> number:
         return x ** self.n
@@ -494,8 +495,8 @@ class n_exp (ArithmeticOpBase):
     """Raises n to the power of x i.e. f(x) = n ** x."""
     def __init__(self, n: number):
         super().__init__(n)
-        self.priority = 4
-        self.ln = log(self.n) if self.n > 0 else None
+        self.priority: int = 4
+        self.ln: Union[float, None] = log(self.n) if self.n > 0 else None
 
     def f(self, x: number) -> number:
         return self.n ** x
@@ -519,8 +520,8 @@ class log_base_n (ArithmeticOpBase):
         super().__init__(n)
         if self.n <= 0:
             raise ValueError(f'Log base must be greater than 0, not {self.n}')
-        self.ln = log(self.n)
-        self.priority = 5
+        self.ln: float = log(self.n)
+        self.priority: int = 5
 
     def f(self, x: number) -> number:
         return log(x, self.n)
@@ -539,8 +540,8 @@ class log_of_n (ArithmeticOpBase):
         super().__init__(n)
         if self.n <= 0:
             raise ValueError(f'Log argument must be greater than 0, not {self.n}')
-        self.ln = log(self.n)
-        self.priority = 5
+        self.ln: float = log(self.n)
+        self.priority: int = 5
 
     def f(self, x: number) -> number:
         return log(self.n, x)

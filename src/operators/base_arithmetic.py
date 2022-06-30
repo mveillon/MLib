@@ -25,8 +25,8 @@ class ArithmeticOpBase:
         n (number) : the constant to use in the operation
     """
     def __init__(self, n: number):
-        self.n = n
-        self.priority = -1 #higher means it should go first
+        self.n: number = n
+        self.priority: int = -1 #higher means it should go first
 
     def __new__(cls, n: number):
         """We define this to allow simplification."""
@@ -170,7 +170,7 @@ class ArithmeticOpBase:
 class _single_arg (ArithmeticOpBase):
     """Abstract base class for single-argument functions."""
     def __init__(self):
-        self.priority = 5
+        self.priority: int = 5
 
     def __new__(cls):
         o = object.__new__(cls)

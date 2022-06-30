@@ -44,8 +44,8 @@ class Fraction:
         den (int) : the denominator
     &#34;&#34;&#34;
     def __init__(self, num: int, den: int):
-        self._num = num
-        self._den = den
+        self._num: int = num
+        self._den: int = den
         self._reduce()
 
     def __new__(cls, num, den):
@@ -245,7 +245,6 @@ class Fraction:
         &#34;&#34;&#34;
         return Fraction(self._num, self._den)
 
-    # TODO : test me!
     def __neg__(self) -&gt; Fraction:
         &#34;&#34;&#34;Returns -1 * self.
         
@@ -257,7 +256,6 @@ class Fraction:
         &#34;&#34;&#34;
         return Fraction(-self._num, self._den)
 
-    # TODO : test me!
     def __floordiv__(first: Fraction, second: number) -&gt; number:
         &#34;&#34;&#34;Floor divides first by second.
         
@@ -270,7 +268,6 @@ class Fraction:
         &#34;&#34;&#34;
         return float(first) // second
 
-    # TODO : test me!
     def __rfloordiv__(frac: Fraction, numerator: number) -&gt; number:
         &#34;&#34;&#34;Floor divides first by second.
         
@@ -331,7 +328,6 @@ def divide(num: int, den: int) -&gt; number:
     &#34;&#34;&#34;
     return Fraction(num, den)
 
-# TODO : test me!
 def frac_abs(n: number) -&gt; number:
     &#34;&#34;&#34;Returns the absolute value of any number, incuding Fractions.
     
@@ -514,8 +510,8 @@ constructor will return the integer quotient.</p>
         den (int) : the denominator
     &#34;&#34;&#34;
     def __init__(self, num: int, den: int):
-        self._num = num
-        self._den = den
+        self._num: int = num
+        self._den: int = den
         self._reduce()
 
     def __new__(cls, num, den):
@@ -715,7 +711,6 @@ constructor will return the integer quotient.</p>
         &#34;&#34;&#34;
         return Fraction(self._num, self._den)
 
-    # TODO : test me!
     def __neg__(self) -&gt; Fraction:
         &#34;&#34;&#34;Returns -1 * self.
         
@@ -727,7 +722,6 @@ constructor will return the integer quotient.</p>
         &#34;&#34;&#34;
         return Fraction(-self._num, self._den)
 
-    # TODO : test me!
     def __floordiv__(first: Fraction, second: number) -&gt; number:
         &#34;&#34;&#34;Floor divides first by second.
         
@@ -740,7 +734,6 @@ constructor will return the integer quotient.</p>
         &#34;&#34;&#34;
         return float(first) // second
 
-    # TODO : test me!
     def __rfloordiv__(frac: Fraction, numerator: number) -&gt; number:
         &#34;&#34;&#34;Floor divides first by second.
         

@@ -16,8 +16,8 @@ class Fraction:
         den (int) : the denominator
     """
     def __init__(self, num: int, den: int):
-        self._num = num
-        self._den = den
+        self._num: int = num
+        self._den: int = den
         self._reduce()
 
     def __new__(cls, num, den):
@@ -217,7 +217,6 @@ class Fraction:
         """
         return Fraction(self._num, self._den)
 
-    # TODO : test me!
     def __neg__(self) -> Fraction:
         """Returns -1 * self.
         
@@ -229,7 +228,6 @@ class Fraction:
         """
         return Fraction(-self._num, self._den)
 
-    # TODO : test me!
     def __floordiv__(first: Fraction, second: number) -> number:
         """Floor divides first by second.
         
@@ -242,7 +240,6 @@ class Fraction:
         """
         return float(first) // second
 
-    # TODO : test me!
     def __rfloordiv__(frac: Fraction, numerator: number) -> number:
         """Floor divides first by second.
         
@@ -303,7 +300,6 @@ def divide(num: int, den: int) -> number:
     """
     return Fraction(num, den)
 
-# TODO : test me!
 def frac_abs(n: number) -> number:
     """Returns the absolute value of any number, incuding Fractions.
     

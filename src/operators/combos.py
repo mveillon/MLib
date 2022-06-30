@@ -16,8 +16,8 @@ class TwoFunctionsBase (ArithmeticOpBase):
             acts as the second function
     """
     def __init__(self, first: ArithmeticOpBase, second: ArithmeticOpBase):
-        self.first = first
-        self.second = second
+        self.first: ArithmeticOpBase = first
+        self.second: ArithmeticOpBase = second
 
     def __new__(cls, f, g):
         o = object.__new__(cls)
@@ -36,7 +36,7 @@ class chain (TwoFunctionsBase):
     """Returns first(second(x)), with arbitrary functions first and second."""
     def __init__(self, first: ArithmeticOpBase, second: ArithmeticOpBase):
         super().__init__(first, second)
-        self.priority = 5
+        self.priority: int = 5
 
     def f(self, x: number) -> number:
         return self.first(self.second(x))
@@ -60,7 +60,7 @@ class f_plus_g (TwoFunctionsBase):
     """Returns first(x) + second(x)."""
     def __init__(self, first: ArithmeticOpBase, second: ArithmeticOpBase):
         super().__init__(first, second)
-        self.priority = 0
+        self.priority: int = 0
 
     def f(self, x: number) -> number:
         return self.first(x) + self.second(x)
@@ -80,7 +80,7 @@ class f_minus_g (TwoFunctionsBase):
     """Returns first(x) - second(x)."""
     def __init__(self, first: ArithmeticOpBase, second: ArithmeticOpBase):
         super().__init__(first, second)
-        self.priority = 1
+        self.priority: int = 1
 
     def f(self, x: number) -> number:
         return self.first(x) - self.second(x)
@@ -100,7 +100,7 @@ class f_times_g (TwoFunctionsBase):
     """Returns first(x) * second(x)."""
     def __init__(self, first: ArithmeticOpBase, second: ArithmeticOpBase):
         super().__init__(first, second)
-        self.priority = 2
+        self.priority: int = 2
 
     def f(self, x: number) -> number:
         return self.first(x) * self.second(x)
@@ -129,7 +129,7 @@ class f_divided_by_g (TwoFunctionsBase):
     """Returns first(x) / second(x)."""
     def __init__(self, first: ArithmeticOpBase, second: ArithmeticOpBase):
         super().__init__(first, second)
-        self.priority = 3
+        self.priority: int = 3
 
     def f(self, x: number) -> number:
         return self.first(x) / self.second(x)
@@ -151,7 +151,7 @@ class f_raised_to_g (TwoFunctionsBase):
     """Returns first(x) ** second(x)."""
     def __init__(self, first: ArithmeticOpBase, second: ArithmeticOpBase):
         super().__init__(first, second)
-        self.priority = 4
+        self.priority: int = 4
 
     def f(self, x: number) -> number:
         return self.first(x) ** self.second(x)

@@ -28,6 +28,8 @@
 </summary>
 <pre><code class="python">from __future__ import annotations
 from typing import Union
+from .utilities import number
+from .fractions import Fraction
 
 class Avg_Node:
     &#34;&#34;&#34;An easy and efficient way to find the average of something.
@@ -38,8 +40,8 @@ class Avg_Node:
         None
     &#34;&#34;&#34;
     def __init__(self):
-        self.count = 0
-        self.data = 0
+        self.count: int = 0
+        self.data: number = 0
 
     def __add__(self, num: Union[int, float]) -&gt; Avg_Node:
         &#34;&#34;&#34;Adds the number to the average and adds one to the total count.
@@ -58,7 +60,7 @@ class Avg_Node:
         self.data += num
         return self
 
-    def avg(self) -&gt; float:
+    def avg(self) -&gt; number:
         &#34;&#34;&#34;Returns the compiled average.
 
         O(1) time
@@ -76,7 +78,10 @@ class Avg_Node:
 
     def __str__(self) -&gt; str:
         &#34;&#34;&#34;A string representation of the average.&#34;&#34;&#34;
-        return str(round(self.avg(), 3))
+        a = self.avg()
+        if isinstance(a, Fraction):
+            return str(a)
+        return str(round(a, 3))
     </code></pre>
 </details>
 </section>
@@ -110,8 +115,8 @@ class Avg_Node:
         None
     &#34;&#34;&#34;
     def __init__(self):
-        self.count = 0
-        self.data = 0
+        self.count: int = 0
+        self.data: number = 0
 
     def __add__(self, num: Union[int, float]) -&gt; Avg_Node:
         &#34;&#34;&#34;Adds the number to the average and adds one to the total count.
@@ -130,7 +135,7 @@ class Avg_Node:
         self.data += num
         return self
 
-    def avg(self) -&gt; float:
+    def avg(self) -&gt; number:
         &#34;&#34;&#34;Returns the compiled average.
 
         O(1) time
@@ -148,12 +153,15 @@ class Avg_Node:
 
     def __str__(self) -&gt; str:
         &#34;&#34;&#34;A string representation of the average.&#34;&#34;&#34;
-        return str(round(self.avg(), 3))</code></pre>
+        a = self.avg()
+        if isinstance(a, Fraction):
+            return str(a)
+        return str(round(a, 3))</code></pre>
 </details>
 <h3>Methods</h3>
 <dl>
 <dt id="src.avg_node.Avg_Node.avg"><code class="name flex">
-<span>def <span class="ident">avg</span></span>(<span>self) ‑> float</span>
+<span>def <span class="ident">avg</span></span>(<span>self) ‑> Union[int, float, <a title="src.fractions.Fraction" href="fractions.html#src.fractions.Fraction">Fraction</a>]</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Returns the compiled average.</p>
@@ -168,7 +176,7 @@ class Avg_Node:
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def avg(self) -&gt; float:
+<pre><code class="python">def avg(self) -&gt; number:
     &#34;&#34;&#34;Returns the compiled average.
 
     O(1) time

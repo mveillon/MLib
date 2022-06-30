@@ -13,8 +13,8 @@ class Posn:
         y (int | float) : the y coordinate
     """
     def __init__(self, x: number, y: number):
-        self.x = x
-        self.y = y
+        self.x: number = x
+        self.y: number = y
         
     def __str__(self) -> str:
         """A string representation of the position."""
