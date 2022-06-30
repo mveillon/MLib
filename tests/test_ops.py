@@ -163,7 +163,7 @@ def test_combos():
     assert _similar_func(exp_log.f_prime().f_prime(), lambda x: -(log(2) * (log(3) - log(2)) * 2 ** log(x, 3)) / 
                                                                  ((log(3) * x) ** 2))
 
-    assert _similar_func(add_n(10)(mult_n(5)), lambda x: 5 * x + 10)
+    assert _similar_func(chain(add_n(10), mult_n(5)), lambda x: 5 * x + 10)
 
 def test_simplify():
     assert isinstance(add_n(0), identity)

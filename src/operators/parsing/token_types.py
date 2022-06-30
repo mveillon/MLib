@@ -1,5 +1,7 @@
 from __future__ import annotations
-from ._parse_utils import number
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from ._parse_utils import number
 
 class Token:
     def __eq__(self, other) -> bool:
@@ -47,7 +49,7 @@ class Exponent (_BinOp):
     pass
 
 class Log (Token):
-    def __init__(self, base: Token, expr: str):
+    def __init__(self, base: Token, expr: Token):
         self.base = base
         self.expr = expr
 
@@ -57,7 +59,7 @@ class Log (Token):
                 self.expr == other.expr)
 
 class _Trig (Token):
-    def __init__(self, expr: str):
+    def __init__(self, expr: Token):
         self.expr = expr
 
     def __eq__(self, other) -> bool:

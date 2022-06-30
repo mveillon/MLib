@@ -1,8 +1,10 @@
 from __future__ import annotations
+from typing import TYPE_CHECKING
 from math import log, e
 import numpy as np
 from .base_arithmetic import ArithmeticOpBase, _single_arg, operator_input, simple_return
-from .parsing._parse_utils import number
+if TYPE_CHECKING:
+    from .parsing._parse_utils import number
 
 class const (ArithmeticOpBase):
     """Always returns n i.e. f(x) = n."""

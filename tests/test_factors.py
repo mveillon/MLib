@@ -1,7 +1,7 @@
 from src import factors, slow_fac
 from timeit import default_timer as timer
 import numpy as np
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt # type: ignore
 
 ENABLED = False
 

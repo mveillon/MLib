@@ -1,4 +1,9 @@
-def lt_n(n):
+from typing import Any, Callable
+from .parsing._parse_utils import number
+
+compare_callable = Callable[[number], bool]
+
+def lt_n(n: number) -> compare_callable:
     """Returns a function that compares the input to n.
     
     Args:
@@ -9,7 +14,7 @@ def lt_n(n):
     """
     return lambda x: x < n
 
-def le_n(n):
+def le_n(n: number) -> compare_callable:
     """Returns a function that compares the input to n.
     
     Args:
@@ -20,7 +25,7 @@ def le_n(n):
     """
     return lambda x: x <= n
 
-def gt_n(n):
+def gt_n(n: number) -> compare_callable:
     """Returns a function that compares the input to n.
     
     Args:
@@ -31,7 +36,7 @@ def gt_n(n):
     """
     return lambda x: x > n
 
-def ge_n(n):
+def ge_n(n: number) -> compare_callable:
     """Returns a function that compares the input to n.
     
     Args:
@@ -42,7 +47,7 @@ def ge_n(n):
     """
     return lambda x: x >= n
 
-def invert():
+def invert() -> Callable[[Any], bool]:
     """Returns a function that returns the inverse of the input i.e. not x
     
     Args:

@@ -1,4 +1,6 @@
-def get_n(n):
+from typing import List, Any, Callable
+
+def get_n(n: int) -> Callable[[List[Any]], Any]:
     """Returns a function that returns the nth element of a collection.
     
     Args:
@@ -9,7 +11,7 @@ def get_n(n):
     """
     return lambda coll: coll[n]
 
-def set_n_to_val(n, val):
+def set_n_to_val(n: int, val: Any) -> Callable[[List[Any]], None]:
     """Returns a function that sets the nth element of a collection to val.
     
     Args:

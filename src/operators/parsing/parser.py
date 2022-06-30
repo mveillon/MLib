@@ -1,5 +1,5 @@
 from __future__ import annotations
-from typing import List
+from typing import Deque, List
 from ..base_arithmetic import ArithmeticOpBase
 from .lexer import is_func_str, is_op_char, shunting_yard
 from .token_types import Token, Num, Var, Log, _BinOp, _Trig
@@ -34,14 +34,13 @@ def _parse_tree(tree: Token, expr: str) -> ArithmeticOpBase:
         if not isinstance(const_base, const):
             raise SyntaxError(f'Expected scalar value for log base: {expr}')
         return chain(log_base_n(const_base.n), _parse_tree(tree.expr, expr))
-        # return log_base_n(const_base.n)(_parse_tree(tree.expr, expr))
 
     if isinstance(tree, _BinOp):
         return _FUNC_COMBOS[typ](_parse_tree(tree.l, expr),
                                  _parse_tree(tree.r, expr))
 
     if isinstance(tree, _Trig):
-        return _TRIG_MAP[typ]()(_parse_tree(tree.expr, expr))
+        return chain(_TRIG_MAP[typ](), _parse_tree(tree.expr, expr))
 
     raise ValueError(f'Internal error: invalid tree {tree} from {expr}')
 
@@ -50,7 +49,7 @@ def _str_to_tree(tokens: List[str], expr: str) -> Token:
     if len(tokens) == 0:
         raise SyntaxError(f'Empty expression {expr}')
 
-    operands = deque()
+    operands: Deque[Token] = deque()
     for tok in tokens:
         if is_op_char(tok) or tok == 'log':
             if len(operands) < 2:

@@ -1,7 +1,9 @@
 from __future__ import annotations
-from typing import Any, Deque, Union
-from ..base_arithmetic import ArithmeticOpBase
-from .token_types import Exponent, Divide, Times, Minus, Plus
+from typing import Any, Deque, Union, TYPE_CHECKING, Dict, Type, Set
+if TYPE_CHECKING:
+    from ..base_arithmetic import ArithmeticOpBase
+
+from .token_types import Token, Exponent, Divide, Times, Minus, Plus, _BinOp, _Trig
 from .token_types import Sin, Cos, Tan, ArcSin, ArcCos, ArcTan, Log
 from ..arithmetic import const, identity, _single_arg
 from ..combos import TwoFunctionsBase, f_divided_by_g, f_minus_g, f_plus_g, f_raised_to_g, f_times_g
@@ -9,42 +11,54 @@ from ..trig_functions import sine, cosine, tangent, arccosine, arcsine, arctange
 
 number = Union[int, float]
 
-_FLOAT_CHARS = set(map(str, range(10))) | set('-.')
-_OP_CHARS = set('+-*^/')
-_FUNC_STRS = {'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'log', 'ln'}
-_FUNC_COMBOS = {Plus : f_plus_g,
-                Minus : f_minus_g,
-                Times : f_times_g,
-                Divide : f_divided_by_g,
-                Exponent : f_raised_to_g}
-_TRIG_MAP = {Sin : sine,
-             Cos : cosine,
-             Tan : tangent,
-             ArcSin : arcsine,
-             ArcCos : arccosine,
-             ArcTan : arctangent}
+_FLOAT_CHARS: Set[str] = set(map(str, range(10))) | set('-.')
+_OP_CHARS: Set[str] = set('+-*^/')
+_FUNC_STRS: Set[str] = {'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'log', 'ln'}
 
-PRIORITIES = {'^' : 0,
-              '/' : 1,
-              '*' : 2,
-              '-' : 3,
-              '+' : 4}
+_FUNC_COMBOS: Dict[Type[Token], Type[TwoFunctionsBase]] = {
+    Plus : f_plus_g,
+    Minus : f_minus_g,
+    Times : f_times_g,
+    Divide : f_divided_by_g,
+    Exponent : f_raised_to_g
+}
 
-_BIN_OPS = {'^' : Exponent,
-            '/' : Divide,
-            '*' : Times,
-            '-' : Minus,
-            '+' : Plus,
-            'log' : Log}
+_TRIG_MAP: Dict[Type[Token], Type[_single_arg]] = {
+    Sin : sine,
+    Cos : cosine,
+    Tan : tangent,
+    ArcSin : arcsine,
+    ArcCos : arccosine,
+    ArcTan : arctangent
+}
 
-_ONE_ARG = {'sin' : Sin,
-            'cos' : Cos,
-            'tan' : Tan,
-            'asin' : ArcSin,
-            'acos' : ArcCos,
-            'atan' : ArcTan}
+PRIORITIES: Dict[str, int] = {
+    '^' : 0,
+    '/' : 1,
+    '*' : 2,
+    '-' : 3,
+    '+' : 4
+}
 
-_VAR_CHARS_C = _FLOAT_CHARS | _OP_CHARS | set('()')
+_BIN_OPS: Dict[str, Union[Type[_BinOp], Type[Log]]] = {
+    '^' : Exponent,
+    '/' : Divide,
+    '*' : Times,
+    '-' : Minus,
+    '+' : Plus,
+    'log' : Log
+}
+
+_ONE_ARG: Dict[str, Type[_Trig]] = {
+    'sin' : Sin,
+    'cos' : Cos,
+    'tan' : Tan,
+    'asin' : ArcSin,
+    'acos' : ArcCos,
+    'atan' : ArcTan
+}
+
+_VAR_CHARS_C: Set[str] = _FLOAT_CHARS | _OP_CHARS | set('()')
 
 def remove_whitespace(s: str) -> str:
     """Returns new string with no whitespace."""

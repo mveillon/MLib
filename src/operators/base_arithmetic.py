@@ -1,6 +1,7 @@
 from __future__ import annotations
-from typing import Callable, Union, Any
-from .parsing._parse_utils import number
+from typing import Callable, Union, TYPE_CHECKING
+if TYPE_CHECKING:
+    from .parsing._parse_utils import number
 
 class ArithmeticOpBase:
     """Abstract base class for all arithmetic operations.
@@ -19,10 +20,6 @@ class ArithmeticOpBase:
     appropriate operators (e.g. +, *). Doing so will return a new function that 
     combines the two given functions appropriately. You can also add numbers and 
     strings to functions. The strings should be parsable expressions.
-
-    Finally, calling an ArithmeticOpBase with another ArithmeticOpBase will return
-    a new chain function that first calls the inner function (the one passed as the
-    argument), then the outer on the input.
     
     Args:
         n (number) : the constant to use in the operation
@@ -59,11 +56,8 @@ class ArithmeticOpBase:
         """
         return str(self.f_prime())
 
-    def __call__(self, x: Union[number, ArithmeticOpBase]) -> Union[number, ArithmeticOpBase]:
+    def __call__(self, x: number) -> number:
         """Allows the object to pretend to be a function. Returns f(x)."""
-        if isinstance(x, ArithmeticOpBase):
-            from .combos import chain
-            return chain(self, x)
         return self.f(x)
 
     def f_prime(self) -> ArithmeticOpBase:
