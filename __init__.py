@@ -5,7 +5,7 @@ from src import analytical_limit, limit, diff_quo, assign_return, part_derivativ
 from src import Posn
 from src import rad, frac, sep_rad, frac_to_float, rad_to_float
 from src import even, odd, is_truthy, close_enough, can_be_int
-from src import Fraction, gcd, lcm, divide
+from src import Fraction, gcd, lcm, divide, frac_abs
 from src import identity, add_n, sub_n, mult_n, div_n, n_div, n_sub, floordiv_n, n_floordiv, exp_n, n_exp
 from src import sine, cosine, tangent, arccosine, arcsine, arctangent, const, identity, f_raised_to_g
 from src import chain, f_plus_g, f_minus_g, f_times_g, f_divided_by_g, mx_plus_b, log_base_n, log_of_n

@@ -1,4 +1,4 @@
-from src import Fraction, close_enough, gcd, lcm, divide
+from src import Fraction, close_enough, gcd, lcm, divide, frac_abs
 
 CHECK_STRS = False
 
@@ -86,6 +86,14 @@ def test_frac():
     f3 = Fraction(1, 2)
     assert f3 ** 2 == Fraction(1, 4)
     assert (f3 * 3) ** 2 == Fraction(9, 4)
+    assert -f3 == Fraction(-1, 2)
+    assert -(-f3) == f3
+    assert f3 // 2 == 0
+    assert f3 // f3 == 1
+    assert f3 // 0.25 == 2
+    assert 2 // f3 == 4
+    assert 0.5 // f3 == 1
+    assert 0.25 // f3 == 0
 
 def test_strs():
     if CHECK_STRS:
@@ -124,3 +132,15 @@ def test_lcm():
     for i in range(1, 20):
         for j in range(1, 20):
             assert lcm(i, j) == lcm(j, i)
+
+def test_frac_abs():
+    assert frac_abs(1) == 1
+    assert frac_abs(-1) == 1
+    assert frac_abs(0) == 0
+    assert frac_abs(1.0) == 1.0
+    assert frac_abs(-1.0) == 1.0
+    assert frac_abs(0.0) == 0.0
+    f = Fraction(1, 2)
+    assert frac_abs(f) == f
+    assert frac_abs(-f) == f
+    assert frac_abs(Fraction(0, 2)) == 0
