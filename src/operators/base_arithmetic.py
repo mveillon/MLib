@@ -1,3 +1,7 @@
+from __future__ import annotations
+from typing import Callable, Union, Any
+from .parsing._parse_utils import number
+
 class ArithmeticOpBase:
     """Abstract base class for all arithmetic operations.
 
@@ -23,15 +27,15 @@ class ArithmeticOpBase:
     Args:
         n (number) : the constant to use in the operation
     """
-    def __init__(self, n):
+    def __init__(self, n: number):
         self.n = n
         self.priority = -1 #higher means it should go first
 
-    def __new__(cls, n):
+    def __new__(cls, n: number):
         """We define this to allow simplification."""
         return super(ArithmeticOpBase, cls).__new__(cls)
         
-    def f(self, x):
+    def f(self, x: number) -> number:
         """Returns the result of the function called on x.
         
         Args:
@@ -42,7 +46,7 @@ class ArithmeticOpBase:
         """
         raise NotImplementedError
 
-    def derivative(self):
+    def derivative(self) -> str:
         """Returns a string form of the derivative of this function.
 
         Formatted as an expression (i.e. no 'f(x) = ') for recursive reasons.
@@ -55,14 +59,14 @@ class ArithmeticOpBase:
         """
         return str(self.f_prime())
 
-    def __call__(self, x):
+    def __call__(self, x: Union[number, ArithmeticOpBase]) -> Union[number, ArithmeticOpBase]:
         """Allows the object to pretend to be a function. Returns f(x)."""
         if isinstance(x, ArithmeticOpBase):
             from .combos import chain
             return chain(self, x)
         return self.f(x)
 
-    def f_prime(self):
+    def f_prime(self) -> ArithmeticOpBase:
         """Returns a function that returns the instantaneous slope at x.
         
         Args:
@@ -73,11 +77,11 @@ class ArithmeticOpBase:
         """
         raise NotImplementedError
 
-    def __str__(self):
+    def __str__(self) -> str:
         """Returns string representation of expression."""
         raise NotImplementedError
 
-    def _get_func(self, other):
+    def _get_func(self, other: operator_input) -> ArithmeticOpBase:
         """Makes the other into an ArithmeticOpBase, if it isn't already."""
         if isinstance(other, ArithmeticOpBase):
             return other
@@ -89,11 +93,11 @@ class ArithmeticOpBase:
             return parse_expr(other)
         raise ValueError(f'Unexpected argument to function arithmetic: {other}')
 
-    def _binop(self, other, combiner):
+    def _binop(self, other: operator_input, combiner: Callable) -> ArithmeticOpBase:
         """Combines self and other using combiner."""
         return combiner(self, self._get_func(other))
 
-    def _simple_add(self, other):
+    def _simple_add(self, other: operator_input) -> simple_return:
         """Tries to return simplified self + other. If it can't, it will return None."""
         other = self._get_func(other)
         from .arithmetic import const
@@ -101,7 +105,7 @@ class ArithmeticOpBase:
             return self
         return None
 
-    def _simple_sub(self, other):
+    def _simple_sub(self, other: operator_input) -> simple_return:
         """Tries to return simplified self - other. If it can't, it will return None."""
         other = self._get_func(other)
         from .arithmetic import const
@@ -109,7 +113,7 @@ class ArithmeticOpBase:
             return self
         return None
 
-    def _simple_mul(self, other):
+    def _simple_mul(self, other: operator_input) -> simple_return:
         """Tries to return simplified self * other. If it can't, it will return None."""
         other = self._get_func(other)
         from .arithmetic import const
@@ -120,7 +124,7 @@ class ArithmeticOpBase:
                 return self
         return None
 
-    def _simple_div(self, other):
+    def _simple_div(self, other: operator_input) -> simple_return:
         """Tries to return simplified self / other. If it can't, it will return None."""
         other = self._get_func(other)
         from .arithmetic import const
@@ -128,7 +132,7 @@ class ArithmeticOpBase:
             return self
         return None
 
-    def _simple_exp(self, other):
+    def _simple_exp(self, other: operator_input) -> simple_return:
         """Tries to return simplified self ** other. If it can't, it will return None."""
         other = self._get_func(other)
         from .arithmetic import const
@@ -139,31 +143,31 @@ class ArithmeticOpBase:
                 return self
         return None
 
-    def __add__(self, other): 
+    def __add__(self, other: operator_input) -> ArithmeticOpBase: 
         s = self._simple_add(other)
         if s: return s
         from .combos import f_plus_g
         return self._binop(other, f_plus_g)
 
-    def __sub__(self, other):
+    def __sub__(self, other: operator_input) -> ArithmeticOpBase:
         s = self._simple_sub(other)
         if s: return s
         from .combos import f_minus_g
         return self._binop(other, f_minus_g)
 
-    def __mul__(self, other):
+    def __mul__(self, other: operator_input) -> ArithmeticOpBase:
         s = self._simple_mul(other)
         if s: return s
         from .combos import f_times_g
         return self._binop(other, f_times_g)
 
-    def __truediv__(self, other):
+    def __truediv__(self, other: operator_input) -> ArithmeticOpBase:
         s = self._simple_div(other)
         if s: return s
         from .combos import f_divided_by_g
         return self._binop(other, f_divided_by_g)
 
-    def __pow__(self, other):
+    def __pow__(self, other: operator_input) -> ArithmeticOpBase:
         s = self._simple_exp(other)
         if s: return s
         from .combos import f_raised_to_g
@@ -179,3 +183,5 @@ class _single_arg (ArithmeticOpBase):
         o.__init__()
         return o
 
+simple_return = Union[ArithmeticOpBase, None]
+operator_input = Union[ArithmeticOpBase, int, float, str]

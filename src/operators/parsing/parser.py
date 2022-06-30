@@ -1,11 +1,14 @@
+from __future__ import annotations
+from typing import List
+from ..base_arithmetic import ArithmeticOpBase
 from .lexer import is_func_str, is_op_char, shunting_yard
-from .token_types import Num, Var, Log, _BinOp, _Trig
+from .token_types import Token, Num, Var, Log, _BinOp, _Trig
 from ._parse_utils import _ONE_ARG, _BIN_OPS, _FUNC_COMBOS, _TRIG_MAP, _is_var, can_be_float
 from ..arithmetic import const, identity, log_base_n
 from ..combos import chain
 from collections import deque
 
-def parse_expr(expr):
+def parse_expr(expr: str) -> ArithmeticOpBase:
     """Parses the arithmetic function and returns a ArithmeticOpBase.
     
     Args:
@@ -17,7 +20,7 @@ def parse_expr(expr):
     """
     return _parse_tree(_str_to_tree(shunting_yard(expr), expr), expr)
 
-def _parse_tree(tree, expr):
+def _parse_tree(tree: Token, expr: str) -> ArithmeticOpBase:
     """Parses the tree into an ArithmeticOpBase."""
     typ = type(tree)
     if isinstance(tree, Num):
@@ -30,7 +33,8 @@ def _parse_tree(tree, expr):
         const_base = _parse_tree(tree.base, expr)
         if not isinstance(const_base, const):
             raise SyntaxError(f'Expected scalar value for log base: {expr}')
-        return log_base_n(const_base.n)(_parse_tree(tree.expr, expr))
+        return chain(log_base_n(const_base.n), _parse_tree(tree.expr, expr))
+        # return log_base_n(const_base.n)(_parse_tree(tree.expr, expr))
 
     if isinstance(tree, _BinOp):
         return _FUNC_COMBOS[typ](_parse_tree(tree.l, expr),
@@ -41,7 +45,7 @@ def _parse_tree(tree, expr):
 
     raise ValueError(f'Internal error: invalid tree {tree} from {expr}')
 
-def _str_to_tree(tokens, expr):
+def _str_to_tree(tokens: List[str], expr: str) -> Token:
     """Takes a list of tokens from shunting yard and turns it into a syntax tree of Token objects."""
     if len(tokens) == 0:
         raise SyntaxError(f'Empty expression {expr}')
