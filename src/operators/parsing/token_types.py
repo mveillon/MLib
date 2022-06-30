@@ -1,7 +1,5 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
-if TYPE_CHECKING:
-    from ._parse_utils import number
+from ...utilities import number
 
 class Token:
     def __eq__(self, other) -> bool:

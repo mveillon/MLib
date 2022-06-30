@@ -2,9 +2,7 @@ from __future__ import annotations
 from .arithmetic import const, exp_n
 from .base_arithmetic import ArithmeticOpBase, _single_arg
 from math import sin, cos, tan, asin, acos, atan
-from typing import TYPE_CHECKING
-if TYPE_CHECKING:
-    from .parsing._parse_utils import number
+from ..utilities import number
 
 class sine (_single_arg):
     """Returns sin(x)."""

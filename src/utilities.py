@@ -1,21 +1,26 @@
-def even(n):
+from typing import Union, Any
+from .fractions import Fraction
+
+number = Union[int, float, Fraction]
+
+def even(n: int) -> bool:
     """Returns whether n is even."""
     return not n & 1
 
-def odd(n):
+def odd(n: int) -> bool:
     """Returns whether n is odd."""
-    return n & 1
+    return bool(n & 1)
 
-def is_truthy(thing):
+def is_truthy(thing: Any) -> bool:
     """Returns whether thing is truthy."""
     return bool(thing)
     
-def close_enough(num1, num2):
+def close_enough(num1: number, num2: number) -> bool:
     """Returns whether the two numbers are close enough within floating point error."""
     diff = num1 - num2
     return diff < 0.001 and diff > -0.001
 
-def can_be_int(thing):
+def can_be_int(thing: Any) -> bool:
     """Returns whether thing can be an integer.
 
     If thing is a float, it will check if thing is close_enough to the nearest integer.

@@ -1,6 +1,7 @@
 import math
+from typing import Set
 
-def _n_twos(n):
+def _n_twos(n: int) -> int:
     """Returns how many times n can be divided by two - O(logn) time."""
     res = 0
     while not n & 1:
@@ -8,7 +9,7 @@ def _n_twos(n):
         res += 1
     return res
 
-def _odd_facs(n):
+def _odd_facs(n: int) -> Set[int]:
     """Returns the factors of n, assuming its odd - O(sqrt(n)) time."""
     assert n & 1, "_odd_facs: n must be odd!"
     res = {1, n}
@@ -18,7 +19,7 @@ def _odd_facs(n):
             res.add(n // i)
     return res
 
-def factors(n):
+def factors(n: int) -> Set[int]:
     """Returns a set of all factors of n >= 0.
 
     O(sqrt(n)) time
@@ -43,7 +44,7 @@ def factors(n):
             res.add(n // new_fac)
     return res
 
-def slow_fac(n):
+def slow_fac(n: int) -> Set[int]:
     """A slower factorization algorithm.
 
     O(sqrt(n)) time
@@ -65,7 +66,7 @@ def slow_fac(n):
             res.add(n // i)
     return res
 
-def is_prime(n):
+def is_prime(n: int) -> bool:
     """Returns whether a number is prime.
 
     O(sqrt(n)) time

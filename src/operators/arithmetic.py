@@ -1,10 +1,9 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
 from math import log, e
 import numpy as np
+from ..fractions import Fraction
 from .base_arithmetic import ArithmeticOpBase, _single_arg, operator_input, simple_return
-if TYPE_CHECKING:
-    from .parsing._parse_utils import number
+from ..utilities import number
 
 class const (ArithmeticOpBase):
     """Always returns n i.e. f(x) = n."""
@@ -530,7 +529,7 @@ class log_base_n (ArithmeticOpBase):
         return const(1) / mult_n(self.ln)
 
     def __str__(self) -> str:
-        if np.isclose(self.n, e):
+        if not isinstance(self.n, Fraction) and np.isclose(self.n, e):
             return 'ln(x)'
         return f'log{self.n}(x)'
 

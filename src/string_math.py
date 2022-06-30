@@ -2,8 +2,10 @@ import math
 from .utilities import can_be_int
 from .factors import factors
 from .fractions import gcd
+from .utilities import number
+from typing import List
 
-def rad(n):
+def rad(n: int) -> str:
     """Takes a radicand and simplifies it.
 
     Args:
@@ -24,7 +26,7 @@ def rad(n):
     else:
         return f'√{n}'
     
-def frac(num, denom):
+def frac(num: int, denom: int) -> str:
     """Takes a fraction and simplifies it.
 
     Args:
@@ -43,7 +45,7 @@ def frac(num, denom):
         return f'{num // best} / {denom // best}'
     return str(num // best)
 
-def sep_rad(r):
+def sep_rad(r: str) -> List[str]:
     """Separates the radical and returns it as a list.
 
     Args:
@@ -59,7 +61,7 @@ def sep_rad(r):
     else:
         raise ValueError('No radical provided to sep_rad')
 
-def frac_to_float(frac):
+def frac_to_float(frac: str) -> float:
     """Converts a string fraction to a float.
 
     Args:
@@ -76,7 +78,7 @@ def frac_to_float(frac):
         return int(nums[0]) / int(nums[1])
     return int(nums[0])
 
-def rad_to_float(rad_arg):
+def rad_to_float(rad_arg: str) -> float:
     """Converts a string version of a radical into a float.
 
     Args:

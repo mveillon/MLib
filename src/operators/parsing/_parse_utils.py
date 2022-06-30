@@ -9,8 +9,6 @@ from ..arithmetic import const, identity, _single_arg
 from ..combos import TwoFunctionsBase, f_divided_by_g, f_minus_g, f_plus_g, f_raised_to_g, f_times_g
 from ..trig_functions import sine, cosine, tangent, arccosine, arcsine, arctangent
 
-number = Union[int, float]
-
 _FLOAT_CHARS: Set[str] = set(map(str, range(10))) | set('-.')
 _OP_CHARS: Set[str] = set('+-*^/')
 _FUNC_STRS: Set[str] = {'sin', 'cos', 'tan', 'asin', 'acos', 'atan', 'log', 'ln'}

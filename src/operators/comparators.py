@@ -1,5 +1,5 @@
 from typing import Any, Callable
-from .parsing._parse_utils import number
+from ..utilities import number
 
 compare_callable = Callable[[number], bool]
 

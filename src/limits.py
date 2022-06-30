@@ -1,9 +1,17 @@
+from __future__ import annotations
 from copy import deepcopy
 import math
 from .frange import frange
-from .utilities import close_enough
+from .utilities import close_enough, number
+from typing import Callable, List
+from .fractions import frac_abs
 
-def analytical_limit(func, approaching, precision = 2, step = 1e-3):
+def analytical_limit(
+    func: Callable[[number], number], 
+    approaching: number, 
+    precision: number = 2, 
+    step: number = 1e-3
+    ) -> number:
     """Finds the analytical limit of the function approaching the given number.
 
     Args:
@@ -15,8 +23,8 @@ def analytical_limit(func, approaching, precision = 2, step = 1e-3):
     Returns:
     :   limit (float) : the analytical limit of the function
     """
-    total_y = 0
-    total_w = 0
+    total_y: number = 0
+    total_w: number = 0
     for i in frange(approaching - step * precision, approaching + step * (precision + 1), step):
         if not close_enough(i, approaching):
             w = step / math.fabs(approaching - i)
@@ -24,7 +32,12 @@ def analytical_limit(func, approaching, precision = 2, step = 1e-3):
             total_w += w
     return total_y / total_w
 
-def limit(func, approaching, precision = 2, step = 1e-3):
+def limit(
+    func: Callable[[number], number], 
+    approaching: number, 
+    precision: number = 2, 
+    step: number = 1e-3
+    ) -> number:
     """Returns the limit of the function at approaching.
     
     First checks if approaching is in the function's domain, then 
@@ -44,7 +57,7 @@ def limit(func, approaching, precision = 2, step = 1e-3):
     except:
         return analytical_limit(func, approaching, precision, step)
 
-def diff_quo(func, x):
+def diff_quo(func: Callable[[number], number], x: number) -> number:
     """Returns the derivative of func at x using the difference quotient.
 
     Args:
@@ -56,7 +69,7 @@ def diff_quo(func, x):
     """
     return analytical_limit(lambda h: (func(x + h) - func(x)) / h, 0)
 
-def assign_return(lst, ind, new_val):
+def assign_return(lst: List[number], ind: int, new_val: number) -> List[number]:
     """Assigns new_val to lst[ind] and returns the list.
 
     Useful for lambda functions -
@@ -74,7 +87,11 @@ def assign_return(lst, ind, new_val):
     res[ind] = new_val
     return res
 
-def part_derivative(func, xs, x_ind):
+def part_derivative(
+    func: Callable[[List[number]], number], 
+    xs: List[number], 
+    x_ind: int
+    ) -> number:
     """Returns the partial derivative with respect to x_{x_ind} of xs.
 
     Args:
@@ -87,7 +104,12 @@ def part_derivative(func, xs, x_ind):
     """
     return diff_quo(lambda n: func(assign_return(xs, x_ind, n)), xs[x_ind])
 
-def get_root(func, guess, thresh = 1e-3, max_iters = 20):
+def get_root(
+    func: Callable[[number], number], 
+    guess: number, 
+    thresh: number = 1e-3, 
+    max_iters: number = 20
+    ) -> number:
     """Returns an approximation of the root (where it equals zero) of the function.
 
     Needs a reasonably good initial guess to work
@@ -102,10 +124,10 @@ def get_root(func, guess, thresh = 1e-3, max_iters = 20):
     Returns:
     :   root (float) : where the function equals zero
     """
-    get_new = lambda g: guess - func(guess) / diff_quo(func, guess)
+    get_new = lambda g: g - func(g) / diff_quo(func, g)
     new = get_new(guess)
     iters = 0
-    while abs(new - guess) > thresh and iters < max_iters:
+    while frac_abs(new - guess) > thresh and iters < max_iters:
         guess = new
         new = get_new(guess)
         iters += 1

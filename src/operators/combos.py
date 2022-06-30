@@ -1,7 +1,6 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING, Tuple, Any
-if TYPE_CHECKING:
-    from .parsing._parse_utils import number
+from typing import Tuple, Any
+from ..utilities import number
 
 from .arithmetic import mult_n, const, identity, log_base_n
 from .base_arithmetic import ArithmeticOpBase, simple_return, operator_input

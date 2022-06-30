@@ -1,7 +1,7 @@
 from __future__ import annotations
-from typing import Callable, Union, TYPE_CHECKING
-if TYPE_CHECKING:
-    from .parsing._parse_utils import number
+from typing import Callable, Union
+from src.fractions import Fraction
+from ..utilities import number
 
 class ArithmeticOpBase:
     """Abstract base class for all arithmetic operations.
@@ -79,7 +79,7 @@ class ArithmeticOpBase:
         """Makes the other into an ArithmeticOpBase, if it isn't already."""
         if isinstance(other, ArithmeticOpBase):
             return other
-        if isinstance(other, int) or isinstance(other, float):
+        if isinstance(other, int) or isinstance(other, float) or isinstance(other, Fraction):
             from .arithmetic import const
             return const(other)
         if isinstance(other, str):
@@ -178,4 +178,4 @@ class _single_arg (ArithmeticOpBase):
         return o
 
 simple_return = Union[ArithmeticOpBase, None]
-operator_input = Union[ArithmeticOpBase, int, float, str]
+operator_input = Union[ArithmeticOpBase, int, float, Fraction, str]

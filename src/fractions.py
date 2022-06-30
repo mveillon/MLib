@@ -1,4 +1,8 @@
+from __future__ import annotations
 import numpy as np
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from .utilities import number
 
 class Fraction:
     """An alternative way of storing (rational) floating-point numbers.
@@ -11,7 +15,7 @@ class Fraction:
 
         den (int) : the denominator
     """
-    def __init__(self, num, den):
+    def __init__(self, num: int, den: int):
         self._num = num
         self._den = den
         self._reduce()
@@ -21,7 +25,7 @@ class Fraction:
             return num // den
         return super().__new__(cls)
 
-    def __add__(first, second):
+    def __add__(first: Fraction, second: number) -> number:
         """Adds the two numbers or fractions and returns the result.
 
         Args:
@@ -44,7 +48,7 @@ class Fraction:
 
     __radd__ = __add__
 
-    def __sub__(first, second):
+    def __sub__(first: Fraction, second: number) -> number:
         """Subtracts the second from the first.
 
         Args:
@@ -60,7 +64,7 @@ class Fraction:
             return first + -second
         raise ValueError(f'Unsupported argument to Fraction operation: {second}')
 
-    def __rsub__(frac, first):
+    def __rsub__(frac: Fraction, first: number) -> number:
         """Subtracts the fraction from first.
         
         Args:
@@ -72,7 +76,7 @@ class Fraction:
         """
         return first + Fraction(-frac._num, frac._den)
 
-    def __mul__(first, second):
+    def __mul__(first: Fraction, second: number) -> number:
         """Returns the product of the two numbers.
 
         Args:
@@ -93,7 +97,7 @@ class Fraction:
 
     __rmul__ = __mul__
 
-    def __str__(self):
+    def __str__(self) -> str:
         """A string representation of the fraction."""
         strs = [str(self._num), str(self._den)]
         lens = list(map(len, strs))
@@ -104,7 +108,7 @@ class Fraction:
         strs[sml_ind] = ''.join([' ' * l_spaces, strs[sml_ind], ' ' * r_spaces])
         return '\n'.join([strs[0], '-' * lens[big_ind], strs[1]])
 
-    def __truediv__(first, second):
+    def __truediv__(first: Fraction, second: number) -> number:
         """Divides the first by the second.
 
         Args:
@@ -122,7 +126,7 @@ class Fraction:
             return float(first) / second
         raise ValueError(f'Unsupported argument to Fraction operation: {second}')
 
-    def __rtruediv__(frac, first):
+    def __rtruediv__(frac: Fraction, first: number) -> number:
         """Divides first by frac.
         
         Args:
@@ -134,7 +138,19 @@ class Fraction:
         """
         return first * Fraction(frac._den, frac._num)
 
-    def __pow__(frac, power):
+    def __rpow__(frac: Fraction, base: number) -> number:
+        """Raises base to the power of frac.
+        
+        Args:
+        :   frac (Fraction) : the Fraction acting as the exponent
+        :   base (Fraction | int | float) : the base of the expression
+
+        Returns:
+        :   third (Fraction | int | float) : base raised to frac
+        """
+        return base ** float(frac)
+
+    def __pow__(frac: Fraction, power: number) -> number:
         """Raises frac the power of pow.
         
         Args:
@@ -150,21 +166,21 @@ class Fraction:
             return float(frac) ** float(power)
         raise ValueError(f'Unsupported argument to Fraction operation: {power}')
 
-    def __int__(self):
+    def __int__(self) -> int:
         """Divides the numerator by the denominator, rounding down."""
         return self._num // self._den
 
-    def __float__(self):
+    def __float__(self) -> float:
         """Divides the numberator by the denominator and provides a more exact value."""
         return self._num / self._den
 
-    def _reduce(self):
+    def _reduce(self) -> None:
         """Simplifies the fraction"""
         q = gcd(self._num, self._den)
         self._num //= q
         self._den //= q
 
-    def __eq__(first, second):
+    def __eq__(first, second) -> bool:
         """Returns whether the two fractions are equal."""
         if isinstance(second, Fraction):
             return first._num == second._num and first._den == second._den
@@ -174,23 +190,23 @@ class Fraction:
             return False
         raise ValueError(f'Unsupported argument to Fraction comparison: {second}')
 
-    def __lt__(first, second):
+    def __lt__(first, second) -> bool:
         """Returns whether the first is less than the second."""
         return float(first) < float(second)
 
-    def __le__(first, second):
+    def __le__(first, second) -> bool:
         """Returns whether the first is less than or equal to the second."""
         return first < second or first == second
 
-    def __gt__(first, second):
+    def __gt__(first, second) -> bool:
         """Returns whether the first is greater than the second."""
         return not first <= second
 
-    def __ge__(first, second):
+    def __ge__(first, second) -> bool:
         """Returns whether the first is greater than or equal to the second."""
         return not first < second
 
-    def reciprocal(self):
+    def reciprocal(self) -> number:
         """Returns the reciprocal of the fraction i.e. 1 / self.
         
         Args:
@@ -201,7 +217,45 @@ class Fraction:
         """
         return Fraction(self._num, self._den)
 
-def gcd(x, y):
+    # TODO : test me!
+    def __neg__(self) -> Fraction:
+        """Returns -1 * self.
+        
+        Args:
+        :   None
+
+        Returns:
+        :   negated (Fraction) : the negation of self
+        """
+        return Fraction(-self._num, self._den)
+
+    # TODO : test me!
+    def __floordiv__(first: Fraction, second: number) -> number:
+        """Floor divides first by second.
+        
+        Args:
+        :   first (Fraction) : the numerator
+        :   second (Fraction | int | float) : the denominator
+
+        Returns:
+        :   third (int) : the floor division
+        """
+        return float(first) // second
+
+    # TODO : test me!
+    def __rfloordiv__(frac: Fraction, numerator: number) -> number:
+        """Floor divides first by second.
+        
+        Args:
+        :   frac (Fraction) : the numerator
+        :   numberator (Fraction | int | float) : the denominator
+
+        Returns:
+        :   third (int) : the floor division
+        """
+        return numerator // float(frac)
+
+def gcd(x: int, y: int) -> int:
     """Returns the greatest common denominator between x and y.
 
     O(log(min(x, y))) time.
@@ -218,7 +272,7 @@ def gcd(x, y):
         x, y = y, x % y
     return x
 
-def lcm(x, y):
+def lcm(x: int, y: int) -> int:
     """Returns the least common multiple of x and y.
 
     uses the fact that x * y == lcm * gcd.
@@ -234,7 +288,7 @@ def lcm(x, y):
     """
     return (x * y) // gcd(x, y)
 
-def divide(num, den):
+def divide(num: int, den: int) -> number:
     """Divides num by den, returning an exact Fraction if they do not divide.
 
     Note that, because the Fraction constructor simplifies itself and can return
@@ -248,3 +302,15 @@ def divide(num, den):
     :   q (int | Fraction) : the quotient of the two
     """
     return Fraction(num, den)
+
+# TODO : test me!
+def frac_abs(n: number) -> number:
+    """Returns the absolute value of any number, incuding Fractions.
+    
+    Args:
+    :   n (int | float | Fraction) : the number to find the absolute value of
+
+    Returns:
+    :   abs (int | float | Fraction) : the absolute value
+    """
+    return -n if n < 0 else n
